@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Rumah Baca Pelita Bangsa — Pematang Siantar &amp; Simalungun</title>
+  <meta name="description" content="Komunitas literasi anak dan warga di Pematang Siantar – Simalungun. Profil, pengurus, relawan, agenda kegiatan, berita, galeri, dan donasi buku.">
+  <link rel="icon" href="assets/img/logo.png">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Rumah Baca Pelita Bangsa">
+  <meta property="og:description" content="Komunitas literasi anak &amp; warga di Pematang Siantar – Simalungun. Nyalakan lentera literasi generasi muda.">
+  <meta property="og:image" content="https://<user>.github.io/<repo>/assets/img/og-image.png">
+  <meta property="og:url" content="https://<user>.github.io/<repo>/">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+  <script src="assets/js/tailwind-config.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/custom.css">
+
+  <script src="assets/js/config.js" defer></script>
+  <script src="assets/js/ui.js" defer></script>
+  <script src="assets/js/api.js" defer></script>
+  <script src="assets/js/layout.js" defer></script>
+  <script src="assets/js/lightbox.js" defer></script>
+  <script src="assets/js/app.js" defer></script>
+</head>
+<body class="bg-surface font-body-md text-body-md text-on-surface antialiased min-h-screen flex flex-col" data-page="beranda">
+<main class="w-full pt-16 xl:pt-20 bg-surface flex-grow">
+<div class="flex flex-col w-full">
+
+<!-- Hero -->
+<section id="beranda" class="relative overflow-hidden bg-gradient-to-b from-surface-container-low via-surface to-background py-space-xl lg:py-28 px-gutter">
+  <div class="absolute -top-32 -right-32 w-96 h-96 bg-primary-fixed/40 rounded-full blur-3xl pointer-events-none"></div>
+  <div class="absolute top-1/2 -left-24 w-80 h-80 bg-secondary-fixed/50 rounded-full blur-3xl pointer-events-none"></div>
+  <div class="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-space-lg lg:gap-space-xl items-center relative z-10">
+    <div class="lg:col-span-7 flex flex-col items-start gap-space-md">
+      <div class="inline-flex items-center gap-space-xs bg-surface-container-lowest px-space-md py-space-xs rounded-full shadow-sm">
+        <span class="inline-block w-2.5 h-2.5 rounded-full bg-primary animate-pulse"></span>
+        <span class="font-label-md text-label-md text-primary tracking-wide uppercase">Gerakan Akar Rumput Sumatera Utara</span>
+      </div>
+      <h1 id="hero-tagline" class="font-display-lg text-display-lg-mobile lg:text-display-lg text-on-surface leading-tight tracking-tight">Nyalakan Lentera Literasi Generasi Muda di <span class="text-primary underline decoration-primary-fixed decoration-4 underline-offset-8">Pematang Siantar &amp; Simalungun</span></h1>
+      <p class="font-body-lg text-body-md lg:text-body-lg text-on-surface-variant max-w-xl justify" data-bind="profil.deskripsi_singkat">Rumah belajar mandiri, perpustakaan komunitas, dan wadah kreativitas anak-anak serta pemuda untuk mewujudkan mimpi luas melalui hangatnya jendela buku.</p>
+      <div class="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-space-sm pt-space-xs w-full sm:w-auto">
+        <a class="px-space-md sm:px-space-lg py-3 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-lg text-label-lg text-center shadow-md transition-all flex items-center justify-center gap-space-xs active:scale-[0.98]" href="#agenda"><span>Jelajahi Agenda</span><span class="material-symbols-outlined text-lg">arrow_forward</span></a>
+        <a class="px-space-md sm:px-space-lg py-3 rounded-lg bg-tertiary-container hover:bg-tertiary text-on-tertiary font-label-lg text-label-lg text-center shadow-md transition-all flex items-center justify-center gap-space-xs active:scale-[0.98]" href="#donasi-kontak"><span class="material-symbols-outlined text-lg">volunteer_activism</span><span>Donasi Buku</span></a>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-space-sm pt-space-md w-full">
+        <div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-center"><div class="font-headline-lg text-headline-lg text-primary"><span data-bind="profil.stat_koleksi_buku">—</span><span class="hidden" data-show="profil.stat_koleksi_buku">+</span></div><div class="font-label-md text-label-md text-on-surface-variant">Koleksi Buku</div></div>
+        <div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-center"><div class="font-headline-lg text-headline-lg text-secondary"><span data-bind="profil.stat_anak_terbina">—</span><span class="hidden" data-show="profil.stat_anak_terbina">+</span></div><div class="font-label-md text-label-md text-on-surface-variant">Anak Terbina</div></div>
+        <div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-center"><div class="font-headline-lg text-headline-lg text-tertiary"><span data-bind="profil.stat_relawan">—</span><span class="hidden" data-show="profil.stat_relawan">+</span></div><div class="font-label-md text-label-md text-on-surface-variant">Relawan Aktif</div></div>
+        <div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-center"><div class="font-headline-lg text-headline-lg text-primary" data-bind="profil.tahun_berdiri">—</div><div class="font-label-md text-label-md text-on-surface-variant">Berdiri Sejak</div></div>
+      </div>
+    </div>
+    <div class="lg:col-span-5 relative">
+      <div class="relative mx-auto max-w-md lg:max-w-none">
+        <div class="absolute -inset-4 bg-gradient-to-tr from-primary-fixed to-secondary-fixed rounded-3xl -rotate-2 opacity-60"></div>
+        <div class="relative bg-surface-container-lowest rounded-2xl overflow-hidden shadow-xl">
+          <img class="w-full h-56 sm:h-72 lg:h-[420px] object-cover bg-surface-container" src="assets/img/placeholder.svg" data-src="profil.hero_foto" alt="Anak-anak membaca di Rumah Baca Pelita Bangsa" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='assets/img/placeholder.svg'">
+          <div class="p-space-md bg-surface-container-lowest flex items-center justify-between gap-space-sm">
+            <div class="flex items-center gap-space-sm min-w-0">
+              <div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-primary shrink-0"><span class="material-symbols-outlined">auto_stories</span></div>
+              <div class="min-w-0"><h4 class="font-label-lg text-label-lg text-on-surface truncate" data-bind="profil.nama_organisasi">Rumah Baca Pelita Bangsa</h4><p class="font-label-sm text-label-sm text-on-surface-variant truncate" data-bind="profil.jam_operasional">Buka untuk Semua</p></div>
+            </div>
+            <span class="px-space-sm py-1 bg-surface-container-high text-secondary rounded-full font-label-sm text-label-sm font-semibold whitespace-nowrap">Sejak <span data-bind="profil.tahun_berdiri">2021</span></span>
+          </div>
+        </div>
+        <div class="hidden lg:flex absolute -top-6 -left-6 z-10 bg-surface-container-lowest p-space-md rounded-xl shadow-lg items-center gap-space-sm max-w-xs">
+          <span class="material-symbols-outlined text-primary text-3xl">verified</span>
+          <div><p class="font-label-md text-label-md font-bold text-on-surface">Akses Bebas Biaya</p><p class="font-label-sm text-label-sm text-on-surface-variant">Buku bacaan anak gratis untuk semua warga.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Profil: sejarah, visi, misi -->
+<section id="profil" class="py-space-xl bg-surface px-gutter">
+  <div class="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-space-lg lg:gap-space-xl items-center">
+    <div class="lg:col-span-5 relative order-2 lg:order-1">
+      <div class="bg-surface-container-low rounded-2xl p-space-lg shadow-sm relative overflow-hidden">
+        <div class="w-12 h-1 bg-primary rounded-full mb-space-md"></div>
+        <span class="font-label-md text-label-md uppercase tracking-wider text-primary font-bold">Kisah Kami</span>
+        <h3 class="font-headline-lg text-headline-lg text-on-surface mt-space-xs mb-space-sm" data-bind="profil.sejarah_judul">Dimulai dari Teras Rumah dan Tumpukan Buku</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant mb-space-lg justify pre-line" data-bind="profil.sejarah">Rumah Baca Pelita Bangsa lahir dari keresahan minimnya akses bacaan berkualitas bagi anak-anak di Pematang Siantar dan Simalungun.</p>
+        <div class="flex items-center gap-space-md pt-space-xs bg-surface-container-lowest p-space-md rounded-xl">
+          <span class="material-symbols-outlined text-primary text-3xl">handshake</span>
+          <div><div class="font-label-lg text-label-lg text-on-surface">Didirikan Tahun <span data-bind="profil.tahun_berdiri">2021</span></div><div class="font-body-sm text-body-sm text-on-surface-variant">Gerakan swadaya sukarela masyarakat Siantar – Simalungun</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="lg:col-span-7 order-1 lg:order-2 flex flex-col gap-space-md">
+      <div class="inline-flex items-center gap-space-xs"><span class="material-symbols-outlined text-primary text-xl">lightbulb</span><span class="font-label-md text-label-md text-primary font-bold uppercase tracking-wider">Arah &amp; Komitmen Kami</span></div>
+      <h2 class="font-headline-xl text-headline-xl-mobile lg:text-headline-xl text-on-surface">Visi Besar &amp; Tiga Pilar Dedikasi Literasi</h2>
+      <div class="p-space-lg bg-surface-container-high/60 rounded-2xl">
+        <h4 class="font-headline-sm text-headline-sm text-on-surface mb-space-xs flex items-center gap-space-xs"><span class="material-symbols-outlined text-primary">visibility</span>Visi Utama</h4>
+        <p class="font-body-lg text-body-md lg:text-body-lg text-on-surface-variant justify" data-bind="profil.visi">“Menumbuhkan budaya literasi yang inklusif dan melahirkan generasi berkarakter mandiri di Pematang Siantar serta Simalungun.”</p>
+      </div>
+      <div id="list-misi" class="grid grid-cols-1 md:grid-cols-3 gap-space-md pt-space-xs">
+        <div class="skeleton h-40 rounded-xl"></div><div class="skeleton h-40 rounded-xl"></div><div class="skeleton h-40 rounded-xl"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Pengurus -->
+<section id="pengurus" class="py-space-xl bg-surface-container-low px-gutter">
+  <div class="max-w-[1200px] mx-auto">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md mb-space-lg lg:mb-space-xl">
+      <div class="max-w-xl">
+        <div class="inline-flex items-center gap-space-xs text-primary font-label-md text-label-md uppercase tracking-wider font-bold mb-space-xs"><span class="material-symbols-outlined text-base">groups</span>Struktur Organisasi</div>
+        <h2 class="font-headline-xl text-headline-xl-mobile lg:text-headline-xl text-on-surface">Pengurus Rumah Baca</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant mt-space-xs">Orang-orang yang menjaga nyala lentera literasi di Pematang Siantar dan Simalungun.</p>
+      </div>
+      <div id="pengurus-periode" class="hidden items-center gap-space-xs text-secondary font-label-lg text-label-lg"><span class="material-symbols-outlined">calendar_month</span><span></span></div>
+    </div>
+    <div id="list-pengurus" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-space-sm md:gap-space-md">
+      <div class="skeleton h-64 rounded-xl"></div><div class="skeleton h-64 rounded-xl"></div><div class="skeleton h-64 rounded-xl"></div><div class="skeleton h-64 rounded-xl"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Relawan -->
+<section id="relawan" class="py-space-xl bg-surface px-gutter">
+  <div class="max-w-[1200px] mx-auto">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md mb-space-lg">
+      <div class="max-w-xl">
+        <div class="inline-flex items-center gap-space-xs text-primary font-label-md text-label-md uppercase tracking-wider font-bold mb-space-xs"><span class="material-symbols-outlined text-base">diversity_1</span>Sahabat Relawan</div>
+        <h2 class="font-headline-xl text-headline-xl-mobile lg:text-headline-xl text-on-surface">Relawan Aktif Kami</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant mt-space-xs">Mahasiswa, guru muda, dan warga yang meluangkan waktu untuk adik-adik binaan.</p>
+      </div>
+      <div id="filter-relawan" class="flex flex-wrap gap-space-xs"></div>
+    </div>
+    <div id="list-relawan" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-space-sm md:gap-space-md">
+      <div class="skeleton h-28 rounded-xl"></div><div class="skeleton h-28 rounded-xl"></div><div class="skeleton h-28 rounded-xl"></div>
+    </div>
+    <div id="relawan-more" class="text-center mt-space-lg hidden"><button class="px-space-lg py-3 rounded-lg bg-surface-container-high text-primary hover:bg-surface-container font-label-lg text-label-lg inline-flex items-center gap-space-xs"><span>Lihat semua relawan</span><span class="material-symbols-outlined text-[18px]">expand_more</span></button></div>
+  </div>
+</section>
+
+<!-- Agenda tahunan -->
+<section id="agenda" class="py-space-xl bg-surface-container-low px-gutter">
+  <div class="max-w-[1200px] mx-auto">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md mb-space-lg">
+      <div class="max-w-xl">
+        <div class="inline-flex items-center gap-space-xs text-primary font-label-md text-label-md uppercase tracking-wider font-bold mb-space-xs"><span class="material-symbols-outlined text-base">local_library</span>Aktivitas Nyata</div>
+        <h2 class="font-headline-xl text-headline-xl-mobile lg:text-headline-xl text-on-surface">Agenda Kegiatan Tahun <span id="agenda-tahun-aktif"></span></h2>
+        <p class="font-body-md text-body-md text-on-surface-variant mt-space-xs">Kalender kegiatan per bulan: literasi anak, kelas digital, pemberdayaan warga, dan perayaan komunitas.</p>
+      </div>
+      <div id="agenda-tahun" class="flex flex-wrap gap-space-xs"></div>
+    </div>
+    <div id="agenda-terdekat" class="mb-space-lg"></div>
+    <div id="agenda-timeline" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-md">
+      <div class="skeleton h-48 rounded-xl"></div><div class="skeleton h-48 rounded-xl"></div><div class="skeleton h-48 rounded-xl"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Berita -->
+<section id="berita" class="py-space-xl bg-surface px-gutter">
+  <div class="max-w-[1200px] mx-auto">
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md mb-space-lg">
+      <div>
+        <div class="inline-flex items-center gap-space-xs bg-surface-container-highest px-space-sm py-space-xs rounded-full mb-space-xs"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span><span class="font-label-sm text-label-sm text-on-surface-variant font-semibold">Tersinkronisasi Google Sheets</span></div>
+        <h2 class="font-headline-xl text-headline-xl-mobile lg:text-headline-xl text-on-surface">Kabar &amp; Warta Terbaru Komunitas</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant">Berita, laporan donasi, dan cerita dari balai baca.</p>
+      </div>
+      <a class="inline-flex items-center justify-center gap-space-xs bg-surface-container-low text-primary px-space-md py-2.5 rounded-lg font-label-lg text-label-lg hover:bg-surface-container-high transition-colors shadow-sm" href="berita"><span>Semua Berita</span><span class="material-symbols-outlined text-[18px]">chevron_right</span></a>
+    </div>
+    <div id="list-berita" class="grid grid-cols-1 md:grid-cols-3 gap-space-md lg:gap-space-lg">
+      <div class="skeleton h-96 rounded-2xl"></div><div class="skeleton h-96 rounded-2xl"></div><div class="skeleton h-96 rounded-2xl"></div>
+    </div>
+    <div class="mt-space-xl p-space-lg rounded-2xl bg-surface-container-high flex flex-col lg:flex-row items-start lg:items-center justify-between gap-space-md shadow-sm">
+      <div class="flex items-start gap-space-md">
+        <div class="w-12 h-12 rounded-xl bg-primary text-on-primary flex items-center justify-center flex-shrink-0 mt-1"><span class="material-symbols-outlined text-2xl">dataset</span></div>
+        <div><h4 class="font-headline-sm text-headline-sm text-on-surface">Khusus Pengelola &amp; Relawan Penulis</h4><p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mt-0.5">Ingin mengunggah warta baru atau mencatat buku donasi yang baru tiba? Masuk ke panel pengelola untuk sinkronisasi otomatis ke Google Sheets tanpa mengubah kode web.</p></div>
+      </div>
+      <a class="whitespace-nowrap px-space-lg py-3 rounded-lg bg-secondary hover:bg-on-secondary-fixed-variant text-white font-label-lg text-label-lg shadow-sm transition-all flex items-center gap-space-xs" href="admin/"><span class="material-symbols-outlined text-lg">admin_panel_settings</span><span>Buka Portal Admin Sheets</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- Galeri -->
+<section id="galeri" class="py-space-xl bg-surface-container-low px-gutter">
+  <div class="max-w-[1200px] mx-auto">
+    <div class="text-center max-w-2xl mx-auto mb-space-lg lg:mb-space-xl">
+      <div class="inline-flex items-center gap-space-xs text-primary font-label-md text-label-md uppercase tracking-wider font-bold mb-space-xs"><span class="material-symbols-outlined text-base">photo_library</span>Wajah Cerita Kami</div>
+      <h2 class="font-headline-xl text-headline-xl-mobile lg:text-headline-xl text-on-surface">Senyum, Semangat &amp; Kebersamaan</h2>
+      <p class="font-body-md text-body-md text-on-surface-variant mt-space-xs">Setiap momen di Rumah Baca Pelita Bangsa adalah saksi kecil terbukanya cakrawala dunia bagi anak-anak di tanah Simalungun.</p>
+    </div>
+    <div id="list-galeri" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-space-md mb-space-lg">
+      <div class="skeleton h-64 rounded-xl"></div><div class="skeleton h-64 rounded-xl"></div><div class="skeleton h-64 rounded-xl"></div>
+    </div>
+    <div class="text-center"><a class="inline-flex items-center gap-space-xs px-space-lg py-3 rounded-lg bg-surface-container-lowest text-primary font-label-lg text-label-lg shadow-sm hover:shadow-md transition-all" href="album"><span>Semua Album</span><span class="material-symbols-outlined text-[18px]">arrow_forward</span></a></div>
+  </div>
+</section>
+
+<!-- Donasi & kontak -->
+<section id="donasi-kontak" class="py-space-xl bg-surface px-gutter">
+  <div class="max-w-[1200px] mx-auto">
+    <div class="bg-surface-container-lowest rounded-3xl p-space-md sm:p-space-lg lg:p-space-xl shadow-md overflow-hidden">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg lg:gap-space-xl">
+        <div class="lg:col-span-6 flex flex-col justify-between gap-space-lg">
+          <div>
+            <span class="px-space-sm py-1 rounded-full bg-tertiary-fixed text-tertiary font-label-sm text-label-sm uppercase font-bold">Gotong Royong Literasi</span>
+            <h2 class="font-headline-xl text-headline-xl-mobile lg:text-headline-xl text-on-surface mt-space-sm mb-space-sm">Bantu Kami Mengirim Lebih Banyak Buku ke Tangan Anak-Anak</h2>
+            <p class="font-body-md text-body-md text-on-surface-variant mb-space-md justify">Buku cerita anak yang layak baca, komik edukasi, alat tulis, maupun dukungan operasional akan disalurkan ke balai baca utama dan pos baca binaan secara teratur dan dapat dipantau statusnya.</p>
+            <div class="flex flex-col gap-space-sm font-body-sm text-body-sm">
+              <div class="flex items-start gap-space-sm p-space-sm bg-surface-container-low rounded-xl">
+                <div class="w-8 h-8 rounded-lg bg-primary-fixed text-primary flex items-center justify-center flex-shrink-0 mt-0.5"><span class="material-symbols-outlined text-lg">pin_drop</span></div>
+                <div><strong class="text-on-surface block font-label-md text-label-md">Alamat Posko / Pengiriman Paket Buku:</strong><span class="text-on-surface-variant leading-relaxed pre-line" data-bind="profil.alamat">Pematang Siantar – Simalungun, Sumatera Utara</span></div>
+              </div>
+              <div class="flex items-start gap-space-sm p-space-sm bg-surface-container-low rounded-xl hidden" data-show="profil.whatsapp">
+                <div class="w-8 h-8 rounded-lg bg-secondary-fixed text-secondary flex items-center justify-center flex-shrink-0 mt-0.5"><span class="material-symbols-outlined text-lg">chat</span></div>
+                <div><strong class="text-on-surface block font-label-md text-label-md">Konfirmasi WhatsApp &amp; Penjemputan Paket:</strong>
+                  <a class="text-secondary font-semibold hover:underline" id="kontak-wa" data-href="profil.whatsapp" data-href-tpl="https://wa.me/{v}?text=Halo%20Pengurus%20Rumah%20Baca%20Pelita%20Bangsa%2C%20saya%20ingin%20berdonasi%20buku" target="_blank" rel="noopener"><span data-bind="profil.whatsapp_tampil">WhatsApp pengurus</span></a>
+                  <span class="text-on-surface-variant block" data-bind="profil.jam_operasional"></span></div>
+              </div>
+              <div class="flex items-start gap-space-sm p-space-sm bg-surface-container-low rounded-xl hidden" data-show="profil.rekening">
+                <div class="w-8 h-8 rounded-lg bg-tertiary-fixed text-tertiary flex items-center justify-center flex-shrink-0 mt-0.5"><span class="material-symbols-outlined text-lg">account_balance</span></div>
+                <div><strong class="text-on-surface block font-label-md text-label-md">Rekening Donasi Operasional &amp; Transparansi:</strong><div class="text-on-surface-variant font-mono text-xs mt-0.5 pre-line" data-bind="profil.rekening"></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="hidden" data-show="profil.maps_embed">
+            <div class="flex items-center justify-between mb-space-xs"><h5 class="font-label-md text-label-md text-on-surface uppercase font-bold">Peta Lokasi Balai Baca:</h5></div>
+            <iframe class="w-full h-56 rounded-xl bg-surface-container-high border-0" data-src="profil.maps_embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen title="Peta lokasi Rumah Baca Pelita Bangsa"></iframe>
+          </div>
+        </div>
+        <div class="lg:col-span-6 bg-surface-container-low p-space-md sm:p-space-lg rounded-2xl flex flex-col justify-between">
+          <div>
+            <h3 class="font-headline-sm text-headline-sm text-on-surface mb-space-xs">Formulir Partisipasi Cepat</h3>
+            <p class="font-body-sm text-body-sm text-on-surface-variant mb-space-md">Tinggalkan kontak Anda, tim kami akan segera menghubungi untuk teknis penjemputan/pengiriman paket atau jadwal orientasi relawan.</p>
+            <form id="form-donasi" class="flex flex-col gap-space-sm" novalidate>
+              <div><label class="block font-label-md text-label-md text-on-surface mb-1" for="dn-nama">Nama Lengkap / Komunitas</label><input id="dn-nama" name="nama" class="w-full px-space-md py-2.5 rounded-lg bg-surface-container-lowest text-on-surface border-0 focus:ring-2 focus:ring-secondary shadow-sm" placeholder="Contoh: Budi Santoso" required maxlength="80" type="text"></div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-space-sm">
+                <div><label class="block font-label-md text-label-md text-on-surface mb-1" for="dn-wa">Nomor WhatsApp</label><input id="dn-wa" name="whatsapp" class="w-full px-space-md py-2.5 rounded-lg bg-surface-container-lowest text-on-surface border-0 focus:ring-2 focus:ring-secondary shadow-sm" placeholder="08123456xxxx" required inputmode="tel" type="tel"></div>
+                <div><label class="block font-label-md text-label-md text-on-surface mb-1" for="dn-jenis">Bentuk Dukungan</label><select id="dn-jenis" name="jenis" class="w-full px-space-md py-2.5 rounded-lg bg-surface-container-lowest text-on-surface border-0 focus:ring-2 focus:ring-secondary shadow-sm"><option>Donasi Buku</option><option>Relawan Mengajar</option><option>Rak &amp; Alat Tulis</option><option>Dukungan Operasional</option><option>Kemitraan / CSR</option></select></div>
+              </div>
+              <div><label class="block font-label-md text-label-md text-on-surface mb-1" for="dn-catatan">Catatan Tambahan / Judul Buku yang Dikirim</label><textarea id="dn-catatan" name="catatan" class="w-full px-space-md py-2.5 rounded-lg bg-surface-container-lowest text-on-surface border-0 focus:ring-2 focus:ring-secondary shadow-sm" placeholder="Tuliskan perkiraan jumlah buku atau bidang keahlian relawan..." rows="3" maxlength="500"></textarea></div>
+              <div class="hidden" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div>
+              <div id="donasi-notif" class="hidden p-space-sm rounded-lg font-body-sm text-body-sm items-center gap-space-xs"></div>
+              <button id="dn-submit" class="w-full mt-space-xs py-3 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-lg text-label-lg shadow-md transition-all flex items-center justify-center gap-space-xs disabled:opacity-60" type="submit"><span class="material-symbols-outlined text-lg">send</span><span>Kirim Formulir Partisipasi</span></button>
+            </form>
+          </div>
+          <div class="mt-space-md pt-space-sm text-center"><span class="font-label-sm text-label-sm text-on-surface-variant">Data formulir hanya dibaca pengurus untuk menghubungi Anda kembali.<span class="hidden" data-show="profil.whatsapp"> Atau langsung <a class="text-secondary font-semibold" data-href="profil.whatsapp" data-href-tpl="https://wa.me/{v}" target="_blank" rel="noopener">chat WhatsApp pengurus</a>.</span></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+</main>
+</body>
+</html>

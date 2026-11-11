@@ -1,0 +1,36 @@
+/* CSS tambahan kecil di luar Tailwind: skeleton, teks rata, scrollbar, safe-area, print. */
+html, body { margin: 0; padding: 0; }
+body { overscroll-behavior: none; -webkit-tap-highlight-color: transparent; }
+::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+
+.skeleton { background: linear-gradient(90deg, #eef2ff 25%, #f8fafc 37%, #eef2ff 63%); background-size: 400% 100%; animation: sk 1.4s ease infinite; }
+@keyframes sk { 0% { background-position: 100% 50%; } 100% { background-position: 0 50%; } }
+
+.justify { text-align: justify; text-justify: inter-word; line-height: 1.65; }
+.pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); }
+.pt-safe { padding-top: env(safe-area-inset-top, 0px); }
+.icon-fill { font-variation-settings: 'FILL' 1; }
+.material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+
+/* Teks dari Sheets: baris baru dipertahankan */
+.pre-line { white-space: pre-line; }
+
+/* Isi berita (markdown ringkas) */
+.prose-pb p { margin: 0 0 1em; }
+.prose-pb ul { list-style: disc; padding-left: 1.25rem; margin: 0 0 1em; }
+.prose-pb blockquote { border-left: 4px solid #ffdcc3; padding-left: 1rem; color: #554336; font-style: italic; margin: 0 0 1em; }
+
+/* Lightbox */
+.lightbox img { max-height: 80vh; }
+
+/* Line clamp (tanpa plugin) */
+.clamp-2, .clamp-3 { display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; }
+.clamp-2 { -webkit-line-clamp: 2; }
+.clamp-3 { -webkit-line-clamp: 3; }
+
+@media print {
+  aside, header, nav, .no-print { display: none !important; }
+  main { padding: 0 !important; }
+  body { background: #fff; }
+}

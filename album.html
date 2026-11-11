@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Galeri Foto — Rumah Baca Pelita Bangsa</title>
+  <meta name="description" content="Album foto kegiatan Rumah Baca Pelita Bangsa, Pematang Siantar – Simalungun.">
+  <link rel="icon" href="assets/img/logo.png">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Galeri Foto — Rumah Baca Pelita Bangsa">
+  <meta property="og:description" content="Dokumentasi kegiatan literasi anak dan warga di Pematang Siantar – Simalungun.">
+  <meta property="og:image" content="https://<user>.github.io/<repo>/assets/img/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+  <script src="assets/js/tailwind-config.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/custom.css">
+
+  <script src="assets/js/config.js" defer></script>
+  <script src="assets/js/ui.js" defer></script>
+  <script src="assets/js/api.js" defer></script>
+  <script src="assets/js/layout.js" defer></script>
+  <script src="assets/js/lightbox.js" defer></script>
+  <script src="assets/js/album.js" defer></script>
+</head>
+<body class="bg-surface font-body-md text-body-md text-on-surface antialiased min-h-screen flex flex-col" data-page="galeri">
+<main class="w-full pt-16 xl:pt-20 bg-surface flex-grow">
+  <section class="py-space-lg lg:py-space-xl px-gutter bg-surface-container-low">
+    <div class="max-w-[1200px] mx-auto">
+      <nav class="font-label-sm text-label-sm text-on-surface-variant mb-space-sm flex items-center gap-1" aria-label="Breadcrumb"><a class="hover:text-primary py-3" href="./">Beranda</a><span class="material-symbols-outlined text-[14px]">chevron_right</span><a class="hover:text-primary py-3" href="album">Galeri</a><span id="crumb-album" class="hidden items-center gap-1"><span class="material-symbols-outlined text-[14px]">chevron_right</span><span class="text-on-surface"></span></span></nav>
+      <div class="inline-flex items-center gap-space-xs text-primary font-label-md text-label-md uppercase tracking-wider font-bold mb-space-xs"><span class="material-symbols-outlined text-base">photo_library</span>Wajah Cerita Kami</div>
+      <h1 id="album-judul" class="font-headline-xl text-headline-xl-mobile lg:text-headline-xl text-on-surface">Galeri Dokumentasi Kegiatan</h1>
+      <p id="album-sub" class="font-body-md text-body-md text-on-surface-variant mt-space-xs">Album foto dari setiap kegiatan Rumah Baca Pelita Bangsa. Klik foto untuk melihat lebih besar.</p>
+    </div>
+  </section>
+  <section class="py-space-lg lg:py-space-xl px-gutter">
+    <div id="album-isi" class="max-w-[1200px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-space-md">
+      <div class="skeleton h-64 rounded-xl"></div><div class="skeleton h-64 rounded-xl"></div><div class="skeleton h-64 rounded-xl"></div>
+    </div>
+  </section>
+</main>
+</body>
+</html>

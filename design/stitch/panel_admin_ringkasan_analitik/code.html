@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+
+<html lang="id"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary":"#8d4b00","surface-dim":"#cfdaf2","secondary-fixed":"#cce5ff","on-primary-fixed":"#2f1500","on-tertiary-fixed-variant":"#920028","inverse-primary":"#ffb77d","on-primary-container":"#fffbff","tertiary-container":"#e21e49","on-primary-fixed-variant":"#6e3900","on-secondary-container":"#00476e","on-primary":"#ffffff","on-secondary-fixed-variant":"#004b73","primary-container":"#b15f00","outline":"#887364","on-tertiary-container":"#fffbff","surface-container-highest":"#d8e3fb","primary-fixed":"#ffdcc3","on-surface":"#111c2d","on-tertiary-fixed":"#40000c","surface-container-low":"#f0f3ff","on-background":"#111c2d","on-surface-variant":"#554336","inverse-on-surface":"#ecf1ff","surface-container-high":"#dee8ff","surface-variant":"#d8e3fb","tertiary-fixed":"#ffdada","error":"#ba1a1a","surface-bright":"#f9f9ff","on-secondary":"#ffffff","surface":"#f9f9ff","tertiary":"#ba0035","tertiary-fixed-dim":"#ffb3b6","surface-tint":"#904d00","secondary-container":"#5bb8fe","background":"#f9f9ff","on-secondary-fixed":"#001d31","error-container":"#ffdad6","surface-container-lowest":"#ffffff","secondary":"#006398","primary-fixed-dim":"#ffb77d","on-error-container":"#93000a","on-tertiary":"#ffffff","inverse-surface":"#263143","outline-variant":"#dbc2b0","on-error":"#ffffff","secondary-fixed-dim":"#93ccff","surface-container":"#e7eeff"},borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},spacing:{"space-lg":"1.5rem","margin":"1.5rem","gutter":"1.25rem","space-xs":"0.25rem","space-xl":"2.5rem","space-md":"1rem","space-sm":"0.5rem"},fontFamily:{"label-lg":["Plus Jakarta Sans"],"body-md":["Plus Jakarta Sans"],"body-lg":["Plus Jakarta Sans"],"headline-xl":["Plus Jakarta Sans"],"headline-lg":["Plus Jakarta Sans"],"display-lg":["Plus Jakarta Sans"],"label-md":["Plus Jakarta Sans"],"headline-md":["Plus Jakarta Sans"],"body-sm":["Plus Jakarta Sans"],"display-lg-mobile":["Plus Jakarta Sans"],"label-sm":["Plus Jakarta Sans"],"headline-xl-mobile":["Plus Jakarta Sans"],"headline-sm":["Plus Jakarta Sans"]},fontSize:{"label-lg":["14px",{"lineHeight":"20px","fontWeight":"600"}],"body-md":["16px",{"lineHeight":"24px","fontWeight":"400"}],"body-lg":["18px",{"lineHeight":"28px","fontWeight":"400"}],"headline-xl":["36px",{"lineHeight":"44px","fontWeight":"700"}],"headline-lg":["28px",{"lineHeight":"36px","fontWeight":"700"}],"display-lg":["48px",{"lineHeight":"56px","fontWeight":"800"}],"label-md":["12px",{"lineHeight":"16px","fontWeight":"600"}],"headline-md":["22px",{"lineHeight":"30px","fontWeight":"600"}],"body-sm":["14px",{"lineHeight":"20px","fontWeight":"400"}],"display-lg-mobile":["34px",{"lineHeight":"42px","fontWeight":"800"}],"label-sm":["11px",{"lineHeight":"14px","fontWeight":"700"}],"headline-xl-mobile":["28px",{"lineHeight":"36px","fontWeight":"700"}],"headline-sm":["18px",{"lineHeight":"26px","fontWeight":"600"}]}}}}</script></head><body class="bg-surface font-body-md text-on-surface"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-low z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col"><div class="h-16 px-space-lg flex items-center gap-3 bg-surface-container-lowest"><div class="w-10 h-10 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-headline-sm">auto_stories</span></div><div class="flex flex-col"><span class="font-label-lg text-label-lg text-primary leading-tight">Pelita Bangsa</span><span class="font-label-sm text-label-sm text-on-surface-variant">Siantar - Simalungun</span></div></div><div class="p-space-md"><div class="bg-surface-container-lowest rounded-lg p-space-sm flex items-center justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-secondary animate-pulse"></span><span class="font-label-sm text-label-sm text-on-surface">Google Sheets</span></div><span class="font-label-sm text-label-sm text-secondary bg-secondary-fixed px-2 py-0.5 rounded-full">Terhubung</span></div></div><nav class="flex flex-col gap-1 px-space-md" data-active-classes="bg-primary-container text-on-primary-container font-headline-sm shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><a class="flex items-center gap-3 px-space-md py-space-sm rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="ringkasan-analitik" href="#"><span class="material-symbols-outlined text-headline-sm">dashboard</span>Ringkasan &amp; Analitik</a><a class="flex items-center gap-3 px-space-md py-space-sm rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="kelola-berita-artikel" href="#"><span class="material-symbols-outlined text-headline-sm">article</span>Kelola Berita &amp; Artikel</a><a class="flex items-center gap-3 px-space-md py-space-sm rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="katalog-koleksi-buku" href="#"><span class="material-symbols-outlined text-headline-sm">menu_book</span>Katalog Koleksi Buku</a><a class="flex items-center gap-3 px-space-md py-space-sm rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="donatur-relawan-komunitas" href="#"><span class="material-symbols-outlined text-headline-sm">volunteer_activism</span>Donatur &amp; Relawan</a><a class="flex items-center gap-3 px-space-md py-space-sm rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="konfigurasi-database-sheets" href="#"><span class="material-symbols-outlined text-headline-sm">sync_alt</span>Konfigurasi Sheets</a></nav></div><div class="p-space-md flex flex-col gap-2 bg-surface-container-low"><a class="flex items-center gap-2 px-space-md py-space-sm rounded-lg font-label-md text-label-md text-secondary hover:bg-secondary-fixed hover:text-on-secondary-fixed transition-colors" data-path="beranda-publik" href="#"><span class="material-symbols-outlined text-body-md">open_in_new</span>Kembali ke Web Publik</a><div class="flex items-center gap-3 p-space-sm rounded-lg bg-surface-container-lowest"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida/ALJJyrAxFbEARVrXjHuv-RLv_OF1S7Dj3E_ifYxgSiJfN9cQT2gcNgmjp7Lf9sjfdGqaivc1vzfDtGeyLHIf8voFYnUGK7iEw1JBi5TvRRPkAgUm9_xVY6JsOn3scnYBIjjyzTEomEIBWPZJmYonwKmWM52y4DT0mHSyh4M4Xtp2C570To3_kgVCs6aOfaSO5R9spUQtwkyFaKs_HbaDv3Qg6ICziZCWpsLGNuWnRvv9fPvu37pFMJGJBZA5RvjyoZ07xzsRgtVC_7Fltg4"/><div class="flex flex-col min-w-0 flex-1"><span class="font-label-md text-label-md text-on-surface truncate">Pengurus Literasi</span><span class="font-label-sm text-label-sm text-on-surface-variant truncate">Admin Siantar</span></div><span class="material-symbols-outlined text-body-md text-on-surface-variant">verified_user</span></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-space-lg"><div class="flex items-center gap-4"><div class="flex items-center gap-2 text-on-surface-variant font-label-md text-label-md"><span class="material-symbols-outlined text-body-md text-primary">pin_drop</span><span>Pematang Siantar – Simalungun</span><span class="text-outline-variant">•</span><span class="text-on-surface-variant">Sistem Manajemen Komunitas</span></div></div><div class="flex items-center gap-space-md"><div class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm"><span class="material-symbols-outlined text-label-md text-secondary">cloud_done</span><span>Auto-Sync Aktif</span></div><button class="p-2 rounded-full text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-headline-sm">notifications</span></button><button class="p-2 rounded-full text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-headline-sm">help_outline</span></button><div class="h-6 w-px bg-surface-container-highest"></div><div class="flex items-center gap-2 pl-2"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida/ALJJyrAxFbEARVrXjHuv-RLv_OF1S7Dj3E_ifYxgSiJfN9cQT2gcNgmjp7Lf9sjfdGqaivc1vzfDtGeyLHIf8voFYnUGK7iEw1JBi5TvRRPkAgUm9_xVY6JsOn3scnYBIjjyzTEomEIBWPZJmYonwKmWM52y4DT0mHSyh4M4Xtp2C570To3_kgVCs6aOfaSO5R9spUQtwkyFaKs_HbaDv3Qg6ICziZCWpsLGNuWnRvv9fPvu37pFMJGJBZA5RvjyoZ07xzsRgtVC_7Fltg4"/><span class="hidden lg:inline font-label-md text-label-md text-on-surface">Admin Pusat</span></div></div></header><main class="relative pt-16 w-full bg-surface px-space-lg pb-space-xl min-h-screen"><div class="flex flex-col w-full">
+<!-- Top Command & Synchronizer Hero Bar -->
+<section class="relative w-full rounded-xl bg-surface-container-lowest p-space-lg shadow-sm mb-space-lg overflow-hidden">
+<div class="absolute -right-16 -top-16 w-80 h-80 rounded-full bg-primary-fixed/25 blur-3xl pointer-events-none"></div>
+<div class="absolute right-64 -bottom-20 w-64 h-64 rounded-full bg-secondary-fixed/30 blur-2xl pointer-events-none"></div>
+<div class="relative z-10 flex flex-col xl:flex-row items-start xl:items-center justify-between gap-space-lg">
+<div class="flex flex-col gap-1 max-w-3xl">
+<div class="flex items-center gap-3">
+<span class="px-2.5 py-1 rounded-full bg-primary-fixed font-label-sm text-label-sm text-on-primary-fixed tracking-wide uppercase">
+            Executive Summary
+          </span>
+<span class="flex items-center gap-1.5 font-label-sm text-label-sm text-secondary bg-surface-container-low px-3 py-1 rounded-full">
+<span class="w-2 h-2 rounded-full bg-secondary animate-ping"></span>
+            DB_PelitaBangsa_Master (Live)
+          </span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight mt-1">
+          Pantauan Kinerja Operasional &amp; Literasi Komunitas
+        </h1>
+<p class="font-body-md text-body-md text-on-surface-variant text-justify">
+          Konsolidasi metrik riil operasional Rumah Baca Pelita Bangsa di wilayah Pematang Siantar dan Simalungun. Seluruh data sirkulasi, donasi, keaktifan relawan, serta keterlibatan adik binaan disinkronkan secara kontinu melalui ekosistem Google Sheets Master Database untuk transparansi dan akuntabilitas pemangku kepentingan.
+        </p>
+</div>
+<!-- Action Panel & Sync Status -->
+<div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0 w-full xl:w-auto">
+<div class="bg-surface-container-low px-space-md py-space-sm rounded-lg flex items-center gap-3">
+<span class="material-symbols-outlined text-headline-sm text-secondary">update</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Update Terakhir</span>
+<span class="font-label-md text-label-md text-on-surface" id="sync-timestamp">Hari ini, 15:42 WIB</span>
+</div>
+</div>
+<button class="flex items-center justify-center gap-2 px-space-md py-2.5 rounded-lg bg-surface-container-high text-on-surface font-label-lg text-label-lg hover:bg-surface-container-highest transition-all shadow-sm" id="btn-refresh" onclick="triggerRefresh()">
+<span class="material-symbols-outlined text-body-lg" id="refresh-icon">sync</span>
+<span>Refresh Data</span>
+</button>
+<button class="flex items-center justify-center gap-2 px-space-md py-2.5 rounded-lg bg-primary text-on-primary font-label-lg text-label-lg hover:bg-primary-container transition-all shadow-sm" onclick="downloadReportNotice()">
+<span class="material-symbols-outlined text-body-lg">picture_as_pdf</span>
+<span>Unduh Laporan PDF</span>
+</button>
+</div>
+</div>
+</section>
+<!-- 4 Primary Operational KPI Cards -->
+<section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-gutter mb-space-lg">
+<!-- Metric 1: Total Koleksi Buku -->
+<div class="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between hover:translate-y-[-2px] transition-transform duration-200">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Katalog Terdaftar</span>
+<span class="font-headline-xl text-headline-xl text-primary font-bold mt-1">1.850</span>
+</div>
+<div class="w-12 h-12 rounded-xl bg-primary-fixed text-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-headline-sm">collections_bookmark</span>
+</div>
+</div>
+<div class="mt-4 pt-3 flex items-center justify-between bg-surface-container-low rounded-lg px-3 py-2">
+<span class="flex items-center gap-1 font-label-md text-label-md text-primary font-semibold">
+<span class="material-symbols-outlined text-body-sm">arrow_upward</span>
+          +120 Buku
+        </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Bulan ini (Donasi)</span>
+</div>
+</div>
+<!-- Metric 2: Adik Binaan Terdaftar -->
+<div class="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between hover:translate-y-[-2px] transition-transform duration-200">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Adik Binaan Aktif</span>
+<span class="font-headline-xl text-headline-xl text-secondary font-bold mt-1">420</span>
+</div>
+<div class="w-12 h-12 rounded-xl bg-secondary-fixed text-secondary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-headline-sm">groups</span>
+</div>
+</div>
+<div class="mt-4 pt-3 flex items-center justify-between bg-surface-container-low rounded-lg px-3 py-2">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Siantar &amp; Simalungun</span>
+<span class="font-label-sm text-label-sm text-secondary bg-surface-container px-2 py-0.5 rounded">6 Sentra Baca</span>
+</div>
+</div>
+<!-- Metric 3: Relawan Terverifikasi -->
+<div class="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between hover:translate-y-[-2px] transition-transform duration-200">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Relawan Edukasi</span>
+<span class="font-headline-xl text-headline-xl text-on-surface font-bold mt-1">35</span>
+</div>
+<div class="w-12 h-12 rounded-xl bg-primary-fixed-dim/40 text-on-primary-fixed-variant flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-headline-sm">handshake</span>
+</div>
+</div>
+<div class="mt-4 pt-3 flex items-center justify-between bg-surface-container-low rounded-lg px-3 py-2">
+<span class="flex items-center gap-1 font-label-md text-label-md text-primary font-semibold">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+          Aktif Mingguan
+        </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Rotasi 3 Tim</span>
+</div>
+</div>
+<!-- Metric 4: Jam Literasi Terlaksana -->
+<div class="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between hover:translate-y-[-2px] transition-transform duration-200">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Total Jam Edukasi</span>
+<span class="font-headline-xl text-headline-xl text-tertiary font-bold mt-1">384</span>
+</div>
+<div class="w-12 h-12 rounded-xl bg-tertiary-fixed text-tertiary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-headline-sm">hourglass_top</span>
+</div>
+</div>
+<div class="mt-4 pt-3 flex items-center justify-between bg-surface-container-low rounded-lg px-3 py-2">
+<span class="font-label-md text-label-md text-tertiary font-semibold">+42 Jam</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">vs Target Kuartal IV</span>
+</div>
+</div>
+</section>
+<!-- Visual Break / Atmosphere Banner -->
+<section class="relative rounded-xl overflow-hidden mb-space-lg shadow-sm">
+<div class="w-full h-44 bg-cover bg-center" data-alt="A warm, bright, sunlit community library room in North Sumatra with wooden shelves filled with colorful children books, wooden long tables, and vibrant educational posters. Sunlight streams gently through wide windows onto warm bamboo mats and smiling young volunteers organizing books." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDLPblfu0F4LA6uFy50hKYsMiA05jZyyYPVHb6py_O0CFZ-7HKrLHB3qqQW-5-8QZGuMniVpZ-j_ZVSa9wE1AS4z_HxGY7pPZ6nLGvCwsHv7Abda6Wlb1s836__hkaWVaXYMLPYfHwYxjAiVFRT5lUq5PzgHjdWbY2QND5cm47-sdOtLyq9regqKwInQNaNtrnLWRnjuEiwEhAkFGNDGyWtEKjqqCJd_3020xaeB_CK')"></div>
+<div class="absolute inset-0 bg-gradient-to-r from-on-surface/90 via-on-surface/65 to-transparent flex items-center px-space-lg">
+<div class="max-w-xl text-on-primary-container">
+<span class="font-label-sm text-label-sm text-primary-fixed uppercase tracking-widest font-bold">Misi Literasi Tanpa Batas</span>
+<p class="font-headline-sm text-headline-sm text-on-primary font-bold mt-1">
+          "Membuka Jendela Dunia dari Bilik Desa hingga Pelosok Lembah Simalungun"
+        </p>
+<p class="font-body-sm text-body-sm text-surface-container-high/90 mt-1 line-clamp-2 text-justify">
+          Setiap buku yang didistribusikan mengalir melalui pemilahan teliti, menjamin bacaan bermutu tinggi untuk membangun penalaran kritis anak-anak bangsa sejak dini.
+        </p>
+</div>
+</div>
+</section>
+<!-- Interactive Analytics Dual Panel -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-gutter mb-space-lg">
+<!-- Panel 1: Sirkulasi Kategori Buku (Donut Chart representation) -->
+<div class="lg:col-span-5 bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-2">
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-bold">
+            Sirkulasi Kategori Bacaan
+          </h2>
+<span class="material-symbols-outlined text-headline-sm text-primary">pie_chart</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-justify mb-4">
+          Proporsi distribusi peminjaman buku berdasarkan klaster kategori pada semester berjalan. Ensiklopedia sains serta fabel lokal mendominasi preferensi anak.
+        </p>
+<!-- Donut & Breakdown Visualization -->
+<div class="flex flex-col sm:flex-row items-center justify-center gap-6 my-2">
+<div class="relative w-44 h-44 flex items-center justify-center shrink-0">
+<!-- Inline SVG Conic Donut -->
+<svg class="w-full h-full -rotate-90" viewbox="0 0 100 100">
+<!-- Total Circumference = 2 * PI * 40 = 251.32 -->
+<!-- Sains (38% = 95.5) -->
+<circle cx="50" cy="50" fill="transparent" r="40" stroke="#8d4b00" stroke-dasharray="95.5 251.32" stroke-dashoffset="0" stroke-width="16"></circle>
+<!-- Fabel & Cerita Rakyat (32% = 80.4) -->
+<circle cx="50" cy="50" fill="transparent" r="40" stroke="#006398" stroke-dasharray="80.4 251.32" stroke-dashoffset="-95.5" stroke-width="16"></circle>
+<!-- Komik Edukasi (18% = 45.2) -->
+<circle cx="50" cy="50" fill="transparent" r="40" stroke="#b15f00" stroke-dasharray="45.2 251.32" stroke-dashoffset="-175.9" stroke-width="16"></circle>
+<!-- Bahasa Inggris (12% = 30.2) -->
+<circle cx="50" cy="50" fill="transparent" r="40" stroke="#dee8ff" stroke-dasharray="30.2 251.32" stroke-dashoffset="-221.1" stroke-width="16"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+<span class="font-headline-md text-headline-md text-on-surface font-bold leading-tight">1.850</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Total Eksemplar</span>
+</div>
+</div>
+<!-- Category Legend Legend -->
+<div class="flex flex-col gap-2.5 w-full">
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-low">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-primary shrink-0"></span>
+<span class="font-label-sm text-label-sm text-on-surface">Ensiklopedia Sains &amp; Tekno</span>
+</div>
+<span class="font-label-md text-label-md text-primary font-bold">38%</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-low">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-secondary shrink-0"></span>
+<span class="font-label-sm text-label-sm text-on-surface">Fabel &amp; Cerita Rakyat</span>
+</div>
+<span class="font-label-md text-label-md text-secondary font-bold">32%</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-low">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-primary-container shrink-0"></span>
+<span class="font-label-sm text-label-sm text-on-surface">Komik Edukasi &amp; Numerasi</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface font-bold">18%</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-low">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-surface-container-high shrink-0"></span>
+<span class="font-label-sm text-label-sm text-on-surface">Cerita Bahasa Inggris</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface-variant font-bold">12%</span>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-4 pt-3 bg-surface-container-low p-space-sm rounded-lg flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Buku Paling Populer</span>
+<span class="font-label-sm text-label-sm text-primary font-semibold">Ensiklopedia Flora Danau Toba</span>
+</div>
+</div>
+<!-- Panel 2: Tren Pengunjung Mingguan & Peminjaman (Mei - Oktober 2025) -->
+<div class="lg:col-span-7 bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-bold">
+              Tren Pengunjung &amp; Peminjaman
+            </h2>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Periode Mei — Oktober 2025 (Kuartal II &amp; III)</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="flex items-center gap-1.5 font-label-sm text-label-sm text-secondary">
+<span class="w-3 h-1 rounded-full bg-secondary"></span>
+              Pengunjung
+            </span>
+<span class="flex items-center gap-1.5 font-label-sm text-label-sm text-primary">
+<span class="w-3 h-1 rounded-full bg-primary"></span>
+              Peminjaman
+            </span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-justify mb-4">
+          Pola kenaikan volume kehadiran adik binaan meningkat drastis pada masa libur sekolah dan pasca peluncuran program "Sopo Belajar Keliling" pada pertengahan bulan Agustus.
+        </p>
+<!-- SVG Line & Area Trend Visualization -->
+<div class="w-full h-56 pt-2">
+<svg class="w-full h-full overflow-visible" viewbox="0 0 600 200">
+<defs>
+<lineargradient id="secondaryGrad" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#006398" stop-opacity="0.25"></stop>
+<stop offset="100%" stop-color="#006398" stop-opacity="0.0"></stop>
+</lineargradient>
+<lineargradient id="primaryGrad" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#8d4b00" stop-opacity="0.2"></stop>
+<stop offset="100%" stop-color="#8d4b00" stop-opacity="0.0"></stop>
+</lineargradient>
+</defs>
+<!-- Horizontal Grid lines -->
+<line stroke="#d8e3fb" stroke-dasharray="4 4" stroke-width="1" x1="30" x2="580" y1="30" y2="30"></line>
+<line stroke="#d8e3fb" stroke-dasharray="4 4" stroke-width="1" x1="30" x2="580" y1="80" y2="80"></line>
+<line stroke="#d8e3fb" stroke-dasharray="4 4" stroke-width="1" x1="30" x2="580" y1="130" y2="130"></line>
+<line stroke="#d8e3fb" stroke-width="1" x1="30" x2="580" y1="180" y2="180"></line>
+<!-- Y-Axis indicators -->
+<text class="font-label-sm" fill="#554336" font-size="10" x="5" y="34">500</text>
+<text class="font-label-sm" fill="#554336" font-size="10" x="5" y="84">350</text>
+<text class="font-label-sm" fill="#554336" font-size="10" x="5" y="134">200</text>
+<text class="font-label-sm" fill="#554336" font-size="10" x="15" y="184">50</text>
+<!-- Pengunjung Path (Area + Line) -->
+<!-- Points: Mei(50, 140), Jun(150, 110), Jul(250, 60), Agu(350, 45), Sep(450, 50), Okt(550, 35) -->
+<path d="M 50 140 L 150 110 L 250 60 L 350 45 L 450 50 L 550 35 L 550 180 L 50 180 Z" fill="url(#secondaryGrad)"></path>
+<path d="M 50 140 L 150 110 L 250 60 L 350 45 L 450 50 L 550 35" fill="none" stroke="#006398" stroke-linecap="round" stroke-width="3"></path>
+<!-- Peminjaman Path (Line) -->
+<!-- Points: Mei(50, 160), Jun(150, 135), Jul(250, 95), Agu(350, 75), Sep(450, 70), Okt(550, 55) -->
+<path d="M 50 160 L 150 135 L 250 95 L 350 75 L 450 70 L 550 55 L 550 180 L 50 180 Z" fill="url(#primaryGrad)"></path>
+<path d="M 50 160 L 150 135 L 250 95 L 350 75 L 450 70 L 550 55" fill="none" stroke="#8d4b00" stroke-linecap="round" stroke-width="3"></path>
+<!-- Node Points -->
+<circle cx="50" cy="140" fill="#006398" r="4"></circle>
+<circle cx="150" cy="110" fill="#006398" r="4"></circle>
+<circle cx="250" cy="60" fill="#006398" r="4"></circle>
+<circle cx="350" cy="45" fill="#006398" r="4"></circle>
+<circle cx="450" cy="50" fill="#006398" r="4"></circle>
+<circle cx="550" cy="35" fill="#006398" r="5" stroke="#ffffff" stroke-width="2"></circle>
+<circle cx="550" cy="55" fill="#8d4b00" r="5" stroke="#ffffff" stroke-width="2"></circle>
+<!-- X-Axis Labels -->
+<text class="font-label-sm" fill="#554336" font-size="11" x="40" y="196">Mei</text>
+<text class="font-label-sm" fill="#554336" font-size="11" x="140" y="196">Jun</text>
+<text class="font-label-sm" fill="#554336" font-size="11" x="240" y="196">Jul</text>
+<text class="font-label-sm" fill="#554336" font-size="11" x="340" y="196">Agu</text>
+<text class="font-label-sm" fill="#554336" font-size="11" x="440" y="196">Sep</text>
+<text class="font-label-sm" fill="#554336" font-size="11" x="535" y="196">Okt '25</text>
+</svg>
+</div>
+</div>
+<div class="mt-4 pt-3 flex flex-wrap items-center justify-between gap-2 bg-surface-container-low px-3 py-2 rounded-lg">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Rata-rata Durasi Baca Harian: <strong class="text-on-surface font-semibold">1,8 Jam / Anak</strong></span>
+<span class="font-label-sm text-label-sm text-secondary font-semibold">Rekor Tertinggi: Oktober (482 Pengunjung)</span>
+</div>
+</div>
+</section>
+<!-- Dual Bottom Grid: Log Aktivitas Google Sheets & API Performance Widget -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-gutter mb-space-lg">
+<!-- Log Aktivitas & Warta Terkini (7 Cols) -->
+<div class="lg:col-span-7 bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary"></span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-bold">
+              Log Interaksi Google Sheets Terkini
+            </h2>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant bg-surface-container-low px-2.5 py-1 rounded">5 Transaksi Terbaru</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-justify mb-4">
+          Audit jejak masukan data secara langsung dari tabel transaksi Google Sheets. Memastikan setiap peminjaman fisik, donasi, dan publikasi warta literasi tercatat tepat waktu dan terverifikasi oleh pengelola.
+        </p>
+<!-- Activity Timeline / List -->
+<div class="flex flex-col gap-3">
+<!-- Log 1: Peminjaman -->
+<div class="flex items-start gap-3 p-3 rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors">
+<div class="w-9 h-9 rounded-lg bg-secondary-fixed text-secondary flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-body-lg">bookmark_added</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between gap-2">
+<span class="font-label-md text-label-md text-on-surface font-bold truncate">Peminjaman Buku: "Petualangan Si Kancil Cerdik"</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant whitespace-nowrap">8 mnt lalu</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-justify mt-0.5">
+                Dicatat oleh Relawan Sari untuk Adik Binaan Samuel Silalahi (ID: AB-092) di Sentra Baca Simalungun Bawah.
+              </p>
+</div>
+</div>
+<!-- Log 2: Donasi Buku Masuk -->
+<div class="flex items-start gap-3 p-3 rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors">
+<div class="w-9 h-9 rounded-lg bg-primary-fixed text-primary flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-body-lg">inventory_2</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between gap-2">
+<span class="font-label-md text-label-md text-on-surface font-bold truncate">Paket Donasi Masuk: 25 Ensiklopedia Sains</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant whitespace-nowrap">42 mnt lalu</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-justify mt-0.5">
+                Penerimaan logistik donasi dari Komunitas Alumni Siantar Jakarta. Telah masuk ke spreadsheet sheet <code class="font-label-sm bg-surface-container-highest px-1 py-0.5 rounded">Donatur_Log</code>.
+              </p>
+</div>
+</div>
+<!-- Log 3: Entri Berita Baru -->
+<div class="flex items-start gap-3 p-3 rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors">
+<div class="w-9 h-9 rounded-lg bg-tertiary-fixed text-tertiary flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-body-lg">post_add</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between gap-2">
+<span class="font-label-md text-label-md text-on-surface font-bold truncate">Publikasi Artikel: "Cahaya Literasi di Sudut Nagori"</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant whitespace-nowrap">2 jam lalu</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-justify mt-0.5">
+                Diterbitkan oleh Admin Pusat pada kategori Warta Komunitas dan disinkronkan ke portal publik.
+              </p>
+</div>
+</div>
+<!-- Log 4: Relawan Baru Terdaftar -->
+<div class="flex items-start gap-3 p-3 rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors">
+<div class="w-9 h-9 rounded-lg bg-surface-container-highest text-on-surface-variant flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-body-lg">person_add</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between gap-2">
+<span class="font-label-md text-label-md text-on-surface font-bold truncate">Verifikasi Relawan Pengajar Mingguan</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant whitespace-nowrap">4 jam lalu</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-justify mt-0.5">
+                Verifikasi dokumen saudara Kevin Sinaga untuk jadwal bimbingan literasi matematika di Sentra Rambung Merah.
+              </p>
+</div>
+</div>
+<!-- Log 5: Sirkulasi Pengembalian Buku -->
+<div class="flex items-start gap-3 p-3 rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors">
+<div class="w-9 h-9 rounded-lg bg-secondary-fixed text-secondary flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-body-lg">assignment_returned</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between gap-2">
+<span class="font-label-md text-label-md text-on-surface font-bold truncate">Pengembalian 3 Judul Buku Dongeng Nusantara</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant whitespace-nowrap">6 jam lalu</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-justify mt-0.5">
+                Status buku diperbarui menjadi "Tersedia" dalam kondisi fisik sangat baik tanpa cacat lembar.
+              </p>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-4 flex items-center justify-between pt-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Menampilkan 5 dari 1.240 riwayat log</span>
+<button class="font-label-md text-label-md text-secondary hover:text-on-secondary-fixed font-semibold flex items-center gap-1" onclick="alert('Membuka sheet Audit_Log lengkap di Google Sheets')">
+<span>Buka Audit Log Lengkap</span>
+<span class="material-symbols-outlined text-body-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Widget Kuota & Performa Google Sheets API (5 Cols) -->
+<div class="lg:col-span-5 bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-2">
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-bold">
+            Status Spreadsheet &amp; API
+          </h2>
+<span class="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+            Stabil
+          </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-justify mb-4">
+          Integritas tautan Google Sheets API v4 yang berfungsi sebagai backend mandiri (Headless CMS) Rumah Baca Pelita Bangsa. Tidak ada latensi signifikan terdeteksi.
+        </p>
+<!-- KPI Performance Cards -->
+<div class="grid grid-cols-2 gap-3 mb-4">
+<div class="p-3 rounded-lg bg-surface-container-low flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">API Health Uptime</span>
+<span class="font-headline-md text-headline-md text-secondary font-bold mt-1">99.8%</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Latency: ~210ms</span>
+</div>
+<div class="p-3 rounded-lg bg-surface-container-low flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Sheet ID</span>
+<span class="font-label-md text-label-md text-primary font-bold mt-2 truncate font-mono">1qA...Z8_PB</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant mt-1">Mode Read/Write</span>
+</div>
+</div>
+<!-- Sheets Row Breakdown -->
+<span class="font-label-md text-label-md text-on-surface uppercase tracking-wider font-semibold block mb-2">
+          Penyimpanan Baris Data (Row Counter)
+        </span>
+<div class="flex flex-col gap-2.5">
+<!-- Item 1: Katalog Buku -->
+<div>
+<div class="flex items-center justify-between font-label-sm text-label-sm mb-1">
+<span class="text-on-surface font-semibold flex items-center gap-1.5">
+<span class="material-symbols-outlined text-body-sm text-primary">table_chart</span>
+                Katalog_Buku (1.850 baris)
+              </span>
+<span class="text-on-surface-variant">74% dari kuota buffer</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container-high overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 74%"></div>
+</div>
+</div>
+<!-- Item 2: Donatur & Mitra -->
+<div>
+<div class="flex items-center justify-between font-label-sm text-label-sm mb-1">
+<span class="text-on-surface font-semibold flex items-center gap-1.5">
+<span class="material-symbols-outlined text-body-sm text-secondary">table_chart</span>
+                Mitra_Donatur (142 baris)
+              </span>
+<span class="text-on-surface-variant">28% kapasitas</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container-high overflow-hidden">
+<div class="h-full bg-secondary rounded-full" style="width: 28%"></div>
+</div>
+</div>
+<!-- Item 3: Artikel & Warta -->
+<div>
+<div class="flex items-center justify-between font-label-sm text-label-sm mb-1">
+<span class="text-on-surface font-semibold flex items-center gap-1.5">
+<span class="material-symbols-outlined text-body-sm text-tertiary">table_chart</span>
+                Artikel_Warta (28 baris)
+              </span>
+<span class="text-on-surface-variant">12% kapasitas</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container-high overflow-hidden">
+<div class="h-full bg-tertiary rounded-full" style="width: 12%"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Card Link -->
+<div class="mt-4 pt-3 rounded-lg bg-surface-container-low p-space-sm flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-body-md text-primary">verified</span>
+<span class="font-label-sm text-label-sm text-on-surface">Auto-Backup Cloud Storage</span>
+</div>
+<span class="font-label-sm text-label-sm text-primary font-semibold">Tiap Pukul 00:00</span>
+</div>
+</div>
+</section>
+<!-- Community Stakeholder Note Footer -->
+<section class="rounded-xl bg-surface-container-low p-space-md mb-space-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-lowest flex items-center justify-center shrink-0 shadow-sm text-primary">
+<span class="material-symbols-outlined text-headline-sm">info</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-justify">
+        Laporan ini diproduksi untuk keperluan monitoring internal Rumah Baca Pelita Bangsa bersama Dinas Perpustakaan dan Kearsipan Kota Pematang Siantar serta para donatur komunitas. Dokumen resmi bertanda tangan digital dapat diekspor melalui tombol unduh laporan di atas.
+      </p>
+</div>
+<div class="shrink-0 flex items-center gap-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant">ID Dokumen: PB-RPT-2025-Q4</span>
+</div>
+</section>
+<!-- Client-side Interactive Behaviors -->
+<script>
+    function triggerRefresh() {
+      const btn = document.getElementById('btn-refresh');
+      const icon = document.getElementById('refresh-icon');
+      const timeElem = document.getElementById('sync-timestamp');
+
+      icon.classList.add('animate-spin');
+      btn.disabled = true;
+
+      setTimeout(() => {
+        icon.classList.remove('animate-spin');
+        btn.disabled = false;
+        
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        timeElem.textContent = `Hari ini, ${hours}:${minutes} WIB`;
+
+        // Temporary feedback badge
+        const badge = document.createElement('div');
+        badge.className = 'fixed bottom-6 right-6 z-50 bg-primary text-on-primary font-label-md text-label-md px-4 py-2.5 rounded-lg shadow-lg flex items-center gap-2 transition-all duration-300';
+        badge.innerHTML = '<span class="material-symbols-outlined text-body-md">check_circle</span> Data Google Sheets berhasil diperbarui!';
+        document.body.appendChild(badge);
+
+        setTimeout(() => {
+          badge.classList.add('opacity-0', 'translate-y-2');
+          setTimeout(() => badge.remove(), 400);
+        }, 2500);
+      }, 900);
+    }
+
+    function downloadReportNotice() {
+      const badge = document.createElement('div');
+      badge.className = 'fixed bottom-6 right-6 z-50 bg-secondary text-on-secondary font-label-md text-label-md px-4 py-2.5 rounded-lg shadow-lg flex items-center gap-2 transition-all duration-300';
+      badge.innerHTML = '<span class="material-symbols-outlined text-body-md">downloading</span> Menyiapkan Laporan Eksekutif PDF Pelita Bangsa...';
+      document.body.appendChild(badge);
+
+      setTimeout(() => {
+        badge.innerHTML = '<span class="material-symbols-outlined text-body-md">task_alt</span> Laporan Siap Diunduh (Simulasi)';
+        setTimeout(() => {
+          badge.classList.add('opacity-0', 'translate-y-2');
+          setTimeout(() => badge.remove(), 400);
+        }, 1800);
+      }, 1500);
+    }
+  </script>
+</div></main></div></body></html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Berita &amp; Artikel — Rumah Baca Pelita Bangsa</title>
+  <meta name="description" content="Kabar, laporan donasi, dan artikel komunitas Rumah Baca Pelita Bangsa, Pematang Siantar – Simalungun.">
+  <link rel="icon" href="assets/img/logo.png">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Berita &amp; Artikel — Rumah Baca Pelita Bangsa">
+  <meta property="og:description" content="Kabar &amp; warta terbaru komunitas literasi Pematang Siantar – Simalungun.">
+  <meta property="og:image" content="https://<user>.github.io/<repo>/assets/img/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+  <script src="assets/js/tailwind-config.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/custom.css">
+
+  <script src="assets/js/config.js" defer></script>
+  <script src="assets/js/ui.js" defer></script>
+  <script src="assets/js/api.js" defer></script>
+  <script src="assets/js/layout.js" defer></script>
+  <script src="assets/js/lightbox.js" defer></script>
+  <script src="assets/js/berita.js" defer></script>
+</head>
+<body class="bg-surface font-body-md text-body-md text-on-surface antialiased min-h-screen flex flex-col" data-page="berita">
+<main class="w-full pt-16 xl:pt-20 bg-surface flex-grow">
+  <!-- Daftar berita -->
+  <div id="view-daftar">
+    <section class="py-space-lg lg:py-space-xl px-gutter bg-surface-container-low">
+      <div class="max-w-[1200px] mx-auto flex flex-col md:flex-row md:items-end justify-between gap-space-md">
+        <div>
+          <div class="inline-flex items-center gap-space-xs bg-surface-container-highest px-space-sm py-space-xs rounded-full mb-space-xs"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span><span class="font-label-sm text-label-sm text-on-surface-variant font-semibold">Tersinkronisasi Google Sheets</span></div>
+          <h1 class="font-headline-xl text-headline-xl-mobile lg:text-headline-xl text-on-surface">Kabar &amp; Warta Komunitas</h1>
+          <p class="font-body-md text-body-md text-on-surface-variant mt-space-xs">Berita kegiatan, laporan donasi, dan tulisan relawan Rumah Baca Pelita Bangsa.</p>
+        </div>
+        <div id="filter-berita" class="flex flex-wrap gap-space-xs"></div>
+      </div>
+    </section>
+    <section class="py-space-lg lg:py-space-xl px-gutter">
+      <div id="list-berita" class="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-md lg:gap-space-lg">
+        <div class="skeleton h-96 rounded-2xl"></div><div class="skeleton h-96 rounded-2xl"></div><div class="skeleton h-96 rounded-2xl"></div>
+      </div>
+    </section>
+  </div>
+  <!-- Satu artikel -->
+  <article id="view-artikel" class="hidden">
+    <div class="px-gutter pt-space-md">
+      <nav class="max-w-3xl mx-auto font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1" aria-label="Breadcrumb"><a class="hover:text-primary py-3" href="./">Beranda</a><span class="material-symbols-outlined text-[14px]">chevron_right</span><a class="hover:text-primary py-3" href="berita">Berita</a></nav>
+    </div>
+    <div id="artikel-isi" class="max-w-3xl mx-auto px-gutter py-space-lg"></div>
+    <section class="px-gutter pb-space-xl">
+      <div class="max-w-[1200px] mx-auto">
+        <h2 class="font-headline-sm text-headline-sm text-on-surface mb-space-md">Berita Lainnya</h2>
+        <div id="list-lainnya" class="grid grid-cols-1 md:grid-cols-3 gap-space-md"></div>
+      </div>
+    </section>
+  </article>
+</main>
+</body>
+</html>

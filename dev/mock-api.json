@@ -1,0 +1,71 @@
+{
+  "ok": true,
+  "cached": false,
+  "generatedAt": "2026-11-10T08:00:00.000Z",
+  "data": {
+    "profil": {
+      "nama_organisasi": "Rumah Baca Pelita Bangsa",
+      "tagline": "Nyalakan Lentera Literasi Generasi Muda di Pematang Siantar & Simalungun",
+      "deskripsi_singkat": "Rumah belajar mandiri, perpustakaan komunitas, dan wadah kreativitas anak-anak serta pemuda untuk mewujudkan mimpi luas melalui hangatnya jendela buku.",
+      "tahun_berdiri": "2021",
+      "sejarah_judul": "Dimulai dari Teras Rumah dan Tumpukan Sepuluh Buku",
+      "sejarah": "Rumah Baca Pelita Bangsa lahir di sudut Pematang Siantar dan Simalungun dari keresahan minimnya akses bacaan berkualitas bagi adik-adik di perkampungan sekitar bantaran rel dan kebun kopi.\n\nBerkat gotong royong pemuda lokal, orang tua, serta jejaring donatur se-Nusantara, kini kami menyediakan ruang teduh, ramah, dan bebas biaya agar setiap anak memiliki kesempatan yang sama untuk bermimpi tinggi.",
+      "visi": "“Menumbuhkan budaya literasi yang inklusif, membina nalar kritis, dan melahirkan generasi berkarakter mandiri di Pematang Siantar serta Simalungun.”",
+      "alamat": "Jl. Merdeka No. 42, Kel. Proklamasi, Kec. Siantar Barat, Kota Pematang Siantar, Sumatera Utara 21111",
+      "jam_operasional": "Selasa – Minggu, 10:00 – 17:30 WIB",
+      "whatsapp": "6281263889021",
+      "email": "kontak@pelitabangsa.or.id",
+      "rekening": "Bank Sumut: 102-020-405-9912 (a.n. Rumah Baca Pelita Bangsa)",
+      "instagram": "https://instagram.com/pelitabangsa_siantar",
+      "facebook": "",
+      "youtube": "https://youtube.com/@pelitabangsa",
+      "tiktok": "",
+      "maps_embed": "",
+      "stat_koleksi_buku": "1850",
+      "stat_anak_terbina": "420",
+      "stat_relawan": "35",
+      "logo": "",
+      "hero_foto": "",
+      "misi": [
+        { "judul": "Literasi Baca-Tulis", "deskripsi": "Penyediaan buku bergambar, bimbingan mengeja, membaca pemahaman, dan menulis cerita pendek." },
+        { "judul": "Karakter & Digital", "deskripsi": "Pengenalan etika bermedia digital, logika dasar, budi pekerti luhur, dan kreativitas mandiri." },
+        { "judul": "Pemberdayaan Warga", "deskripsi": "Pelibatan orang tua, pelatihan relawan muda, dan pengadaan pos baca ramah keluarga." }
+      ]
+    },
+    "pengurus": [
+      { "nama": "Daniel Sihombing", "jabatan": "Ketua", "periode": "2025–2027", "deskripsi": "Penggagas rumah baca sejak 2021.", "foto": "" },
+      { "nama": "Nur Aisyah", "jabatan": "Sekretaris", "periode": "2025–2027", "deskripsi": "", "foto": "" },
+      { "nama": "Rian Sinaga", "jabatan": "Bendahara", "periode": "2025–2027", "deskripsi": "", "foto": "" },
+      { "nama": "Tiara Purba", "jabatan": "Koordinator Relawan", "periode": "2025–2027", "deskripsi": "", "foto": "" }
+    ],
+    "relawan": [
+      { "nama": "Bona Saragih", "asal_instansi": "Mahasiswa USI", "bidang": "Literasi Digital", "sejak_tahun": "2023", "foto": "" },
+      { "nama": "Maria Pardede", "asal_instansi": "Guru SD Negeri 122", "bidang": "Pengajar", "sejak_tahun": "2022", "foto": "" },
+      { "nama": "Samuel Nainggolan", "asal_instansi": "Komunitas IT Siantar", "bidang": "Literasi Digital", "sejak_tahun": "2024", "foto": "" },
+      { "nama": "Theresia Sinaga", "asal_instansi": "FKIP USI", "bidang": "Dongeng", "sejak_tahun": "2021", "foto": "" },
+      { "nama": "Yohanes Pardede", "asal_instansi": "Guru Matematika", "bidang": "Pengajar", "sejak_tahun": "2022", "foto": "" },
+      { "nama": "Ruth Simanjuntak", "asal_instansi": "Warga Siantar Barat", "bidang": "Dokumentasi", "sejak_tahun": "2025", "foto": "" }
+    ],
+    "agenda": {
+      "tahunAktif": "2026",
+      "tahunList": ["2026", "2025"],
+      "items": [
+        { "tahun": "2026", "bulan": 2, "tanggal_mulai": "2026-02-14", "tanggal_selesai": "", "nama_kegiatan": "Festival Dongeng Nusantara", "lokasi": "Balai Baca Utama", "kategori": "Literasi Anak", "deskripsi": "Mendongeng fabel Danau Toba dan lomba mewarnai.", "status": "Selesai", "album_id": "festival-dongeng-2026" },
+        { "tahun": "2026", "bulan": 8, "tanggal_mulai": "2026-08-17", "tanggal_selesai": "2026-08-17", "nama_kegiatan": "Lomba Membaca 17-an", "lokasi": "Teras Rumah Baca", "kategori": "Perayaan", "deskripsi": "Lomba baca puisi dan membaca nyaring untuk anak SD.", "status": "Selesai", "album_id": "" },
+        { "tahun": "2026", "bulan": 11, "tanggal_mulai": "2026-11-22", "tanggal_selesai": "", "nama_kegiatan": "Kelas Kreatif & Literasi Digital", "lokasi": "Pojok Baca Siantar Utara", "kategori": "Literasi Digital", "deskripsi": "Pengenalan komputer dan etika berinternet untuk remaja.", "status": "Akan Datang", "album_id": "" },
+        { "tahun": "2026", "bulan": 12, "tanggal_mulai": "2026-12-06", "tanggal_selesai": "2026-12-07", "nama_kegiatan": "Distribusi Buku Pelita Keliling", "lokasi": "Nagori Sitalasari", "kategori": "Pemberdayaan Warga", "deskripsi": "Boks buku bergilir untuk dusun perkebunan.", "status": "Akan Datang", "album_id": "" },
+        { "tahun": "2025", "bulan": 10, "tanggal_mulai": "2025-10-28", "tanggal_selesai": "", "nama_kegiatan": "Semarak Sumpah Pemuda", "lokasi": "Siantar Barat", "kategori": "Perayaan", "deskripsi": "Festival baca nyaring 80 anak.", "status": "Selesai", "album_id": "" }
+      ]
+    },
+    "galeri": [
+      { "id": "festival-dongeng-2026", "judul": "Festival Dongeng Nusantara", "tanggal": "2026-02-14", "sampul": "", "jumlah": 2, "foto": [ { "url": "", "ket": "Peserta kelas kecil" }, { "url": "", "ket": "Penyerahan hadiah" } ] },
+      { "id": "sortir-donasi-2025", "judul": "Penyortiran Buku Donasi Baru", "tanggal": "2025-10-15", "sampul": "", "jumlah": 1, "foto": [ { "url": "", "ket": "Relawan menyortir buku" } ] }
+    ],
+    "berita": [
+      { "id": "PB-251028-A1B", "tanggal": "2025-10-28", "judul": "Semarak Sumpah Pemuda: Festival Baca Nyaring Bersama 80 Anak Siantar", "kategori": "Kegiatan", "penulis": "Kak Tiara Purba", "lokasi": "Siantar Barat", "ringkasan": "Sebanyak delapan puluh anak berkumpul merayakan kecintaan membaca lewat festival mendongeng cerita rakyat Simalungun.", "isi": "Sebanyak delapan puluh anak berkumpul merayakan kecintaan membaca.\n\n- Mendongeng cerita rakyat Simalungun\n- Pameran buku bergambar\n\n> \"Setiap anak membawa pulang paket buku cerita.\"", "foto": "" },
+      { "id": "PB-251015-C2D", "tanggal": "2025-10-15", "judul": "Penerimaan Paket 350 Buku Ensiklopedia Anak dari Alumni Kampus Medan", "kategori": "Laporan Donasi", "penulis": "Bung David Saragih", "lokasi": "Simalungun", "ringkasan": "Koleksi buku pengetahuan sains dan atlas dunia bertambah untuk mendukung anak-anak sekolah dasar.", "isi": "Seluruh kiriman buku telah melalui proses kurasi kondisi fisik layak pakai dan pelabelan kode rak.", "foto": "" },
+      { "id": "PB-251002-E3F", "tanggal": "2025-10-02", "judul": "Mengapa Membaca 15 Menit Sehari Mampu Mengubah Perilaku Anak di Era Gadget", "kategori": "Opini Edukasi", "penulis": "Relawan Pelita", "lokasi": "", "ringkasan": "Kiat praktis orang tua mendampingi anak menyenangi buku cetak di tengah gempuran layar gawai.", "isi": "Tulisan ini menguraikan tahapan menumbuhkan rutinitas membacakan dongeng sebelum tidur.", "foto": "" }
+    ],
+    "dibuat": "2026-11-10T08:00:00.000Z"
+  }
+}

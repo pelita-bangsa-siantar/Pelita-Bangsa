@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+
+<html lang="id"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary":"#8d4b00","surface-dim":"#cfdaf2","secondary-fixed":"#cce5ff","on-primary-fixed":"#2f1500","on-tertiary-fixed-variant":"#920028","inverse-primary":"#ffb77d","on-primary-container":"#fffbff","tertiary-container":"#e21e49","on-primary-fixed-variant":"#6e3900","on-secondary-container":"#00476e","on-primary":"#ffffff","on-secondary-fixed-variant":"#004b73","primary-container":"#b15f00","outline":"#887364","on-tertiary-container":"#fffbff","surface-container-highest":"#d8e3fb","primary-fixed":"#ffdcc3","on-surface":"#111c2d","on-tertiary-fixed":"#40000c","surface-container-low":"#f0f3ff","on-background":"#111c2d","on-surface-variant":"#554336","inverse-on-surface":"#ecf1ff","surface-container-high":"#dee8ff","surface-variant":"#d8e3fb","tertiary-fixed":"#ffdada","error":"#ba1a1a","surface-bright":"#f9f9ff","on-secondary":"#ffffff","surface":"#f9f9ff","tertiary":"#ba0035","tertiary-fixed-dim":"#ffb3b6","surface-tint":"#904d00","secondary-container":"#5bb8fe","background":"#f9f9ff","on-secondary-fixed":"#001d31","error-container":"#ffdad6","surface-container-lowest":"#ffffff","secondary":"#006398","primary-fixed-dim":"#ffb77d","on-error-container":"#93000a","on-tertiary":"#ffffff","inverse-surface":"#263143","outline-variant":"#dbc2b0","on-error":"#ffffff","secondary-fixed-dim":"#93ccff","surface-container":"#e7eeff"},borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},spacing:{"space-lg":"1.5rem","margin":"1.5rem","gutter":"1.25rem","space-xs":"0.25rem","space-xl":"2.5rem","space-md":"1rem","space-sm":"0.5rem"},fontFamily:{"label-lg":["Plus Jakarta Sans"],"body-md":["Plus Jakarta Sans"],"body-lg":["Plus Jakarta Sans"],"headline-xl":["Plus Jakarta Sans"],"headline-lg":["Plus Jakarta Sans"],"display-lg":["Plus Jakarta Sans"],"label-md":["Plus Jakarta Sans"],"headline-md":["Plus Jakarta Sans"],"body-sm":["Plus Jakarta Sans"],"display-lg-mobile":["Plus Jakarta Sans"],"label-sm":["Plus Jakarta Sans"],"headline-xl-mobile":["Plus Jakarta Sans"],"headline-sm":["Plus Jakarta Sans"]},fontSize:{"label-lg":["14px",{"lineHeight":"20px","fontWeight":"600"}],"body-md":["16px",{"lineHeight":"24px","fontWeight":"400"}],"body-lg":["18px",{"lineHeight":"28px","fontWeight":"400"}],"headline-xl":["36px",{"lineHeight":"44px","fontWeight":"700"}],"headline-lg":["28px",{"lineHeight":"36px","fontWeight":"700"}],"display-lg":["48px",{"lineHeight":"56px","fontWeight":"800"}],"label-md":["12px",{"lineHeight":"16px","fontWeight":"600"}],"headline-md":["22px",{"lineHeight":"30px","fontWeight":"600"}],"body-sm":["14px",{"lineHeight":"20px","fontWeight":"400"}],"display-lg-mobile":["34px",{"lineHeight":"42px","fontWeight":"800"}],"label-sm":["11px",{"lineHeight":"14px","fontWeight":"700"}],"headline-xl-mobile":["28px",{"lineHeight":"36px","fontWeight":"700"}],"headline-sm":["18px",{"lineHeight":"26px","fontWeight":"600"}]}}}}</script></head><body class="bg-surface font-body-md text-on-surface"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-low z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col"><div class="h-16 px-space-lg flex items-center gap-3 bg-surface-container-lowest"><div class="w-10 h-10 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-headline-sm">auto_stories</span></div><div class="flex flex-col"><span class="font-label-lg text-label-lg text-primary leading-tight">Pelita Bangsa</span><span class="font-label-sm text-label-sm text-on-surface-variant">Siantar - Simalungun</span></div></div><div class="p-space-md"><div class="bg-surface-container-lowest rounded-lg p-space-sm flex items-center justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-secondary animate-pulse"></span><span class="font-label-sm text-label-sm text-on-surface">Google Sheets</span></div><span class="font-label-sm text-label-sm text-secondary bg-secondary-fixed px-2 py-0.5 rounded-full">Terhubung</span></div></div><nav class="flex flex-col gap-1 px-space-md" data-active-classes="bg-primary-container text-on-primary-container font-headline-sm shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><a class="flex items-center gap-3 px-space-md py-space-sm rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="ringkasan-analitik" href="#"><span class="material-symbols-outlined text-headline-sm">dashboard</span>Ringkasan &amp; Analitik</a><a class="flex items-center gap-3 px-space-md py-space-sm rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="kelola-berita-artikel" href="#"><span class="material-symbols-outlined text-headline-sm">article</span>Kelola Berita &amp; Artikel</a><a aria-current="page" class="flex items-center gap-3 px-space-md py-space-sm rounded-lg transition-colors bg-primary-container text-on-primary-container font-headline-sm shadow-[0_1px_8px_rgba(0,0,0,0.04)]" data-path="katalog-koleksi-buku" href="#"><span class="material-symbols-outlined text-headline-sm">menu_book</span>Katalog Koleksi Buku</a><a class="flex items-center gap-3 px-space-md py-space-sm rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="donatur-relawan-komunitas" href="#"><span class="material-symbols-outlined text-headline-sm">volunteer_activism</span>Donatur &amp; Relawan</a><a class="flex items-center gap-3 px-space-md py-space-sm rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="konfigurasi-database-sheets" href="#"><span class="material-symbols-outlined text-headline-sm">sync_alt</span>Konfigurasi Sheets</a></nav></div><div class="p-space-md flex flex-col gap-2 bg-surface-container-low"><a class="flex items-center gap-2 px-space-md py-space-sm rounded-lg font-label-md text-label-md text-secondary hover:bg-secondary-fixed hover:text-on-secondary-fixed transition-colors" data-path="beranda-publik" href="#"><span class="material-symbols-outlined text-body-md">open_in_new</span>Kembali ke Web Publik</a><div class="flex items-center gap-3 p-space-sm rounded-lg bg-surface-container-lowest"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida/ALJJyrAxFbEARVrXjHuv-RLv_OF1S7Dj3E_ifYxgSiJfN9cQT2gcNgmjp7Lf9sjfdGqaivc1vzfDtGeyLHIf8voFYnUGK7iEw1JBi5TvRRPkAgUm9_xVY6JsOn3scnYBIjjyzTEomEIBWPZJmYonwKmWM52y4DT0mHSyh4M4Xtp2C570To3_kgVCs6aOfaSO5R9spUQtwkyFaKs_HbaDv3Qg6ICziZCWpsLGNuWnRvv9fPvu37pFMJGJBZA5RvjyoZ07xzsRgtVC_7Fltg4"/><div class="flex flex-col min-w-0 flex-1"><span class="font-label-md text-label-md text-on-surface truncate">Pengurus Literasi</span><span class="font-label-sm text-label-sm text-on-surface-variant truncate">Admin Siantar</span></div><span class="material-symbols-outlined text-body-md text-on-surface-variant">verified_user</span></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-space-lg"><div class="flex items-center gap-4"><div class="flex items-center gap-2 text-on-surface-variant font-label-md text-label-md"><span class="material-symbols-outlined text-body-md text-primary">pin_drop</span><span>Pematang Siantar – Simalungun</span><span class="text-outline-variant">•</span><span class="text-on-surface-variant">Sistem Manajemen Komunitas</span></div></div><div class="flex items-center gap-space-md"><div class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm"><span class="material-symbols-outlined text-label-md text-secondary">cloud_done</span><span>Auto-Sync Aktif</span></div><button class="p-2 rounded-full text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-headline-sm">notifications</span></button><button class="p-2 rounded-full text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-headline-sm">help_outline</span></button><div class="h-6 w-px bg-surface-container-highest"></div><div class="flex items-center gap-2 pl-2"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida/ALJJyrAxFbEARVrXjHuv-RLv_OF1S7Dj3E_ifYxgSiJfN9cQT2gcNgmjp7Lf9sjfdGqaivc1vzfDtGeyLHIf8voFYnUGK7iEw1JBi5TvRRPkAgUm9_xVY6JsOn3scnYBIjjyzTEomEIBWPZJmYonwKmWM52y4DT0mHSyh4M4Xtp2C570To3_kgVCs6aOfaSO5R9spUQtwkyFaKs_HbaDv3Qg6ICziZCWpsLGNuWnRvv9fPvu37pFMJGJBZA5RvjyoZ07xzsRgtVC_7Fltg4"/><span class="hidden lg:inline font-label-md text-label-md text-on-surface">Admin Pusat</span></div></div></header><main class="relative pt-16 w-full bg-surface px-space-lg pb-space-xl min-h-screen"><div class="flex flex-col w-full">
+<!-- Top Command & Action Bar -->
+<div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-space-md mb-space-lg">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-3">
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Katalog Koleksi Buku</h1>
+<div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed text-label-sm font-label-sm">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+<span>Live Sync: Sheets 'Katalog_Buku'</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-justify">
+        Sistem inventaris balai baca komunitas literasi Pematang Siantar – Simalungun. Terhubung langsung secara dwiarah ke pangkalan data Google Sheets dengan pembaharuan stok otomatis setiap transaksi peminjaman.
+      </p>
+</div>
+<!-- Quick Buttons -->
+<div class="flex items-center gap-space-sm shrink-0">
+<button class="flex items-center gap-2 px-space-md py-2.5 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-lg text-label-lg shadow-sm transition-all" id="btn-import-csv">
+<span class="material-symbols-outlined text-body-md text-secondary">cloud_upload</span>
+<span>Import CSV / Sheets</span>
+</button>
+<button class="flex items-center gap-2 px-space-md py-2.5 rounded-lg bg-primary-container hover:bg-primary text-on-primary-container font-label-lg text-label-lg shadow-md hover:shadow-lg transition-all" id="open-entry-modal">
+<span class="material-symbols-outlined text-body-md">add_circle</span>
+<span>+ Tambah Buku Baru ke Sheets</span>
+</button>
+</div>
+</div>
+<!-- Metric / Overview Shelf -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-space-md mb-space-lg">
+<!-- Stat 1 -->
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between relative overflow-hidden">
+<div class="absolute -right-4 -bottom-4 w-24 h-24 bg-primary-fixed/30 rounded-full blur-xl pointer-events-none"></div>
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Total Koleksi Aktif</span>
+<div class="w-9 h-9 rounded-lg bg-primary-fixed flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-headline-sm">collections_bookmark</span>
+</div>
+</div>
+<div>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-xl text-headline-xl text-primary font-headline-xl leading-none">1.850</span>
+<span class="font-label-md text-label-md text-on-surface-variant">Buku</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-2">Tersebar dalam 45 kategori literasi anak &amp; sains</p>
+</div>
+</div>
+<!-- Stat 2 -->
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between relative overflow-hidden">
+<div class="absolute -right-4 -bottom-4 w-24 h-24 bg-secondary-fixed/40 rounded-full blur-xl pointer-events-none"></div>
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Tersedia di Rak</span>
+<div class="w-9 h-9 rounded-lg bg-secondary-fixed flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-headline-sm">local_library</span>
+</div>
+</div>
+<div>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-xl text-headline-xl text-secondary font-headline-xl leading-none">1.590</span>
+<span class="font-label-md text-label-md text-secondary font-semibold">86% Siap Baca</span>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-full mt-3 overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 86%"></div>
+</div>
+</div>
+</div>
+<!-- Stat 3 -->
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between relative overflow-hidden">
+<div class="absolute -right-4 -bottom-4 w-24 h-24 bg-tertiary-fixed/40 rounded-full blur-xl pointer-events-none"></div>
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Dipinjam Adik Binaan</span>
+<div class="w-9 h-9 rounded-lg bg-tertiary-fixed flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-headline-sm">front_hand</span>
+</div>
+</div>
+<div>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-xl text-headline-xl text-tertiary font-headline-xl leading-none">260</span>
+<span class="font-label-md text-label-md text-on-surface-variant">Sirkulasi Aktif</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-2">14 kelompok belajar di pelosok Simalungun</p>
+</div>
+</div>
+<!-- Stat 4 -->
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between relative overflow-hidden">
+<div class="absolute -right-4 -bottom-4 w-24 h-24 bg-primary-fixed-dim/30 rounded-full blur-xl pointer-events-none"></div>
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Kebutuhan Donasi</span>
+<div class="w-9 h-9 rounded-lg bg-primary-fixed-dim flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined text-headline-sm">volunteer_activism</span>
+</div>
+</div>
+<div>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-xl text-headline-xl text-primary-container font-headline-xl leading-none">+150</span>
+<span class="font-label-md text-label-md text-on-surface-variant">Eksemplar</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-2">Target prioritas: Ensiklopedia Sains &amp; Kamus Bergambar</p>
+</div>
+</div>
+</div>
+<!-- Filter & Control Section -->
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm mb-space-lg flex flex-col gap-space-md">
+<div class="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-space-md">
+<!-- Search Input -->
+<div class="relative flex-1">
+<span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-on-surface-variant text-body-md">search</span>
+<input class="w-full pl-10 pr-4 py-2.5 rounded-lg bg-surface-container-low text-on-surface placeholder:text-on-surface-variant/70 font-body-sm text-body-sm outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-secondary transition-all" id="search-input" placeholder="Cari ISBN, Judul Koleksi, Pengarang, atau Kata Kunci..." type="text"/>
+</div>
+<!-- Quick Shelf Jump Filter -->
+<div class="flex items-center gap-space-sm flex-wrap">
+<!-- Category Dropdown -->
+<div class="flex items-center bg-surface-container-low rounded-lg px-3 py-2">
+<span class="material-symbols-outlined text-on-surface-variant text-body-md mr-2">category</span>
+<select class="bg-transparent font-label-md text-label-md text-on-surface outline-none cursor-pointer" id="filter-category">
+<option value="all">Semua Kategori Literasi</option>
+<option value="Sains &amp; Alam">Sains &amp; Alam</option>
+<option value="Fabel &amp; Dongeng">Fabel &amp; Dongeng</option>
+<option value="Komik Edukasi">Komik Edukasi</option>
+<option value="Cerita Rakyat Simalungun">Cerita Rakyat Simalungun</option>
+<option value="Ensiklopedi &amp; Kamus">Ensiklopedi &amp; Kamus</option>
+</select>
+</div>
+<!-- Shelf Location Dropdown -->
+<div class="flex items-center bg-surface-container-low rounded-lg px-3 py-2">
+<span class="material-symbols-outlined text-on-surface-variant text-body-md mr-2">grid_view</span>
+<select class="bg-transparent font-label-md text-label-md text-on-surface outline-none cursor-pointer" id="filter-shelf">
+<option value="all">Semua Posisi Rak</option>
+<option value="Rak A1">Rak A1 - Literasi Dini</option>
+<option value="Rak A2">Rak A2 - Fabel Nusantara</option>
+<option value="Rak B1">Rak B1 - Komik Edukasi</option>
+<option value="Rak B3">Rak B3 - Cerita Daerah Simalungun</option>
+<option value="Rak C1">Rak C1 - Eksplorasi Sains</option>
+<option value="Rak C2">Rak C2 - Flora &amp; Fauna</option>
+<option value="Rak D1">Rak D1 - Kamus Bahasa</option>
+<option value="Rak D4">Rak D4 - Ensiklopedia Populer</option>
+</select>
+</div>
+<!-- Stock Status Dropdown -->
+<div class="flex items-center bg-surface-container-low rounded-lg px-3 py-2">
+<span class="material-symbols-outlined text-on-surface-variant text-body-md mr-2">tune</span>
+<select class="bg-transparent font-label-md text-label-md text-on-surface outline-none cursor-pointer" id="filter-status">
+<option value="all">Semua Status Stok</option>
+<option value="available">Tersedia Banyak</option>
+<option value="limited">Tersisa Sedikit (≤ 2)</option>
+<option value="borrowed">Semua Sedang Dipinjam</option>
+</select>
+</div>
+<button class="p-2.5 rounded-lg bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" id="btn-reset-filters" title="Reset Filter">
+<span class="material-symbols-outlined text-body-md">restart_alt</span>
+</button>
+</div>
+</div>
+<!-- Active Filter Tags & Data Source Note -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-2 text-label-sm font-label-sm text-on-surface-variant">
+<div class="flex items-center gap-2">
+<span class="font-semibold text-on-surface">Petunjuk Penataan:</span>
+<span class="text-justify">
+          Label rak bersandi A (Anak), B (Budaya/Komik), C (Sains), dan D (Referensi). Setiap penambahan melalui formulir akan mengisi baris paling bawah pada lembar Google Sheets secara instan.
+        </span>
+</div>
+<div class="shrink-0 flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-label-md">database</span>
+<span>ID Dokumen: PB-SIANTAR-2025-GSHEET</span>
+</div>
+</div>
+</div>
+<!-- Main Catalog Table Section -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden mb-space-lg">
+<div class="px-space-md py-4 bg-surface-container-low flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-headline-sm">menu_book</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Daftar Inventaris Koleksi</span>
+<span class="px-2.5 py-0.5 rounded-full bg-primary-fixed text-primary font-label-sm text-label-sm">Menampilkan 10 dari 1.850 data</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-3 py-1.5 rounded-lg bg-surface-container text-on-surface font-label-sm text-label-sm flex items-center gap-1 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-label-md">sort</span> Urutkan
+        </button>
+<button class="px-3 py-1.5 rounded-lg bg-surface-container text-on-surface font-label-sm text-label-sm flex items-center gap-1 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-label-md">download</span> Ekspor Salinan
+        </button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left font-body-sm text-body-sm">
+<thead class="bg-surface-container-high text-on-surface font-label-md text-label-md uppercase tracking-wider">
+<tr>
+<th class="py-3.5 px-4 w-12 text-center">No</th>
+<th class="py-3.5 px-4 w-32">Kode ISBN</th>
+<th class="py-3.5 px-4">Judul Koleksi &amp; Penulis</th>
+<th class="py-3.5 px-4 w-44">Kategori Literasi</th>
+<th class="py-3.5 px-4 w-36">Posisi Rak</th>
+<th class="py-3.5 px-4 w-48">Ketersediaan</th>
+<th class="py-3.5 px-4 w-32 text-center">Status Sheets</th>
+<th class="py-3.5 px-4 w-28 text-center">Aksi</th>
+</tr>
+</thead>
+<tbody class="text-on-surface" id="catalog-rows">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3.5 px-4 text-center font-label-sm text-on-surface-variant">01</td>
+<td class="py-3.5 px-4 font-mono font-label-sm text-on-surface-variant">978-602-03-8812-4</td>
+<td class="py-3.5 px-4">
+<div class="font-headline-sm text-headline-sm text-on-surface text-base">Dongeng Si Kantil &amp; Pohon Raksasa</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Oleh: Tioria Simanjuntak • Gramedia Pustaka (2021)</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="px-2.5 py-1 rounded-full bg-primary-fixed text-primary font-label-sm text-label-sm">Fabel &amp; Dongeng</span>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-body-md text-on-surface-variant">shelves</span>
+<span class="font-label-md text-label-md text-on-surface">Rak A2 - B</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between text-label-sm font-label-sm">
+<span class="text-primary font-semibold">8 dari 10 di Rak</span>
+<span class="text-on-surface-variant">2 Dipinjam</span>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 80%"></div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 text-center">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Sinkron #12
+              </span>
+</td>
+<td class="py-3.5 px-4 text-center">
+<div class="flex items-center justify-center gap-1">
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-primary hover:bg-primary-fixed transition-colors" title="Pinjamkan Buku">
+<span class="material-symbols-outlined text-body-md">front_hand</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-secondary hover:bg-secondary-fixed transition-colors" title="Edit Metadata">
+<span class="material-symbols-outlined text-body-md">edit_note</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-tertiary hover:bg-tertiary-fixed transition-colors" title="Hapus Baris">
+<span class="material-symbols-outlined text-body-md">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="bg-surface-container-lowest/70 hover:bg-surface-container-low transition-colors">
+<td class="py-3.5 px-4 text-center font-label-sm text-on-surface-variant">02</td>
+<td class="py-3.5 px-4 font-mono font-label-sm text-on-surface-variant">978-623-24-4119-9</td>
+<td class="py-3.5 px-4">
+<div class="font-headline-sm text-headline-sm text-on-surface text-base">Asal-Usul Danau Toba &amp; Pulau Samosir</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Oleh: Marbun Saragih • Dian Aksara Pematang Siantar (2020)</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="px-2.5 py-1 rounded-full bg-tertiary-fixed text-tertiary font-label-sm text-label-sm">Cerita Rakyat Simalungun</span>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-body-md text-on-surface-variant">shelves</span>
+<span class="font-label-md text-label-md text-on-surface">Rak B3 - A</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between text-label-sm font-label-sm">
+<span class="text-primary font-semibold">12 dari 15 di Rak</span>
+<span class="text-on-surface-variant">3 Dipinjam</span>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 80%"></div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 text-center">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Sinkron #13
+              </span>
+</td>
+<td class="py-3.5 px-4 text-center">
+<div class="flex items-center justify-center gap-1">
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-primary hover:bg-primary-fixed transition-colors" title="Pinjamkan Buku">
+<span class="material-symbols-outlined text-body-md">front_hand</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-secondary hover:bg-secondary-fixed transition-colors" title="Edit Metadata">
+<span class="material-symbols-outlined text-body-md">edit_note</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-tertiary hover:bg-tertiary-fixed transition-colors" title="Hapus Baris">
+<span class="material-symbols-outlined text-body-md">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3.5 px-4 text-center font-label-sm text-on-surface-variant">03</td>
+<td class="py-3.5 px-4 font-mono font-label-sm text-on-surface-variant">978-602-45-2980-1</td>
+<td class="py-3.5 px-4">
+<div class="font-headline-sm text-headline-sm text-on-surface text-base">Seri Tubuh Manusia: Kenapa Kita Bisa Bersin?</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Oleh: Dr. Hendrik Purba • BIP Kids (2022)</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="px-2.5 py-1 rounded-full bg-secondary-fixed text-secondary font-label-sm text-label-sm">Sains &amp; Alam</span>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-body-md text-on-surface-variant">shelves</span>
+<span class="font-label-md text-label-md text-on-surface">Rak C1 - C</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between text-label-sm font-label-sm">
+<span class="text-tertiary font-semibold">1 dari 6 di Rak</span>
+<span class="text-tertiary font-medium">5 Dipinjam</span>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden">
+<div class="bg-tertiary h-full rounded-full" style="width: 16%"></div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 text-center">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Sinkron #14
+              </span>
+</td>
+<td class="py-3.5 px-4 text-center">
+<div class="flex items-center justify-center gap-1">
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-primary hover:bg-primary-fixed transition-colors" title="Pinjamkan Buku">
+<span class="material-symbols-outlined text-body-md">front_hand</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-secondary hover:bg-secondary-fixed transition-colors" title="Edit Metadata">
+<span class="material-symbols-outlined text-body-md">edit_note</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-tertiary hover:bg-tertiary-fixed transition-colors" title="Hapus Baris">
+<span class="material-symbols-outlined text-body-md">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="bg-surface-container-lowest/70 hover:bg-surface-container-low transition-colors">
+<td class="py-3.5 px-4 text-center font-label-sm text-on-surface-variant">04</td>
+<td class="py-3.5 px-4 font-mono font-label-sm text-on-surface-variant">978-602-06-1934-7</td>
+<td class="py-3.5 px-4">
+<div class="font-headline-sm text-headline-sm text-on-surface text-base">Petualangan Sains: Mengapa Gunung Sinabung Batuk?</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Oleh: Tim Ekspedisi Vulkanologi Sumut • Mitra Ilmu (2019)</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="px-2.5 py-1 rounded-full bg-secondary-fixed text-secondary font-label-sm text-label-sm">Sains &amp; Alam</span>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-body-md text-on-surface-variant">shelves</span>
+<span class="font-label-md text-label-md text-on-surface">Rak C2 - A</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between text-label-sm font-label-sm">
+<span class="text-primary font-semibold">5 dari 5 di Rak</span>
+<span class="text-on-surface-variant">0 Dipinjam</span>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 100%"></div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 text-center">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Sinkron #15
+              </span>
+</td>
+<td class="py-3.5 px-4 text-center">
+<div class="flex items-center justify-center gap-1">
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-primary hover:bg-primary-fixed transition-colors" title="Pinjamkan Buku">
+<span class="material-symbols-outlined text-body-md">front_hand</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-secondary hover:bg-secondary-fixed transition-colors" title="Edit Metadata">
+<span class="material-symbols-outlined text-body-md">edit_note</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-tertiary hover:bg-tertiary-fixed transition-colors" title="Hapus Baris">
+<span class="material-symbols-outlined text-body-md">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3.5 px-4 text-center font-label-sm text-on-surface-variant">05</td>
+<td class="py-3.5 px-4 font-mono font-label-sm text-on-surface-variant">978-979-30-6218-0</td>
+<td class="py-3.5 px-4">
+<div class="font-headline-sm text-headline-sm text-on-surface text-base">Kamus Bergambar 3 Bahasa: Indonesia - Batak - Inggris</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Oleh: Tim Bahasa Daerah Balai Pustaka Siantar (2023)</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="px-2.5 py-1 rounded-full bg-surface-container-highest text-on-surface font-label-sm text-label-sm">Ensiklopedi &amp; Kamus</span>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-body-md text-on-surface-variant">shelves</span>
+<span class="font-label-md text-label-md text-on-surface">Rak D1 - B</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between text-label-sm font-label-sm">
+<span class="text-tertiary font-semibold">0 dari 8 di Rak</span>
+<span class="text-tertiary font-bold">8 Dipinjam</span>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden">
+<div class="bg-tertiary h-full rounded-full" style="width: 0%"></div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 text-center">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed-variant font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Antre Sync
+              </span>
+</td>
+<td class="py-3.5 px-4 text-center">
+<div class="flex items-center justify-center gap-1">
+<button class="p-1.5 rounded-lg opacity-40 cursor-not-allowed text-on-surface-variant" disabled="" title="Stok Habis">
+<span class="material-symbols-outlined text-body-md">front_hand</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-secondary hover:bg-secondary-fixed transition-colors" title="Edit Metadata">
+<span class="material-symbols-outlined text-body-md">edit_note</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-tertiary hover:bg-tertiary-fixed transition-colors" title="Hapus Baris">
+<span class="material-symbols-outlined text-body-md">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 6 -->
+<tr class="bg-surface-container-lowest/70 hover:bg-surface-container-low transition-colors">
+<td class="py-3.5 px-4 text-center font-label-sm text-on-surface-variant">06</td>
+<td class="py-3.5 px-4 font-mono font-label-sm text-on-surface-variant">978-602-12-8801-9</td>
+<td class="py-3.5 px-4">
+<div class="font-headline-sm text-headline-sm text-on-surface text-base">Komik Sejarah: Pahlawan Raja Siantar Sang Naualuh</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Oleh: Ardi Damanik &amp; Studio Siantar Komik (2022)</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="px-2.5 py-1 rounded-full bg-primary-fixed text-primary font-label-sm text-label-sm">Komik Edukasi</span>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-body-md text-on-surface-variant">shelves</span>
+<span class="font-label-md text-label-md text-on-surface">Rak B1 - C</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between text-label-sm font-label-sm">
+<span class="text-primary font-semibold">14 dari 20 di Rak</span>
+<span class="text-on-surface-variant">6 Dipinjam</span>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 70%"></div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 text-center">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Sinkron #17
+              </span>
+</td>
+<td class="py-3.5 px-4 text-center">
+<div class="flex items-center justify-center gap-1">
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-primary hover:bg-primary-fixed transition-colors" title="Pinjamkan Buku">
+<span class="material-symbols-outlined text-body-md">front_hand</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-secondary hover:bg-secondary-fixed transition-colors" title="Edit Metadata">
+<span class="material-symbols-outlined text-body-md">edit_note</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-tertiary hover:bg-tertiary-fixed transition-colors" title="Hapus Baris">
+<span class="material-symbols-outlined text-body-md">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 7 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3.5 px-4 text-center font-label-sm text-on-surface-variant">07</td>
+<td class="py-3.5 px-4 font-mono font-label-sm text-on-surface-variant">978-602-09-4455-2</td>
+<td class="py-3.5 px-4">
+<div class="font-headline-sm text-headline-sm text-on-surface text-base">Aku Ingin Tahu: Rahasia Hutan Lindung Bah Bolon</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Oleh: Yayasan Pelestari Simalungun • Hijau Lestari (2020)</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="px-2.5 py-1 rounded-full bg-secondary-fixed text-secondary font-label-sm text-label-sm">Sains &amp; Alam</span>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-body-md text-on-surface-variant">shelves</span>
+<span class="font-label-md text-label-md text-on-surface">Rak C1 - A</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between text-label-sm font-label-sm">
+<span class="text-primary font-semibold">9 dari 10 di Rak</span>
+<span class="text-on-surface-variant">1 Dipinjam</span>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 90%"></div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 text-center">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Sinkron #18
+              </span>
+</td>
+<td class="py-3.5 px-4 text-center">
+<div class="flex items-center justify-center gap-1">
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-primary hover:bg-primary-fixed transition-colors" title="Pinjamkan Buku">
+<span class="material-symbols-outlined text-body-md">front_hand</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-secondary hover:bg-secondary-fixed transition-colors" title="Edit Metadata">
+<span class="material-symbols-outlined text-body-md">edit_note</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-tertiary hover:bg-tertiary-fixed transition-colors" title="Hapus Baris">
+<span class="material-symbols-outlined text-body-md">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 8 -->
+<tr class="bg-surface-container-lowest/70 hover:bg-surface-container-low transition-colors">
+<td class="py-3.5 px-4 text-center font-label-sm text-on-surface-variant">08</td>
+<td class="py-3.5 px-4 font-mono font-label-sm text-on-surface-variant">978-623-01-0982-1</td>
+<td class="py-3.5 px-4">
+<div class="font-headline-sm text-headline-sm text-on-surface text-base">Seri Matematika Ceria: Belajar Berhitung di Kebun Teh Sidamanik</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Oleh: Marlina Sinaga, M.Pd • Edukasi Siantar Cerdas (2021)</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="px-2.5 py-1 rounded-full bg-primary-fixed text-primary font-label-sm text-label-sm">Komik Edukasi</span>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-body-md text-on-surface-variant">shelves</span>
+<span class="font-label-md text-label-md text-on-surface">Rak A1 - D</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between text-label-sm font-label-sm">
+<span class="text-primary font-semibold">11 dari 12 di Rak</span>
+<span class="text-on-surface-variant">1 Dipinjam</span>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 92%"></div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 text-center">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Sinkron #19
+              </span>
+</td>
+<td class="py-3.5 px-4 text-center">
+<div class="flex items-center justify-center gap-1">
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-primary hover:bg-primary-fixed transition-colors" title="Pinjamkan Buku">
+<span class="material-symbols-outlined text-body-md">front_hand</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-secondary hover:bg-secondary-fixed transition-colors" title="Edit Metadata">
+<span class="material-symbols-outlined text-body-md">edit_note</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-tertiary hover:bg-tertiary-fixed transition-colors" title="Hapus Baris">
+<span class="material-symbols-outlined text-body-md">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 9 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3.5 px-4 text-center font-label-sm text-on-surface-variant">09</td>
+<td class="py-3.5 px-4 font-mono font-label-sm text-on-surface-variant">978-602-88-7711-4</td>
+<td class="py-3.5 px-4">
+<div class="font-headline-sm text-headline-sm text-on-surface text-base">Ensiklopedia Flora Khas Dataran Tinggi Sumatera</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Oleh: Prof. B. Saragih • Penerbit Obor Ilmu (2018)</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="px-2.5 py-1 rounded-full bg-surface-container-highest text-on-surface font-label-sm text-label-sm">Ensiklopedi &amp; Kamus</span>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-body-md text-on-surface-variant">shelves</span>
+<span class="font-label-md text-label-md text-on-surface">Rak D4 - A</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between text-label-sm font-label-sm">
+<span class="text-tertiary font-semibold">2 dari 4 di Rak</span>
+<span class="text-on-surface-variant">2 Dipinjam</span>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden">
+<div class="bg-tertiary h-full rounded-full" style="width: 50%"></div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 text-center">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Sinkron #20
+              </span>
+</td>
+<td class="py-3.5 px-4 text-center">
+<div class="flex items-center justify-center gap-1">
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-primary hover:bg-primary-fixed transition-colors" title="Pinjamkan Buku">
+<span class="material-symbols-outlined text-body-md">front_hand</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-secondary hover:bg-secondary-fixed transition-colors" title="Edit Metadata">
+<span class="material-symbols-outlined text-body-md">edit_note</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-tertiary hover:bg-tertiary-fixed transition-colors" title="Hapus Baris">
+<span class="material-symbols-outlined text-body-md">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 10 -->
+<tr class="bg-surface-container-lowest/70 hover:bg-surface-container-low transition-colors">
+<td class="py-3.5 px-4 text-center font-label-sm text-on-surface-variant">10</td>
+<td class="py-3.5 px-4 font-mono font-label-sm text-on-surface-variant">978-602-54-1188-7</td>
+<td class="py-3.5 px-4">
+<div class="font-headline-sm text-headline-sm text-on-surface text-base">Legenda Danau Siombak &amp; Sungai Bah Bolon</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Oleh: Sahat Manik • Balai Bahasa Sumut Mandiri (2022)</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="px-2.5 py-1 rounded-full bg-tertiary-fixed text-tertiary font-label-sm text-label-sm">Cerita Rakyat Simalungun</span>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-body-md text-on-surface-variant">shelves</span>
+<span class="font-label-md text-label-md text-on-surface">Rak B3 - C</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between text-label-sm font-label-sm">
+<span class="text-primary font-semibold">6 dari 6 di Rak</span>
+<span class="text-on-surface-variant">0 Dipinjam</span>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 100%"></div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 text-center">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Sinkron #21
+              </span>
+</td>
+<td class="py-3.5 px-4 text-center">
+<div class="flex items-center justify-center gap-1">
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-primary hover:bg-primary-fixed transition-colors" title="Pinjamkan Buku">
+<span class="material-symbols-outlined text-body-md">front_hand</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-secondary hover:bg-secondary-fixed transition-colors" title="Edit Metadata">
+<span class="material-symbols-outlined text-body-md">edit_note</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-tertiary hover:bg-tertiary-fixed transition-colors" title="Hapus Baris">
+<span class="material-symbols-outlined text-body-md">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination & Meta Footer -->
+<div class="px-space-md py-3.5 bg-surface-container-low flex flex-col sm:flex-row items-center justify-between gap-3 text-label-sm font-label-sm text-on-surface-variant">
+<div>
+        Menampilkan data baris ke <strong class="text-on-surface">1 - 10</strong> dari total <strong class="text-on-surface">1.850 buku</strong> terdata di Google Sheets
+      </div>
+<div class="flex items-center gap-1">
+<button class="px-3 py-1.5 rounded bg-surface-container-lowest text-on-surface-variant hover:text-on-surface transition-colors opacity-50 cursor-not-allowed" disabled="">Sebelumnya</button>
+<button class="px-3 py-1.5 rounded bg-primary text-on-primary font-semibold">1</button>
+<button class="px-3 py-1.5 rounded bg-surface-container-lowest text-on-surface hover:bg-surface-container transition-colors">2</button>
+<button class="px-3 py-1.5 rounded bg-surface-container-lowest text-on-surface hover:bg-surface-container transition-colors">3</button>
+<span class="px-2">...</span>
+<button class="px-3 py-1.5 rounded bg-surface-container-lowest text-on-surface hover:bg-surface-container transition-colors">185</button>
+<button class="px-3 py-1.5 rounded bg-surface-container-lowest text-on-surface hover:bg-surface-container transition-colors">Berikutnya</button>
+</div>
+</div>
+</div>
+<!-- Dual Column Lower Layout: Rapid Data Entry Section & Shelf Spatial Map -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg">
+<!-- Quick Entry Form Section (Span 7) -->
+<div class="xl:col-span-7 bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-3 mb-space-md bg-surface-container-low/50 -mx-space-lg -mt-space-lg px-space-lg pt-4 rounded-t-xl">
+<div class="flex items-center gap-2">
+<span class="w-8 h-8 rounded-lg bg-primary-fixed flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-body-md">post_add</span>
+</span>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Entri Buku Baru ke Google Sheets</h2>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Menulis langsung ke baris paling mutakhir sheet 'Katalog_Buku'</span>
+</div>
+</div>
+<span class="text-label-sm font-label-sm text-secondary bg-secondary-fixed px-2.5 py-1 rounded-full">Koneksi Aktif</span>
+</div>
+<form class="space-y-4" id="book-entry-form">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1">Kode ISBN / Barcode Komunitas</label>
+<input class="w-full px-3.5 py-2.5 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary transition-all" id="new-isbn" placeholder="Contoh: 978-602-xxx-xxx-x" required="" type="text"/>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1">Kategori Literasi</label>
+<select class="w-full px-3.5 py-2.5 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary transition-all cursor-pointer" id="new-category">
+<option value="Sains &amp; Alam">Sains &amp; Alam</option>
+<option value="Fabel &amp; Dongeng">Fabel &amp; Dongeng</option>
+<option value="Komik Edukasi">Komik Edukasi</option>
+<option value="Cerita Rakyat Simalungun">Cerita Rakyat Simalungun</option>
+<option value="Ensiklopedi &amp; Kamus">Ensiklopedi &amp; Kamus</option>
+<option value="Sastra Remaja">Sastra Remaja</option>
+</select>
+</div>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1">Judul Lengkap Buku</label>
+<input class="w-full px-3.5 py-2.5 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary transition-all" id="new-title" placeholder="Contoh: Petualangan Menjelajah Hutan Harangan Simalungun" required="" type="text"/>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1">Pengarang / Ilustrator</label>
+<input class="w-full px-3.5 py-2.5 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary transition-all" id="new-author" placeholder="Contoh: Jonner Damanik" required="" type="text"/>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1">Penerbit &amp; Tahun Terbit</label>
+<input class="w-full px-3.5 py-2.5 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary transition-all" id="new-publisher" placeholder="Contoh: Pustaka Siantar, 2023" type="text"/>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1">Jumlah Eksemplar</label>
+<input class="w-full px-3.5 py-2.5 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary transition-all" id="new-copies" min="1" required="" type="number" value="5"/>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1">Posisi Rak Penyimpanan</label>
+<select class="w-full px-3.5 py-2.5 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary transition-all cursor-pointer" id="new-shelf">
+<option value="Rak A1">Rak A1 (Dini / Balita)</option>
+<option value="Rak A2">Rak A2 (Fabel Nusantara)</option>
+<option value="Rak B1">Rak B1 (Komik Edukasi)</option>
+<option value="Rak B3">Rak B3 (Cerita Rakyat Simalungun)</option>
+<option value="Rak C1">Rak C1 (Sains Alam)</option>
+<option value="Rak C2">Rak C2 (Flora Fauna)</option>
+<option value="Rak D1">Rak D1 (Kamus 3 Bahasa)</option>
+<option value="Rak D4">Rak D4 (Ensiklopedia Umum)</option>
+</select>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1">Sumber Pengadaan</label>
+<select class="w-full px-3.5 py-2.5 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary transition-all cursor-pointer" id="new-source">
+<option value="Donasi Publik">Donasi Publik</option>
+<option value="Program CSR Bank Sumut">Program CSR Mitra</option>
+<option value="Kas Swadaya Komunitas">Kas Swadaya</option>
+<option value="Hadiah Festival Literasi">Hadiah Festival</option>
+</select>
+</div>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1">Catatan Kondisi Fisik &amp; Keterangan Rak</label>
+<textarea class="w-full px-3.5 py-2 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary transition-all" id="new-notes" placeholder="Catatan kondisi buku baru atau petunjuk khusus peminjaman..." rows="2"></textarea>
+</div>
+<div class="flex items-center justify-between pt-2">
+<div class="flex items-center gap-2">
+<input checked="" class="w-4 h-4 accent-primary cursor-pointer" id="sync-now" type="checkbox"/>
+<label class="font-label-sm text-label-sm text-on-surface cursor-pointer select-none" for="sync-now">Kirim sinyal webhook real-time ke lembar tab Google Sheets</label>
+</div>
+<button class="flex items-center gap-2 px-space-lg py-2.5 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-lg text-label-lg shadow-md hover:shadow-lg transition-all" type="submit">
+<span class="material-symbols-outlined text-body-md">cloud_sync</span>
+<span>Simpan ke Google Sheets</span>
+</button>
+</div>
+</form>
+</div>
+<div class="hidden mt-4 p-3 rounded-lg bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm flex items-center gap-2" id="form-feedback">
+<span class="material-symbols-outlined text-body-md">check_circle</span>
+<span>Data berhasil ditambahkan ke lembar 'Katalog_Buku' (Baris #1851)!</span>
+</div>
+</div>
+<!-- Visual Rack Map & Shelf Distribution (Span 5) -->
+<div class="xl:col-span-5 flex flex-col gap-space-md">
+<!-- Shelf Blueprint Panel -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-headline-sm">shelves</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Tata Letak Fisik Balai Baca</h3>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Ruang Baca Siantar Pusat</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-justify mb-4">
+          Pemetaan lemari rak buku bertujuan memudahkan relawan mencari eksemplar fisik sesuai kode baris Google Sheets. Silakan pilih rak untuk melihat komposisi buku.
+        </p>
+<!-- Grid of Racks -->
+<div class="grid grid-cols-2 gap-3 mb-4">
+<!-- Zone A -->
+<div class="p-3 rounded-lg bg-primary-fixed/40 hover:bg-primary-fixed transition-colors cursor-pointer group">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-lg text-label-lg text-primary font-bold">ZONA A</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Rak A1 - A4</span>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface font-semibold">Anak Usia Dini &amp; Dongeng</div>
+<div class="flex justify-between items-center text-label-sm text-on-surface-variant mt-2">
+<span>520 Buku</span>
+<span class="text-primary font-semibold">475 Siap</span>
+</div>
+</div>
+<!-- Zone B -->
+<div class="p-3 rounded-lg bg-tertiary-fixed/40 hover:bg-tertiary-fixed transition-colors cursor-pointer group">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-lg text-label-lg text-tertiary font-bold">ZONA B</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Rak B1 - B4</span>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface font-semibold">Cerita Simalungun &amp; Komik</div>
+<div class="flex justify-between items-center text-label-sm text-on-surface-variant mt-2">
+<span>440 Buku</span>
+<span class="text-tertiary font-semibold">380 Siap</span>
+</div>
+</div>
+<!-- Zone C -->
+<div class="p-3 rounded-lg bg-secondary-fixed/40 hover:bg-secondary-fixed transition-colors cursor-pointer group">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-lg text-label-lg text-secondary font-bold">ZONA C</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Rak C1 - C4</span>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface font-semibold">Sains, Flora &amp; Fauna</div>
+<div class="flex justify-between items-center text-label-sm text-on-surface-variant mt-2">
+<span>490 Buku</span>
+<span class="text-secondary font-semibold">415 Siap</span>
+</div>
+</div>
+<!-- Zone D -->
+<div class="p-3 rounded-lg bg-surface-container-high hover:bg-surface-container-highest transition-colors cursor-pointer group">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-lg text-label-lg text-on-surface font-bold">ZONA D</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Rak D1 - D4</span>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface font-semibold">Kamus &amp; Ensiklopedia</div>
+<div class="flex justify-between items-center text-label-sm text-on-surface-variant mt-2">
+<span>400 Buku</span>
+<span class="text-on-surface font-semibold">320 Siap</span>
+</div>
+</div>
+</div>
+<div class="p-3 rounded-lg bg-surface-container-low text-justify font-body-sm text-body-sm text-on-surface-variant">
+<strong class="text-on-surface">Keterangan Khusus Balai:</strong> Buku bertanda stiker merah di rak D1 hanya dapat dibaca di tempat dan wajib dicatat peminjamannya melalui sistem relawan untuk keperluan inventarisasi bulanan.
+        </div>
+</div>
+<!-- Sync Diagnostic Box -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Diagnostik Saluran Google Sheets</span>
+<span class="font-label-sm text-label-sm text-secondary">Latency: 142ms</span>
+</div>
+<div class="space-y-2">
+<div class="flex items-center justify-between text-body-sm text-on-surface-variant">
+<span>Sinkronisasi Terakhir</span>
+<span class="font-label-sm text-on-surface font-semibold">Hari ini, 15:42 WIB</span>
+</div>
+<div class="flex items-center justify-between text-body-sm text-on-surface-variant">
+<span>Baris Terisi di Spreadsheet</span>
+<span class="font-label-sm text-on-surface font-semibold">1.850 / 5.000 batas</span>
+</div>
+<div class="flex items-center justify-between text-body-sm text-on-surface-variant">
+<span>Otentikasi Akun Layanan</span>
+<span class="font-label-sm text-secondary font-semibold">siantar-literasi@sheets.gserviceaccount.com</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Interactive Inline Script for Micro-interactions -->
+<script>
+    (function() {
+      // Filter filtering mock behavior
+      const searchInput = document.getElementById('search-input');
+      const filterCategory = document.getElementById('filter-category');
+      const filterShelf = document.getElementById('filter-shelf');
+      const btnReset = document.getElementById('btn-reset-filters');
+      const tableRows = document.querySelectorAll('#catalog-rows tr');
+
+      function filterTable() {
+        const query = searchInput.value.toLowerCase();
+        const selectedCat = filterCategory.value.toLowerCase();
+        const selectedShelf = filterShelf.value.toLowerCase();
+
+        tableRows.forEach(row => {
+          const text = row.innerText.toLowerCase();
+          const matchesQuery = query === '' || text.includes(query);
+          const matchesCategory = selectedCat === 'all' || text.includes(selectedCat.replace('&amp;', '&'));
+          const matchesShelf = selectedShelf === 'all' || text.includes(selectedShelf);
+
+          if (matchesQuery && matchesCategory && matchesShelf) {
+            row.style.display = '';
+          } else {
+            row.style.display = 'none';
+          }
+        });
+      }
+
+      searchInput.addEventListener('input', filterTable);
+      filterCategory.addEventListener('change', filterTable);
+      filterShelf.addEventListener('change', filterTable);
+
+      btnReset.addEventListener('click', () => {
+        searchInput.value = '';
+        filterCategory.value = 'all';
+        filterShelf.value = 'all';
+        document.getElementById('filter-status').value = 'all';
+        tableRows.forEach(row => row.style.display = '');
+      });
+
+      // Quick entry form submit feedback
+      const form = document.getElementById('book-entry-form');
+      const feedback = document.getElementById('form-feedback');
+      const openModalBtn = document.getElementById('open-entry-modal');
+
+      openModalBtn.addEventListener('click', () => {
+        form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.getElementById('new-title').focus();
+      });
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        feedback.classList.remove('hidden');
+        feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        
+        // Reset basic fields
+        document.getElementById('new-isbn').value = '';
+        document.getElementById('new-title').value = '';
+        document.getElementById('new-author').value = '';
+        document.getElementById('new-notes').value = '';
+
+        setTimeout(() => {
+          feedback.classList.add('hidden');
+        }, 5000);
+      });
+
+      // Quick toast on import
+      const btnImport = document.getElementById('btn-import-csv');
+      btnImport.addEventListener('click', () => {
+        alert('Fitur Import CSV: Siapkan berkas berekstensi .csv berformat (ISBN, Judul, Pengarang, Kategori, Rak, Stok). Berkas akan dipetakan langsung ke Google Sheets.');
+      });
+    })();
+  </script>
+</div></main></div></body></html>

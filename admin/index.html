@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Panel Admin — Rumah Baca Pelita Bangsa</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="../assets/img/logo.png">
+  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+  <script src="../assets/js/tailwind-config.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/custom.css">
+  <script>window.PB = { BASE: '../' };
+    // Mode demo lokal tanpa Apps Script: di console jalankan localStorage.pb_admin_dev = '1' lalu muat ulang.
+    if (/^(localhost|127\.0\.0\.1)$/.test(location.hostname) && localStorage.getItem('pb_admin_dev')) document.write('<script src="../dev/mock-admin.js" defer><\/script>');
+  </script>
+  <script src="../assets/js/config.js" defer></script>
+  <script src="../assets/js/ui.js" defer></script>
+  <script src="../assets/js/api.js" defer></script>
+  <script src="../assets/js/admin.js" defer></script>
+</head>
+<body class="bg-surface font-body-md text-body-md text-on-surface antialiased min-h-screen">
+
+<!-- ===== LOGIN ===== -->
+<div id="view-login" class="min-h-screen flex items-center justify-center px-gutter py-space-xl bg-gradient-to-b from-surface-container-low via-surface to-background">
+  <div class="w-full max-w-md bg-surface-container-lowest rounded-2xl shadow-xl p-space-lg sm:p-space-xl">
+    <div class="flex items-center gap-3 mb-space-lg">
+      <img src="../assets/img/logo.png" alt="Logo" class="w-12 h-12 rounded-xl object-cover">
+      <div><h1 class="font-headline-sm text-headline-sm text-primary leading-tight">Portal Admin</h1><p class="font-label-sm text-label-sm text-on-surface-variant">Rumah Baca Pelita Bangsa · Database Google Sheets</p></div>
+    </div>
+    <form id="form-login" class="flex flex-col gap-space-md" novalidate>
+      <div>
+        <label class="block font-label-md text-label-md text-on-surface mb-1.5" for="login-user">Username</label>
+        <div class="relative"><input id="login-user" type="text" autocomplete="username" autocapitalize="none" required class="w-full h-11 pl-10 pr-3.5 rounded-lg bg-surface-container-low border-0 text-on-surface font-body-sm focus:ring-2 focus:ring-secondary" placeholder="Admin"><span class="material-symbols-outlined absolute left-3 top-2.5 text-on-surface-variant text-[20px]">person</span></div>
+      </div>
+      <div>
+        <label class="block font-label-md text-label-md text-on-surface mb-1.5" for="login-pw">Password</label>
+        <div class="relative"><input id="login-pw" type="password" autocomplete="current-password" required class="w-full h-11 pl-10 pr-3.5 rounded-lg bg-surface-container-low border-0 text-on-surface font-body-sm focus:ring-2 focus:ring-secondary" placeholder="••••••••"><span class="material-symbols-outlined absolute left-3 top-2.5 text-on-surface-variant text-[20px]">lock</span></div>
+      </div>
+      <div id="login-err" class="hidden p-space-sm rounded-lg bg-error-container text-on-error-container font-body-sm text-body-sm"></div>
+      <button id="btn-login" type="submit" class="w-full h-12 flex items-center justify-center gap-2 bg-primary hover:bg-primary-container text-on-primary font-headline-sm rounded-lg shadow-sm active:scale-[0.98] transition-transform disabled:opacity-60"><span class="material-symbols-outlined text-[20px]">login</span><span>Masuk ke Panel</span></button>
+    </form>
+    <p class="font-label-sm text-label-sm text-on-surface-variant mt-space-md justify">Username &amp; password diatur di Google Sheets, tab <strong>ADMIN</strong>. Sesi berlaku 6 jam.</p>
+    <a class="inline-flex items-center gap-1 mt-space-sm py-2.5 font-label-md text-label-md text-secondary hover:underline" href="../"><span class="material-symbols-outlined text-[18px]">arrow_back</span>Kembali ke web publik</a>
+  </div>
+</div>
+
+<!-- ===== APP SHELL ===== -->
+<div id="app" class="hidden">
+<aside class="hidden lg:flex fixed left-0 top-0 h-full w-72 bg-surface-container-low z-50 flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
+  <div class="flex flex-col">
+    <div class="h-16 px-space-lg flex items-center gap-3 bg-surface-container-lowest">
+      <div class="w-10 h-10 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-headline-sm">auto_stories</span></div>
+      <div class="flex flex-col"><span class="font-label-lg text-label-lg text-primary leading-tight">Pelita Bangsa</span><span class="font-label-sm text-label-sm text-on-surface-variant">Siantar – Simalungun</span></div>
+    </div>
+    <div class="p-space-md">
+      <div class="bg-surface-container-lowest rounded-lg p-space-sm flex items-center justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
+        <div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-secondary animate-pulse" data-status-dot></span><span class="font-label-sm text-label-sm text-on-surface">Google Sheets</span></div>
+        <span class="font-label-sm text-label-sm text-secondary bg-secondary-fixed px-2 py-0.5 rounded-full" data-status-text>Terhubung</span>
+      </div>
+    </div>
+    <nav id="side-nav" class="flex flex-col gap-1 px-space-md">
+      <a href="#ringkasan" data-nav="ringkasan" class="flex items-center gap-3 px-space-md py-space-sm rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-headline-sm">dashboard</span>Ringkasan &amp; Analitik</a>
+      <a href="#berita" data-nav="berita" class="flex items-center gap-3 px-space-md py-space-sm rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-headline-sm">article</span>Kelola Berita &amp; Artikel</a>
+      <a href="#galeri" data-nav="galeri" class="flex items-center gap-3 px-space-md py-space-sm rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-headline-sm">photo_library</span>Galeri &amp; Album Drive</a>
+      <a href="#buku" data-nav="buku" class="flex items-center gap-3 px-space-md py-space-sm rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-headline-sm">menu_book</span>Katalog Koleksi Buku</a>
+      <a href="#donatur" data-nav="donatur" class="flex items-center gap-3 px-space-md py-space-sm rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-headline-sm">volunteer_activism</span>Donatur &amp; Relawan</a>
+      <a href="#konfigurasi" data-nav="konfigurasi" class="flex items-center gap-3 px-space-md py-space-sm rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-headline-sm">sync_alt</span>Konfigurasi Sheets</a>
+    </nav>
+  </div>
+  <div class="p-space-md flex flex-col gap-2 bg-surface-container-low">
+    <a class="flex items-center gap-2 px-space-md py-space-sm rounded-lg font-label-md text-label-md text-secondary hover:bg-secondary-fixed hover:text-on-secondary-fixed transition-colors" href="../"><span class="material-symbols-outlined text-body-md">open_in_new</span>Kembali ke Web Publik</a>
+    <div class="flex items-center gap-3 p-space-sm rounded-lg bg-surface-container-lowest">
+      <img alt="" class="w-8 h-8 rounded-full object-cover" src="../assets/img/logo.png">
+      <div class="flex flex-col min-w-0 flex-1"><span class="font-label-md text-label-md text-on-surface truncate" data-user-nama>Pengurus Literasi</span><span class="font-label-sm text-label-sm text-on-surface-variant truncate" data-user-email>Admin</span></div>
+      <button data-logout class="p-1 rounded-lg text-on-surface-variant hover:text-tertiary hover:bg-tertiary-fixed transition-colors" title="Keluar sesi"><span class="material-symbols-outlined text-body-md">logout</span></button>
+    </div>
+  </div>
+</aside>
+
+<div class="lg:pl-72">
+  <header class="fixed top-0 left-0 lg:left-72 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-gutter lg:px-space-lg pt-safe">
+    <div class="flex items-center gap-3 min-w-0">
+      <div class="lg:hidden w-9 h-9 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-[20px]">auto_stories</span></div>
+      <div class="lg:hidden flex flex-col min-w-0"><span class="font-label-sm text-label-sm text-primary uppercase tracking-wider">Panel Admin</span><span class="font-headline-sm text-headline-sm text-on-surface leading-tight truncate">Pelita Bangsa</span></div>
+      <div class="hidden lg:flex items-center gap-2 text-on-surface-variant font-label-md text-label-md"><span class="material-symbols-outlined text-body-md text-primary">pin_drop</span><span>Pematang Siantar – Simalungun</span><span class="text-outline-variant">•</span><span>Sistem Manajemen Komunitas</span></div>
+    </div>
+    <div class="flex items-center gap-2 lg:gap-space-md">
+      <div class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm"><span class="material-symbols-outlined text-label-md text-secondary">cloud_done</span><span>Cache publik <span data-cache-ttl>10</span> mnt</span></div>
+      <button data-refresh class="p-2 rounded-full text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" title="Muat ulang data"><span class="material-symbols-outlined text-headline-sm" data-refresh-icon>sync</span></button>
+      <a class="p-2 rounded-full text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" title="Buka spreadsheet" target="_blank" rel="noopener" data-ss-link href="#"><span class="material-symbols-outlined text-headline-sm">table_chart</span></a>
+      <div class="hidden sm:block h-6 w-px bg-surface-container-highest"></div>
+      <div class="flex items-center gap-2 pl-1"><img alt="" class="w-8 h-8 rounded-full object-cover" src="../assets/img/logo.png"><span class="hidden lg:inline font-label-md text-label-md text-on-surface" data-user-nama>Admin</span></div>
+      <button data-logout class="lg:hidden p-2 rounded-full text-on-surface-variant hover:text-tertiary" title="Keluar"><span class="material-symbols-outlined text-headline-sm">logout</span></button>
+    </div>
+  </header>
+
+  <main class="relative pt-16 w-full bg-surface px-gutter lg:px-space-lg pb-24 lg:pb-space-xl min-h-screen">
+    <!-- chip nav mobile -->
+    <div class="lg:hidden flex items-center gap-2 overflow-x-auto py-space-sm -mx-gutter px-gutter no-scrollbar" id="chip-nav">
+      <a href="#ringkasan" data-nav="ringkasan" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm whitespace-nowrap"><span class="material-symbols-outlined text-[16px]">dashboard</span><span>Ringkasan</span></a>
+      <a href="#berita" data-nav="berita" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm whitespace-nowrap"><span class="material-symbols-outlined text-[16px]">edit_note</span><span>Kelola Berita</span></a>
+      <a href="#galeri" data-nav="galeri" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm whitespace-nowrap"><span class="material-symbols-outlined text-[16px]">photo_library</span><span>Galeri</span></a>
+      <a href="#buku" data-nav="buku" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm whitespace-nowrap"><span class="material-symbols-outlined text-[16px]">menu_book</span><span>Katalog Buku</span></a>
+      <a href="#donatur" data-nav="donatur" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm whitespace-nowrap"><span class="material-symbols-outlined text-[16px]">groups</span><span>Donatur &amp; Relawan</span></a>
+      <a href="#konfigurasi" data-nav="konfigurasi" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm whitespace-nowrap"><span class="material-symbols-outlined text-[16px]">database</span><span>Database API</span></a>
+    </div>
+    <div id="app-err" class="hidden mb-space-md p-space-md rounded-xl bg-error-container text-on-error-container font-body-sm text-body-sm flex items-start gap-2"><span class="material-symbols-outlined">error</span><span data-msg></span></div>
+
+    <!-- ===== RINGKASAN & ANALITIK ===== -->
+    <section data-view="ringkasan" class="hidden flex-col w-full pt-space-sm">
+      <div class="relative w-full rounded-xl bg-surface-container-lowest p-space-md lg:p-space-lg shadow-sm mb-space-lg overflow-hidden">
+        <div class="absolute -right-16 -top-16 w-80 h-80 rounded-full bg-primary-fixed/25 blur-3xl pointer-events-none"></div>
+        <div class="relative z-10 flex flex-col xl:flex-row items-start xl:items-center justify-between gap-space-lg">
+          <div class="flex flex-col gap-1 max-w-3xl">
+            <div class="flex items-center gap-3 flex-wrap"><span class="px-2.5 py-1 rounded-full bg-primary-fixed font-label-sm text-label-sm text-on-primary-fixed tracking-wide uppercase">Ringkasan Eksekutif</span><span class="flex items-center gap-1.5 font-label-sm text-label-sm text-secondary bg-surface-container-low px-3 py-1 rounded-full"><span class="w-2 h-2 rounded-full bg-secondary animate-ping"></span><span data-ss-nama>Google Sheets</span> (Live)</span></div>
+            <h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight mt-1">Pantauan Kinerja Operasional &amp; Literasi Komunitas</h1>
+            <p class="font-body-md text-body-md text-on-surface-variant justify">Konsolidasi metrik operasional Rumah Baca Pelita Bangsa. Seluruh angka dihitung langsung dari tab Google Sheets: katalog buku, donasi, relawan, agenda, dan berita.</p>
+          </div>
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0 w-full xl:w-auto no-print">
+            <div class="bg-surface-container-low px-space-md py-space-sm rounded-lg flex items-center gap-3"><span class="material-symbols-outlined text-headline-sm text-secondary">update</span><div class="flex flex-col"><span class="font-label-sm text-label-sm text-on-surface-variant">Data dihitung</span><span class="font-label-md text-label-md text-on-surface" id="rk-waktu">—</span></div></div>
+            <button data-refresh class="flex items-center justify-center gap-2 px-space-md py-2.5 rounded-lg bg-surface-container-high text-on-surface font-label-lg text-label-lg hover:bg-surface-container-highest transition-all shadow-sm"><span class="material-symbols-outlined text-body-lg">sync</span><span>Refresh Data</span></button>
+            <button onclick="window.print()" class="flex items-center justify-center gap-2 px-space-md py-2.5 rounded-lg bg-primary text-on-primary font-label-lg text-label-lg hover:bg-primary-container transition-all shadow-sm"><span class="material-symbols-outlined text-body-lg">print</span><span>Cetak Laporan</span></button>
+          </div>
+        </div>
+      </div>
+      <div id="rk-kpi" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-gutter mb-space-lg"></div>
+      <div class="bg-surface-container-lowest p-space-md lg:p-space-lg rounded-xl shadow-sm mb-space-lg">
+        <div class="flex items-center justify-between mb-2"><div class="flex items-center gap-2"><span class="material-symbols-outlined text-headline-sm text-secondary">travel_explore</span><h2 class="font-headline-sm text-headline-sm text-on-surface font-bold">Pengunjung Website</h2></div><span class="font-label-sm text-label-sm text-on-surface-variant bg-surface-container-low px-2.5 py-1 rounded">Tab KUNJUNGAN</span></div>
+        <p class="font-body-sm text-body-sm text-on-surface-variant justify mb-4">Satu perangkat dihitung sekali per hari (harian) dan sekali per bulan (bulanan). Kunjungan ke panel admin tidak dihitung.</p>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+          <div id="rk-kj-angka" class="lg:col-span-5 grid grid-cols-2 gap-3"></div>
+          <div class="lg:col-span-7 flex flex-col">
+            <span class="font-label-md text-label-md text-on-surface uppercase tracking-wider font-semibold mb-2">Pengunjung harian · 14 hari terakhir</span>
+            <div id="rk-kj-harian" class="h-32 flex items-end gap-1.5"></div>
+            <span class="font-label-md text-label-md text-on-surface uppercase tracking-wider font-semibold mt-4 mb-2">Pengunjung bulanan</span>
+            <div id="rk-kj-bulanan" class="grid grid-cols-3 sm:grid-cols-6 gap-2"></div>
+          </div>
+        </div>
+      </div>
+      <div id="rk-banner" class="relative rounded-xl overflow-hidden mb-space-lg shadow-sm hidden">
+        <img class="w-full h-44 object-cover" alt="" referrerpolicy="no-referrer">
+        <div class="absolute inset-0 bg-gradient-to-r from-on-surface/90 via-on-surface/65 to-transparent flex items-center px-space-lg">
+          <div class="max-w-xl"><span class="font-label-sm text-label-sm text-primary-fixed uppercase tracking-widest font-bold">Misi Literasi Tanpa Batas</span><p class="font-headline-sm text-headline-sm text-on-primary font-bold mt-1" data-profil="tagline"></p><p class="font-body-sm text-body-sm text-surface-container-high/90 mt-1 clamp-2" data-profil="deskripsi_singkat"></p></div>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter mb-space-lg">
+        <div class="lg:col-span-5 bg-surface-container-lowest p-space-md lg:p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2"><h2 class="font-headline-sm text-headline-sm text-on-surface font-bold">Komposisi Kategori Koleksi</h2><span class="material-symbols-outlined text-headline-sm text-primary">pie_chart</span></div>
+            <p class="font-body-sm text-body-sm text-on-surface-variant justify mb-4">Proporsi eksemplar buku per kategori literasi berdasarkan tab BUKU.</p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-6 my-2">
+              <div class="relative w-44 h-44 flex items-center justify-center shrink-0"><svg id="rk-donut" class="w-full h-full -rotate-90" viewBox="0 0 100 100"></svg><div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none"><span class="font-headline-md text-headline-md text-on-surface font-bold leading-tight" id="rk-donut-total">0</span><span class="font-label-sm text-label-sm text-on-surface-variant">Eksemplar</span></div></div>
+              <div id="rk-legend" class="flex flex-col gap-2.5 w-full"></div>
+            </div>
+          </div>
+          <div class="mt-4 pt-3 bg-surface-container-low p-space-sm rounded-lg flex items-center justify-between"><span class="font-label-sm text-label-sm text-on-surface-variant">Judul terdata</span><span class="font-label-sm text-label-sm text-primary font-semibold" id="rk-judul">0</span></div>
+        </div>
+        <div class="lg:col-span-7 bg-surface-container-lowest p-space-md lg:p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
+              <div><h2 class="font-headline-sm text-headline-sm text-on-surface font-bold">Tren Donasi &amp; Publikasi</h2><span class="font-label-sm text-label-sm text-on-surface-variant" id="rk-tren-periode">6 bulan terakhir</span></div>
+              <div class="flex items-center gap-4"><span class="flex items-center gap-1.5 font-label-sm text-label-sm text-secondary"><span class="w-3 h-1 rounded-full bg-secondary"></span>Donasi masuk</span><span class="flex items-center gap-1.5 font-label-sm text-label-sm text-primary"><span class="w-3 h-1 rounded-full bg-primary"></span>Berita terbit</span></div>
+            </div>
+            <p class="font-body-sm text-body-sm text-on-surface-variant justify mb-4">Jumlah formulir donasi/relawan yang masuk dan berita yang diterbitkan per bulan.</p>
+            <div class="w-full h-56 pt-2"><svg id="rk-tren" class="w-full h-full overflow-visible" viewBox="0 0 600 200"></svg></div>
+          </div>
+          <div class="mt-4 pt-3 flex flex-wrap items-center justify-between gap-2 bg-surface-container-low px-3 py-2 rounded-lg font-label-sm text-label-sm text-on-surface-variant"><span>Agenda tahun ini: <strong class="text-on-surface" id="rk-agenda">0</strong></span><span>Album galeri: <strong class="text-on-surface" id="rk-galeri">0</strong></span><span class="text-secondary font-semibold" id="rk-donasi-baru"></span></div>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter mb-space-lg">
+        <div class="lg:col-span-7 bg-surface-container-lowest p-space-md lg:p-space-lg rounded-xl shadow-sm">
+          <div class="flex items-center justify-between mb-2"><div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-secondary"></span><h2 class="font-headline-sm text-headline-sm text-on-surface font-bold">Log Interaksi Google Sheets Terkini</h2></div><span class="font-label-sm text-label-sm text-on-surface-variant bg-surface-container-low px-2.5 py-1 rounded">8 terbaru</span></div>
+          <p class="font-body-sm text-body-sm text-on-surface-variant justify mb-4">Jejak perubahan dari panel admin dan formulir web (tab LOG).</p>
+          <div id="rk-log" class="flex flex-col gap-3"></div>
+          <div class="mt-4 flex items-center justify-between pt-2"><span class="font-label-sm text-label-sm text-on-surface-variant">Log lengkap ada di tab LOG</span><a href="#konfigurasi" class="font-label-md text-label-md text-secondary font-semibold flex items-center gap-1 py-2.5"><span>Buka Audit Log</span><span class="material-symbols-outlined text-body-sm">arrow_forward</span></a></div>
+        </div>
+        <div class="lg:col-span-5 bg-surface-container-lowest p-space-md lg:p-space-lg rounded-xl shadow-sm">
+          <div class="flex items-center justify-between mb-2"><h2 class="font-headline-sm text-headline-sm text-on-surface font-bold">Status Spreadsheet &amp; API</h2><span class="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm" id="rk-api-status"><span class="w-2 h-2 rounded-full bg-secondary"></span>Mengukur…</span></div>
+          <p class="font-body-sm text-body-sm text-on-surface-variant justify mb-4">Apps Script Web App sebagai backend read/write Rumah Baca Pelita Bangsa.</p>
+          <div class="grid grid-cols-2 gap-3 mb-4">
+            <div class="p-3 rounded-lg bg-surface-container-low flex flex-col"><span class="font-label-sm text-label-sm text-on-surface-variant">Latensi ping</span><span class="font-headline-md text-headline-md text-secondary font-bold mt-1" id="rk-latency">—</span><span class="font-label-sm text-label-sm text-on-surface-variant">dari browser ini</span></div>
+            <div class="p-3 rounded-lg bg-surface-container-low flex flex-col"><span class="font-label-sm text-label-sm text-on-surface-variant">Cache publik</span><span class="font-label-md text-label-md text-primary font-bold mt-2" id="rk-cache">—</span><span class="font-label-sm text-label-sm text-on-surface-variant mt-1">TTL <span data-cache-ttl>10</span> menit</span></div>
+          </div>
+          <span class="font-label-md text-label-md text-on-surface uppercase tracking-wider font-semibold block mb-2">Jumlah Baris per Tab</span>
+          <div id="rk-rows" class="flex flex-col gap-2.5"></div>
+        </div>
+      </div>
+      <section class="rounded-xl bg-surface-container-low p-space-md flex items-start gap-3"><div class="w-10 h-10 rounded-full bg-surface-container-lowest flex items-center justify-center shrink-0 shadow-sm text-primary"><span class="material-symbols-outlined text-headline-sm">info</span></div><p class="font-body-sm text-body-sm text-on-surface-variant justify">Laporan ini untuk monitoring internal pengurus dan donatur komunitas. Gunakan tombol Cetak Laporan untuk menyimpan sebagai PDF lewat dialog cetak browser.</p></section>
+    </section>
+
+    <!-- ===== KELOLA BERITA ===== -->
+    <section data-view="berita" class="hidden flex-col w-full gap-space-lg pt-space-sm">
+      <div class="w-full bg-surface-container-lowest rounded-xl p-space-md lg:p-space-lg shadow-sm flex flex-col lg:flex-row items-start lg:items-center justify-between gap-space-md">
+        <div class="flex items-start gap-space-md">
+          <div class="w-12 h-12 rounded-xl bg-secondary-container/20 text-secondary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-[28px]">table_view</span></div>
+          <div>
+            <div class="flex items-center gap-space-xs flex-wrap"><h1 class="font-headline-md text-headline-md text-on-surface">Pusat Manajemen Berita &amp; Artikel</h1><span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-label-sm text-label-sm"><span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>Live Sheets Sync</span></div>
+            <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Tersambung ke tab <strong class="text-on-surface">BERITA</strong> di spreadsheet <strong class="text-on-surface" data-ss-nama>Google Sheets</strong> • <span class="text-secondary font-semibold">Dimuat: <span id="br-waktu">—</span></span></p>
+          </div>
+        </div>
+        <div class="flex items-center gap-space-sm self-stretch sm:self-auto shrink-0">
+          <button data-reload="BERITA" class="flex-1 sm:flex-initial inline-flex items-center justify-center gap-space-xs px-space-md py-2.5 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-lg text-label-lg transition-colors shadow-sm"><span class="material-symbols-outlined text-[18px]">sync</span><span>Sinkronkan Ulang</span></button>
+          <a data-ss-link href="#" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-space-xs px-space-md py-2.5 rounded-lg bg-secondary text-on-secondary hover:bg-secondary/90 font-label-lg text-label-lg transition-colors shadow-sm"><span class="material-symbols-outlined text-[18px]">open_in_new</span><span class="hidden sm:inline">Spreadsheet Asli</span></a>
+        </div>
+      </div>
+      <div id="br-kpi" class="grid grid-cols-2 lg:grid-cols-4 gap-space-sm lg:gap-space-md"></div>
+      <div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg">
+        <div class="xl:col-span-8 bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+          <button type="button" id="br-toggle" class="w-full p-4 flex items-center justify-between bg-primary-container text-on-primary-container text-left xl:cursor-default">
+            <div class="flex items-center gap-2.5"><div class="w-8 h-8 rounded-full bg-on-primary-container/20 flex items-center justify-center"><span class="material-symbols-outlined text-[20px]">edit_note</span></div><div><h2 class="font-headline-sm text-headline-sm leading-none" id="br-form-title">Formulir Warta &amp; Berita Komunitas</h2><p class="font-label-sm text-label-sm text-primary-fixed opacity-90 mt-0.5">Tersimpan langsung ke tab BERITA</p></div></div>
+            <span class="material-symbols-outlined text-[24px] xl:hidden" id="br-arrow">expand_more</span>
+          </button>
+          <form id="form-berita" class="p-space-md lg:p-space-lg space-y-space-md" novalidate>
+            <input type="hidden" name="id">
+            <div><label class="block font-label-lg text-label-lg text-on-surface mb-1.5">Judul Berita / Kegiatan Literasi <span class="text-tertiary">*</span></label><input name="judul" required maxlength="200" class="w-full px-space-md py-2.5 rounded-lg bg-surface-container-low border-0 text-on-surface font-body-md focus:ring-2 focus:ring-secondary" placeholder="Contoh: Gebyar Mendongeng & Donasi Buku Ceria di Nagori Dolok Maraja"></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+              <div><label class="block font-label-lg text-label-lg text-on-surface mb-1.5">Kategori Berita</label><select name="kategori" class="w-full px-space-md py-2.5 rounded-lg bg-surface-container-low border-0 text-on-surface font-body-md focus:ring-2 focus:ring-secondary"><option>Kabar Komunitas</option><option>Kegiatan</option><option>Laporan Donasi</option><option>Opini Edukasi</option><option>Pojok Baca</option></select></div>
+              <div><label class="block font-label-lg text-label-lg text-on-surface mb-1.5">Penulis / Relawan Penanggung Jawab</label><div class="relative"><input name="penulis" maxlength="80" class="w-full pl-10 pr-space-md py-2.5 rounded-lg bg-surface-container-low border-0 text-on-surface font-body-md focus:ring-2 focus:ring-secondary" placeholder="Nama penulis / Tim Humas"><span class="material-symbols-outlined absolute left-3 top-2.5 text-on-surface-variant text-[20px]">badge</span></div></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+              <div><label class="block font-label-lg text-label-lg text-on-surface mb-1.5">Tanggal Publikasi <span class="text-tertiary">*</span></label><input name="tanggal" type="date" required class="w-full px-space-md py-2.5 rounded-lg bg-surface-container-low border-0 text-on-surface font-body-md focus:ring-2 focus:ring-secondary"></div>
+              <div><label class="block font-label-lg text-label-lg text-on-surface mb-1.5">Lokasi</label><input name="lokasi" maxlength="80" class="w-full px-space-md py-2.5 rounded-lg bg-surface-container-low border-0 text-on-surface font-body-md focus:ring-2 focus:ring-secondary" placeholder="Siantar Barat"></div>
+              <div><label class="block font-label-lg text-label-lg text-on-surface mb-1.5">Foto Sampul (link / ID Drive)</label><div class="relative"><input name="foto_drive_id" class="w-full pl-10 pr-space-md py-2.5 rounded-lg bg-surface-container-low border-0 text-on-surface font-body-md focus:ring-2 focus:ring-secondary" placeholder="https://drive.google.com/..."><span class="material-symbols-outlined absolute left-3 top-2.5 text-on-surface-variant text-[20px]">add_photo_alternate</span></div></div>
+            </div>
+            <div><label class="block font-label-lg text-label-lg text-on-surface mb-1.5">Ringkasan (tampil di kartu)</label><textarea name="ringkasan" rows="2" maxlength="300" class="w-full px-space-md py-2.5 rounded-lg bg-surface-container-low border-0 text-on-surface font-body-md focus:ring-2 focus:ring-secondary" placeholder="Satu-dua kalimat inti berita..."></textarea></div>
+            <div>
+              <label class="block font-label-lg text-label-lg text-on-surface mb-1.5">Isi Warta &amp; Narasi Berita <span class="text-tertiary">*</span></label>
+              <div class="bg-surface-container-low rounded-t-lg px-space-md py-2 flex items-center flex-wrap gap-1 border-b border-surface-container-high">
+                <button type="button" data-fmt="bold" title="Tebal" class="p-1.5 hover:bg-surface-container-highest rounded text-on-surface-variant"><span class="material-symbols-outlined text-[18px]">format_bold</span></button>
+                <button type="button" data-fmt="italic" title="Miring" class="p-1.5 hover:bg-surface-container-highest rounded text-on-surface-variant"><span class="material-symbols-outlined text-[18px]">format_italic</span></button>
+                <span class="w-[1px] h-4 bg-outline-variant mx-1"></span>
+                <button type="button" data-fmt="list" title="Daftar Poin" class="p-1.5 hover:bg-surface-container-highest rounded text-on-surface-variant"><span class="material-symbols-outlined text-[18px]">format_list_bulleted</span></button>
+                <button type="button" data-fmt="quote" title="Kutipan" class="p-1.5 hover:bg-surface-container-highest rounded text-on-surface-variant"><span class="material-symbols-outlined text-[18px]">format_quote</span></button>
+                <span class="font-label-sm text-label-sm text-on-surface-variant ml-auto hidden sm:inline">Format Markdown ringkas</span>
+              </div>
+              <textarea name="isi" rows="7" required class="w-full px-space-md py-space-sm rounded-b-lg bg-surface-container-lowest border border-surface-container-high text-on-surface font-body-md focus:ring-2 focus:ring-secondary resize-y justify" placeholder="Tuliskan laporan rinci, sukacita anak-anak saat membaca, pesan relawan, atau rincian buku yang diterima..."></textarea>
+            </div>
+            <label class="flex items-center gap-2 font-label-md text-label-md text-on-surface"><input type="checkbox" name="sembunyikan" class="w-4 h-4 rounded accent-primary">Sembunyikan dari web (arsip)</label>
+            <div class="pt-space-sm flex flex-col sm:flex-row items-center justify-between gap-space-md">
+              <div class="flex items-center gap-space-xs text-on-surface-variant font-label-md text-label-md"><span class="material-symbols-outlined text-[18px] text-secondary">verified_user</span><span id="br-form-note">Baris baru ditambahkan ke tab BERITA</span></div>
+              <div class="flex items-center gap-space-sm w-full sm:w-auto">
+                <button type="button" id="br-batal" class="hidden px-space-md py-2.5 rounded-lg text-on-surface-variant font-label-lg text-label-lg hover:bg-surface-container">Batal</button>
+                <button type="button" id="br-draf" class="flex-1 sm:flex-initial px-space-md py-2.5 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-lg text-label-lg transition-all">Simpan Draf</button>
+                <button type="submit" id="br-terbit" class="flex-1 sm:flex-initial inline-flex items-center justify-center gap-space-xs px-space-lg py-2.5 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-lg text-label-lg transition-all shadow-md disabled:opacity-60"><span class="material-symbols-outlined text-[20px]">publish</span><span>Simpan &amp; Publikasikan</span></button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="xl:col-span-4 flex flex-col gap-space-md">
+          <div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm">
+            <div class="flex items-center justify-between mb-space-sm"><span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Pratinjau Kartu Berita</span><span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-bold">Tampilan Web</span></div>
+            <div id="br-preview"></div>
+          </div>
+          <div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm">
+            <div class="flex items-center gap-space-xs mb-space-sm"><span class="material-symbols-outlined text-secondary text-[22px]">hub</span><h3 class="font-headline-sm text-headline-sm text-on-surface">Alur Data Google Sheets</h3></div>
+            <p class="font-body-sm text-body-sm text-on-surface-variant mb-space-sm justify">Setiap entri formulir dikirim ke Apps Script lalu ditulis ke tab <span class="font-semibold text-on-surface">BERITA</span> dengan kolom:</p>
+            <div id="br-kolom" class="space-y-space-xs font-mono text-label-sm"></div>
+            <div class="mt-space-md p-space-sm rounded-lg bg-surface-container-high/60 flex items-start gap-space-xs"><span class="material-symbols-outlined text-[18px] text-primary shrink-0 mt-0.5">lightbulb</span><p class="font-body-sm text-body-sm text-on-surface-variant justify">Berita berstatus <strong>Terbit</strong> langsung tampil di web publik (cache diperbarui otomatis). <strong>Draf</strong> hanya terlihat di panel ini.</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="bg-surface-container-lowest rounded-xl p-space-md lg:p-space-lg shadow-sm">
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-space-md mb-space-md">
+          <div><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-primary text-[24px]">dataset</span><h2 class="font-headline-sm text-headline-sm text-on-surface">Data Berita (Sinkron dari Sheets)</h2></div><p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Semua baris tab BERITA, termasuk draf dan yang disembunyikan.</p></div>
+          <div class="flex items-center gap-space-sm w-full md:w-auto">
+            <div class="relative flex-1 md:w-64"><input id="br-cari" class="w-full pl-9 pr-space-md py-2 rounded-lg bg-surface-container-low border-0 text-on-surface font-body-sm focus:ring-2 focus:ring-secondary" placeholder="Cari judul, kategori, penulis..."><span class="material-symbols-outlined absolute left-2.5 top-2 text-on-surface-variant text-[18px]">search</span></div>
+            <select id="br-filter-status" class="px-space-md py-2 rounded-lg bg-surface-container-low border-0 text-on-surface font-label-md focus:ring-2 focus:ring-secondary"><option value="">Semua Status</option><option>Terbit</option><option>Draf</option></select>
+          </div>
+        </div>
+        <div class="overflow-x-auto rounded-lg"><table class="w-full text-left font-body-sm text-body-sm"><thead class="bg-surface-container font-label-md text-label-md uppercase tracking-wider text-on-surface-variant"><tr><th class="py-3 px-space-md">ID</th><th class="py-3 px-space-md">Tanggal</th><th class="py-3 px-space-md">Judul Berita</th><th class="py-3 px-space-md">Kategori</th><th class="py-3 px-space-md">Penulis</th><th class="py-3 px-space-md">Status</th><th class="py-3 px-space-md text-right">Aksi</th></tr></thead><tbody id="br-rows" class="divide-y divide-surface-container-high"></tbody></table></div>
+        <div id="br-pager" class="mt-space-md pt-space-sm flex flex-col sm:flex-row items-center justify-between gap-space-sm border-t border-surface-container-high text-on-surface-variant font-label-sm text-label-sm"></div>
+      </div>
+    </section>
+
+    <!-- ===== GALERI: ALBUM = FOLDER GOOGLE DRIVE ===== -->
+    <section data-view="galeri" class="hidden flex-col w-full gap-space-lg pt-space-sm">
+      <div class="w-full bg-surface-container-lowest rounded-xl p-space-md lg:p-space-lg shadow-sm flex flex-col lg:flex-row items-start lg:items-center justify-between gap-space-md">
+        <div class="flex items-start gap-space-md">
+          <div class="w-12 h-12 rounded-xl bg-secondary-container/20 text-secondary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-[28px]">photo_library</span></div>
+          <div>
+            <div class="flex items-center gap-space-xs flex-wrap"><h1 class="font-headline-md text-headline-md text-on-surface">Galeri &amp; Album Google Drive</h1><span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm" id="gl-count">—</span></div>
+            <p class="font-body-sm text-body-sm text-on-surface-variant mt-1 justify">Satu album = satu folder Google Drive. Cukup tempel link foldernya; semua foto di dalamnya tampil otomatis di web. Foto tetap tersimpan di Drive, tidak disalin ke tempat lain.</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-space-sm self-stretch sm:self-auto shrink-0">
+          <button data-reload="ALBUM" class="flex-1 sm:flex-initial inline-flex items-center justify-center gap-space-xs px-space-md py-2.5 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-lg text-label-lg transition-colors shadow-sm"><span class="material-symbols-outlined text-[18px]">sync</span><span>Sinkronkan Ulang</span></button>
+          <a href="../album" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-space-xs px-space-md py-2.5 rounded-lg bg-secondary text-on-secondary hover:bg-secondary/90 font-label-lg text-label-lg transition-colors shadow-sm"><span class="material-symbols-outlined text-[18px]">open_in_new</span><span class="hidden sm:inline">Lihat Galeri Publik</span></a>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg items-start">
+        <div class="xl:col-span-5 flex flex-col gap-space-md">
+          <div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+            <div class="p-4 flex items-center justify-between bg-primary-container text-on-primary-container">
+              <div class="flex items-center gap-2.5"><div class="w-8 h-8 rounded-full bg-on-primary-container/20 flex items-center justify-center"><span class="material-symbols-outlined text-[20px]">create_new_folder</span></div><div><h2 class="font-headline-sm text-headline-sm leading-none" id="gl-form-title">Album Baru dari Folder Drive</h2><p class="font-label-sm text-label-sm text-primary-fixed opacity-90 mt-0.5">Tersimpan ke tab ALBUM</p></div></div>
+              <button type="button" id="gl-batal" class="hidden font-label-sm text-label-sm underline">Batal edit</button>
+            </div>
+            <form id="form-album" class="p-space-md lg:p-space-lg space-y-space-md" novalidate>
+              <input type="hidden" name="id">
+              <div><label class="block font-label-lg text-label-lg text-on-surface mb-1.5" for="gl-judul">Judul Album <span class="text-tertiary">*</span></label><input id="gl-judul" name="judul" required maxlength="120" class="w-full px-space-md py-2.5 rounded-lg bg-surface-container-low border-0 text-on-surface font-body-md focus:ring-2 focus:ring-secondary" placeholder="Contoh: Lomba 17 Agustus 2026"></div>
+              <div><label class="block font-label-lg text-label-lg text-on-surface mb-1.5" for="gl-folder">Link Folder Google Drive <span class="text-tertiary">*</span></label><div class="relative"><input id="gl-folder" name="folder_drive" required class="w-full pl-10 pr-space-md py-2.5 rounded-lg bg-surface-container-low border-0 text-on-surface font-body-md focus:ring-2 focus:ring-secondary" placeholder="https://drive.google.com/drive/folders/..."><span class="material-symbols-outlined absolute left-3 top-2.5 text-on-surface-variant text-[20px]">add_to_drive</span></div></div>
+              <div><label class="block font-label-lg text-label-lg text-on-surface mb-1.5" for="gl-tanggal">Tanggal Kegiatan</label><input id="gl-tanggal" name="tanggal" type="date" class="w-full px-space-md py-2.5 rounded-lg bg-surface-container-low border-0 text-on-surface font-body-md focus:ring-2 focus:ring-secondary"></div>
+              <label class="flex items-center gap-2 font-label-md text-label-md text-on-surface"><input type="checkbox" name="sembunyikan" class="w-4 h-4 rounded accent-primary">Sembunyikan dari web</label>
+              <button type="submit" id="gl-simpan" class="w-full inline-flex items-center justify-center gap-space-xs px-space-lg py-2.5 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-lg text-label-lg transition-all shadow-md disabled:opacity-60"><span class="material-symbols-outlined text-[20px]">cloud_sync</span><span>Simpan Album</span></button>
+            </form>
+          </div>
+          <div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm">
+            <div class="flex items-center gap-space-xs mb-space-sm"><span class="material-symbols-outlined text-secondary text-[22px]">lightbulb</span><h3 class="font-headline-sm text-headline-sm text-on-surface">Cara menyiapkan folder</h3></div>
+            <ol class="list-decimal pl-5 space-y-1.5 font-body-sm text-body-sm text-on-surface-variant">
+              <li>Buat folder di Google Drive, upload foto kegiatan ke dalamnya.</li>
+              <li>Klik kanan folder → <strong class="text-on-surface">Bagikan</strong> → akses umum <strong class="text-on-surface">Siapa saja yang memiliki link</strong> (Pelihat).</li>
+              <li>Salin link folder, tempel di formulir, lalu simpan.</li>
+            </ol>
+            <p class="font-body-sm text-body-sm text-on-surface-variant mt-space-sm justify">Foto diurutkan menurut nama file; foto pertama menjadi sampul. Setelah menambah foto ke folder, klik tombol <span class="material-symbols-outlined text-[16px] align-middle text-secondary">sync</span> pada album agar web membaca ulang.</p>
+          </div>
+        </div>
+        <div class="xl:col-span-7 bg-surface-container-lowest rounded-xl p-space-md lg:p-space-lg shadow-sm">
+          <div class="flex items-center gap-space-xs mb-space-md"><span class="material-symbols-outlined text-primary text-[24px]">collections</span><h2 class="font-headline-sm text-headline-sm text-on-surface">Daftar Album</h2></div>
+          <div class="overflow-x-auto rounded-lg"><table class="w-full text-left font-body-sm text-body-sm"><thead class="bg-surface-container font-label-md text-label-md uppercase tracking-wider text-on-surface-variant"><tr><th class="py-3 px-space-sm sm:px-space-md">Album</th><th class="py-3 px-space-md hidden sm:table-cell">Tanggal</th><th class="py-3 px-space-md hidden sm:table-cell">Foto</th><th class="py-3 px-space-md text-right">Aksi</th></tr></thead><tbody id="gl-rows" class="divide-y divide-surface-container-high"></tbody></table></div>
+          <div id="gl-pager" class="mt-space-md pt-space-sm flex flex-col sm:flex-row items-center justify-between gap-space-sm border-t border-surface-container-high text-on-surface-variant font-label-sm text-label-sm"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== KATALOG BUKU ===== -->
+    <section data-view="buku" class="hidden flex-col w-full pt-space-sm">
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-space-md mb-space-lg">
+        <div class="flex flex-col gap-1">
+          <div class="flex items-center gap-3 flex-wrap"><h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Katalog Koleksi Buku</h1><div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed text-label-sm font-label-sm"><span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span><span>Live Sync: tab BUKU</span></div></div>
+          <p class="font-body-sm text-body-sm text-on-surface-variant justify">Inventaris balai baca komunitas. Setiap perubahan ditulis langsung ke Google Sheets dan stok di web publik ikut diperbarui.</p>
+        </div>
+        <div class="flex items-center gap-space-sm shrink-0">
+          <button data-export="BUKU" class="flex items-center gap-2 px-space-md py-2.5 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-lg text-label-lg shadow-sm transition-all"><span class="material-symbols-outlined text-body-md text-secondary">download</span><span>Ekspor CSV</span></button>
+          <button id="bk-tambah" class="flex items-center gap-2 px-space-md py-2.5 rounded-lg bg-primary-container hover:bg-primary text-on-primary-container font-label-lg text-label-lg shadow-md transition-all"><span class="material-symbols-outlined text-body-md">add_circle</span><span>Tambah Buku Baru</span></button>
+        </div>
+      </div>
+      <div id="bk-kpi" class="grid grid-cols-2 xl:grid-cols-4 gap-space-sm lg:gap-space-md mb-space-lg"></div>
+      <div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm mb-space-lg flex flex-col gap-space-md">
+        <div class="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-space-md">
+          <div class="relative flex-1"><span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-on-surface-variant text-body-md">search</span><input id="bk-cari" class="w-full pl-10 pr-4 py-2.5 rounded-lg bg-surface-container-low border-0 text-on-surface font-body-sm focus:ring-2 focus:ring-secondary" placeholder="Cari ISBN, judul, pengarang, atau rak..."></div>
+          <div class="flex items-center gap-space-sm flex-wrap">
+            <div class="flex items-center bg-surface-container-low rounded-lg px-3 py-1"><span class="material-symbols-outlined text-on-surface-variant text-body-md mr-1">category</span><select id="bk-filter-kategori" class="bg-transparent border-0 font-label-md text-label-md text-on-surface focus:ring-0 cursor-pointer py-1.5"><option value="">Semua Kategori</option></select></div>
+            <div class="flex items-center bg-surface-container-low rounded-lg px-3 py-1"><span class="material-symbols-outlined text-on-surface-variant text-body-md mr-1">grid_view</span><select id="bk-filter-rak" class="bg-transparent border-0 font-label-md text-label-md text-on-surface focus:ring-0 cursor-pointer py-1.5"><option value="">Semua Rak</option></select></div>
+            <div class="flex items-center bg-surface-container-low rounded-lg px-3 py-1"><span class="material-symbols-outlined text-on-surface-variant text-body-md mr-1">tune</span><select id="bk-filter-status" class="bg-transparent border-0 font-label-md text-label-md text-on-surface focus:ring-0 cursor-pointer py-1.5"><option value="">Semua Stok</option><option value="tersedia">Tersedia</option><option value="menipis">Tersisa Sedikit (≤ 2)</option><option value="habis">Semua Dipinjam</option></select></div>
+            <button id="bk-reset" class="p-2.5 rounded-lg bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" title="Reset Filter"><span class="material-symbols-outlined text-body-md">restart_alt</span></button>
+          </div>
+        </div>
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-2 text-label-sm font-label-sm text-on-surface-variant border-t border-surface-container-high"><span class="justify"><span class="font-semibold text-on-surface">Petunjuk penataan:</span> kode rak diawali huruf zona, mis. <em>Rak A1</em> (Anak), <em>B2</em> (Budaya/Komik), <em>C1</em> (Sains), <em>D4</em> (Referensi).</span><span class="shrink-0 flex items-center gap-1 text-secondary"><span class="material-symbols-outlined text-label-md">database</span><span data-ss-nama>Google Sheets</span></span></div>
+      </div>
+      <div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden mb-space-lg">
+        <div class="px-space-md py-4 bg-surface-container-low flex flex-col sm:flex-row sm:items-center justify-between gap-2"><div class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-headline-sm">menu_book</span><span class="font-headline-sm text-headline-sm text-on-surface">Daftar Inventaris Koleksi</span><span class="px-2.5 py-0.5 rounded-full bg-primary-fixed text-primary font-label-sm text-label-sm" id="bk-count"></span></div></div>
+        <div class="overflow-x-auto"><table class="w-full text-left font-body-sm text-body-sm"><thead class="bg-surface-container-high text-on-surface font-label-md text-label-md uppercase tracking-wider"><tr><th class="py-3.5 px-4 w-12 text-center">No</th><th class="py-3.5 px-4 w-36">Kode / ISBN</th><th class="py-3.5 px-4">Judul Koleksi &amp; Penulis</th><th class="py-3.5 px-4 w-40">Kategori</th><th class="py-3.5 px-4 w-32">Posisi Rak</th><th class="py-3.5 px-4 w-48">Ketersediaan</th><th class="py-3.5 px-4 w-36 text-center">Aksi</th></tr></thead><tbody id="bk-rows" class="text-on-surface"></tbody></table></div>
+        <div id="bk-pager" class="px-space-md py-3.5 bg-surface-container-low flex flex-col sm:flex-row items-center justify-between gap-3 text-label-sm font-label-sm text-on-surface-variant"></div>
+      </div>
+      <div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg">
+        <div class="xl:col-span-7 bg-surface-container-lowest rounded-xl p-space-md lg:p-space-lg shadow-sm">
+          <div class="flex items-center justify-between pb-3 mb-space-md border-b border-surface-container-high">
+            <div class="flex items-center gap-2"><span class="w-8 h-8 rounded-lg bg-primary-fixed flex items-center justify-center text-primary"><span class="material-symbols-outlined text-body-md">post_add</span></span><div><h2 class="font-headline-sm text-headline-sm text-on-surface" id="bk-form-title">Entri Buku Baru ke Google Sheets</h2><span class="font-label-sm text-label-sm text-on-surface-variant">Menulis ke tab BUKU</span></div></div>
+            <button type="button" id="bk-batal" class="hidden text-label-sm font-label-sm text-tertiary hover:underline">Batal edit</button>
+          </div>
+          <form id="form-buku" class="space-y-4" novalidate>
+            <input type="hidden" name="id">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+              <div><label class="block font-label-md text-label-md text-on-surface mb-1">Kode ISBN / Barcode</label><input name="isbn" maxlength="40" class="w-full px-3.5 py-2.5 rounded-lg bg-surface-container-low border-0 text-on-surface font-body-sm focus:ring-2 focus:ring-primary" placeholder="978-602-xxx-xxx-x"></div>
+              <div><label class="block font-label-md text-label-md text-on-surface mb-1">Kategori Literasi</label><select name="kategori" class="w-full px-3.5 py-2.5 rounded-lg bg-surface-container-low border-0 text-on-surface font-body-sm focus:ring-2 focus:ring-primary"><option>Fabel &amp; Dongeng</option><option>Sains &amp; Alam</option><option>Komik Edukasi</option><option>Cerita Rakyat</option><option>Ensiklopedi &amp; Kamus</option><option>Pelajaran</option><option>Sastra Remaja</option><option>Lainnya</option></select></div>
+            </div>
+            <div><label class="block font-label-md text-label-md text-on-surface mb-1">Judul Lengkap Buku <span class="text-tertiary">*</span></label><input name="judul" required maxlength="200" class="w-full px-3.5 py-2.5 rounded-lg bg-surface-container-low border-0 text-on-surface font-body-sm focus:ring-2 focus:ring-primary" placeholder="Contoh: Petualangan Menjelajah Hutan Harangan Simalungun"></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+              <div><label class="block font-label-md text-label-md text-on-surface mb-1">Pengarang / Ilustrator</label><input name="penulis" maxlength="120" class="w-full px-3.5 py-2.5 rounded-lg bg-surface-container-low border-0 text-on-surface font-body-sm focus:ring-2 focus:ring-primary" placeholder="Contoh: Jonner Damanik"></div>
+              <div><label class="block font-label-md text-label-md text-on-surface mb-1">Penerbit &amp; Tahun Terbit</label><input name="penerbit_tahun" maxlength="120" class="w-full px-3.5 py-2.5 rounded-lg bg-surface-container-low border-0 text-on-surface font-body-sm focus:ring-2 focus:ring-primary" placeholder="Contoh: Pustaka Siantar, 2023"></div>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-space-md">
+              <div><label class="block font-label-md text-label-md text-on-surface mb-1">Jumlah Eksemplar</label><input name="jumlah" type="number" min="1" value="1" class="w-full px-3.5 py-2.5 rounded-lg bg-surface-container-low border-0 text-on-surface font-body-sm focus:ring-2 focus:ring-primary"></div>
+              <div><label class="block font-label-md text-label-md text-on-surface mb-1">Dipinjam</label><input name="dipinjam" type="number" min="0" value="0" class="w-full px-3.5 py-2.5 rounded-lg bg-surface-container-low border-0 text-on-surface font-body-sm focus:ring-2 focus:ring-primary"></div>
+              <div><label class="block font-label-md text-label-md text-on-surface mb-1">Posisi Rak</label><input name="rak" maxlength="20" list="bk-rak-list" class="w-full px-3.5 py-2.5 rounded-lg bg-surface-container-low border-0 text-on-surface font-body-sm focus:ring-2 focus:ring-primary" placeholder="Rak A1"><datalist id="bk-rak-list"></datalist></div>
+              <div><label class="block font-label-md text-label-md text-on-surface mb-1">Sumber</label><select name="sumber" class="w-full px-3.5 py-2.5 rounded-lg bg-surface-container-low border-0 text-on-surface font-body-sm focus:ring-2 focus:ring-primary"><option>Donasi Publik</option><option>CSR Mitra</option><option>Kas Swadaya</option><option>Hadiah Festival</option><option>Lainnya</option></select></div>
+            </div>
+            <div><label class="block font-label-md text-label-md text-on-surface mb-1">Catatan Kondisi Fisik &amp; Keterangan</label><textarea name="catatan" rows="2" maxlength="300" class="w-full px-3.5 py-2 rounded-lg bg-surface-container-low border-0 text-on-surface font-body-sm focus:ring-2 focus:ring-primary" placeholder="Catatan kondisi buku atau petunjuk khusus peminjaman..."></textarea></div>
+            <div class="flex items-center justify-between pt-2 gap-space-sm flex-wrap">
+              <label class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface"><input type="checkbox" name="sembunyikan" class="w-4 h-4 rounded accent-primary">Sembunyikan dari hitungan web</label>
+              <button type="submit" id="bk-simpan" class="flex items-center gap-2 px-space-lg py-2.5 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-lg text-label-lg shadow-md transition-all disabled:opacity-60"><span class="material-symbols-outlined text-body-md">cloud_sync</span><span>Simpan ke Google Sheets</span></button>
+            </div>
+          </form>
+        </div>
+        <div class="xl:col-span-5 flex flex-col gap-space-md">
+          <div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm">
+            <div class="flex items-center justify-between mb-3"><div class="flex items-center gap-2"><span class="material-symbols-outlined text-secondary text-headline-sm">shelves</span><h3 class="font-headline-sm text-headline-sm text-on-surface">Tata Letak Rak Balai Baca</h3></div><span class="font-label-sm text-label-sm text-on-surface-variant">Per zona</span></div>
+            <p class="font-body-sm text-body-sm text-on-surface-variant justify mb-4">Ringkasan jumlah buku per zona rak, dihitung dari huruf pertama kolom <em>rak</em>. Klik zona untuk memfilter tabel.</p>
+            <div id="bk-zona" class="grid grid-cols-2 gap-3"></div>
+          </div>
+          <div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm">
+            <div class="flex items-center justify-between mb-2"><span class="font-label-md text-label-md text-on-surface font-semibold">Diagnostik Tab BUKU</span><span class="font-label-sm text-label-sm text-secondary" id="bk-diag-latency"></span></div>
+            <div class="space-y-2 text-body-sm text-on-surface-variant" id="bk-diag"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== DONATUR & RELAWAN ===== -->
+    <section data-view="donatur" class="hidden flex-col w-full pt-space-sm">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md mb-space-lg">
+        <div><div class="flex items-center gap-2 mb-1"><span class="font-label-sm text-label-sm uppercase tracking-wider text-primary">Sistem Kemitraan Komunitas</span><span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span><span class="font-label-sm text-label-sm text-on-surface-variant">Siantar – Simalungun</span></div><h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Manajemen Donatur &amp; Relawan Komunitas</h1></div>
+        <div class="flex flex-wrap items-center gap-2.5">
+          <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container-low shadow-sm"><span class="w-2 h-2 rounded-full bg-secondary"></span><span class="font-label-md text-label-md text-on-surface-variant">Tab DONASI: <strong class="text-on-surface font-semibold" id="dn-count-badge">—</strong></span></div>
+          <button data-reload="DONASI" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-highest hover:bg-surface-container-high text-on-surface font-label-md text-label-md transition-all"><span class="material-symbols-outlined text-body-md text-primary">sync</span><span>Sinkronisasi</span></button>
+        </div>
+      </div>
+      <div id="dn-kpi" class="grid grid-cols-1 md:grid-cols-3 gap-space-md mb-space-lg"></div>
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-sm mb-space-md">
+        <div class="inline-flex p-1.5 bg-surface-container-low rounded-xl shadow-inner gap-1 self-start" id="dn-tabs">
+          <button data-tab="donasi" class="flex items-center gap-2 px-space-md py-2 rounded-lg font-label-lg text-label-lg transition-all"><span class="material-symbols-outlined text-body-md">inventory_2</span><span>Donatur &amp; Logistik Buku</span></button>
+          <button data-tab="relawan" class="flex items-center gap-2 px-space-md py-2 rounded-lg font-label-lg text-label-lg transition-all"><span class="material-symbols-outlined text-body-md">calendar_month</span><span>Pendaftar Relawan</span></button>
+        </div>
+        <div class="hidden lg:flex items-center gap-2 text-on-surface-variant font-label-sm text-label-sm"><span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-secondary"></span>WA Gateway: tautan wa.me</span><span>•</span><span data-ss-nama>Google Sheets</span></div>
+      </div>
+      <div class="flex flex-col gap-space-lg">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-md bg-surface-container-lowest p-space-md rounded-xl shadow-sm">
+          <div class="flex flex-wrap items-center gap-2">
+            <div class="relative min-w-[240px]"><span class="material-symbols-outlined absolute left-3 top-2.5 text-body-md text-on-surface-variant">search</span><input id="dn-cari" class="w-full pl-9 pr-3 py-2 bg-surface-container-low rounded-lg border-0 font-body-sm text-on-surface focus:ring-2 focus:ring-secondary" placeholder="Cari donatur, asal kota, ekspedisi, resi..."></div>
+            <div class="flex items-center gap-1.5 bg-surface-container-low px-3 py-1 rounded-lg"><span class="font-label-sm text-label-sm text-on-surface-variant">Status:</span><select id="dn-filter-status" class="bg-transparent border-0 font-label-sm text-label-sm text-on-surface focus:ring-0 cursor-pointer py-1"><option value="">Semua</option><option>Baru</option><option>Dikonfirmasi</option><option>Dalam Pengiriman</option><option>Diterima</option><option>Terkatalog</option><option>Dibatalkan</option></select></div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button data-export="DONASI" class="flex items-center justify-center gap-2 px-space-md py-2.5 rounded-lg bg-surface-container-high text-on-surface font-label-lg text-label-lg hover:bg-surface-container-highest transition-all"><span class="material-symbols-outlined text-body-md text-secondary">download</span><span class="hidden sm:inline">CSV</span></button>
+            <button id="dn-tambah" class="flex items-center justify-center gap-2 px-space-md py-2.5 rounded-lg bg-primary text-on-primary font-label-lg text-label-lg shadow-sm hover:bg-primary-container transition-all"><span class="material-symbols-outlined text-body-md">add_circle</span><span>Catat Donasi Masuk Baru</span></button>
+          </div>
+        </div>
+        <div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+          <div class="px-space-md lg:px-space-lg py-space-md bg-surface-container-low/70 flex items-center justify-between"><div class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-headline-sm">receipt_long</span><h2 class="font-headline-sm text-headline-sm text-on-surface" id="dn-table-title">Riwayat Penerimaan Donasi Masuk</h2></div><span class="font-label-sm text-label-sm bg-surface-container-high text-on-surface px-2.5 py-1 rounded-full" id="dn-count"></span></div>
+          <div class="overflow-x-auto"><table class="w-full text-left font-body-sm text-body-sm"><thead class="bg-surface-container-low text-on-surface-variant font-label-md text-label-md uppercase tracking-wider"><tr><th class="py-3 px-space-md lg:px-space-lg">Donatur &amp; Kontak</th><th class="py-3 px-space-md">Asal / Kota</th><th class="py-3 px-space-md">Rincian</th><th class="py-3 px-space-md">Tanggal &amp; Logistik</th><th class="py-3 px-space-md">Status &amp; Apresiasi</th><th class="py-3 px-space-md lg:px-space-lg text-right">Aksi</th></tr></thead><tbody id="dn-rows" class="text-on-surface"></tbody></table></div>
+          <div id="dn-pager" class="px-space-md lg:px-space-lg py-3 bg-surface-container-low flex flex-col sm:flex-row items-center justify-between gap-2 font-label-sm text-label-sm text-on-surface-variant"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== KONFIGURASI SHEETS ===== -->
+    <section data-view="konfigurasi" class="hidden flex-col w-full pt-space-sm">
+      <div class="mb-space-lg p-space-md rounded-xl bg-gradient-to-r from-primary-fixed via-surface-container-low to-secondary-fixed text-on-surface flex flex-wrap items-center justify-between gap-space-md shadow-sm">
+        <div class="flex items-center gap-space-md"><div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-on-primary shadow-sm shrink-0"><span class="material-symbols-outlined text-headline-sm animate-pulse">cloud_sync</span></div><div><p class="font-label-lg text-label-lg text-primary">Arsitektur Database Berbasis Google Sheets</p><p class="font-body-sm text-body-sm text-on-surface-variant justify">Web statis di GitHub Pages membaca JSON dari Apps Script Web App; panel ini menulis ke tab BUKU, BERITA, DONASI, dan ALBUM lewat aksi POST bertoken. Tidak ada server terpisah.</p></div></div>
+        <div class="flex items-center gap-2"><span class="px-3 py-1 rounded-full bg-surface-container-lowest text-secondary font-label-sm text-label-sm flex items-center gap-1.5 shadow-sm"><span class="w-2 h-2 rounded-full bg-secondary"></span>Apps Script V8</span><span class="px-3 py-1 rounded-full bg-surface-container-lowest text-on-surface-variant font-label-sm text-label-sm shadow-sm">Zona waktu <span id="kf-tz">Asia/Jakarta</span></span></div>
+      </div>
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-md mb-space-lg">
+        <div><div class="flex items-center gap-2 mb-space-xs text-primary font-label-md text-label-md tracking-wider uppercase"><span class="material-symbols-outlined text-body-md">database</span><span>Infrastruktur Data Siantar – Simalungun</span></div><h1 class="font-headline-xl text-headline-xl-mobile lg:text-headline-xl text-on-surface tracking-tight">Konfigurasi Database &amp; Integrasi Google Sheets</h1><p class="font-body-md text-body-md text-on-surface-variant mt-1 justify">Pusat kendali koneksi antara panel admin, web publik, dan spreadsheet induk.</p></div>
+        <div class="flex items-center gap-space-md bg-surface-container-lowest p-space-sm px-space-md rounded-xl shadow-sm shrink-0">
+          <div class="flex items-center gap-3 pr-space-md"><div class="relative flex items-center justify-center"><span class="w-3.5 h-3.5 rounded-full bg-secondary" id="kf-dot"></span><span class="absolute w-5 h-5 rounded-full bg-secondary opacity-30 animate-ping"></span></div><div><span class="block font-label-sm text-label-sm text-on-surface-variant leading-none">Status Sesi API</span><span class="font-label-lg text-label-lg text-on-surface leading-tight" id="kf-status">Terhubung</span></div></div>
+          <div class="w-px h-8 bg-surface-container-highest"></div>
+          <div class="pl-space-xs"><span class="block font-label-sm text-label-sm text-on-surface-variant leading-none">Latensi</span><div class="flex items-baseline gap-1 mt-0.5"><span class="font-headline-sm text-headline-sm text-primary leading-none" id="kf-latency">—</span><span class="font-label-sm text-label-sm text-on-surface-variant">ms</span></div></div>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+        <div class="lg:col-span-7 flex flex-col gap-space-lg">
+          <div class="bg-surface-container-lowest rounded-xl p-space-md lg:p-space-lg shadow-sm">
+            <div class="flex items-center justify-between mb-space-md"><div class="flex items-center gap-2"><span class="w-8 h-8 rounded-lg bg-primary-fixed text-primary flex items-center justify-center"><span class="material-symbols-outlined text-headline-sm">table_chart</span></span><h2 class="font-headline-md text-headline-md text-on-surface">Parameter Spreadsheet Master</h2></div><span class="font-label-sm text-label-sm bg-surface-container text-on-surface-variant px-2.5 py-1 rounded-full" id="kf-pw-badge">—</span></div>
+            <p class="font-body-sm text-body-sm text-on-surface-variant mb-space-lg justify">Nilai di bawah dibaca langsung dari Apps Script. Password admin disimpan sebagai hash di Script Properties, tidak pernah ada di kode maupun repo.</p>
+            <div id="kf-param" class="space-y-space-md"></div>
+            <div class="mt-space-lg p-space-md rounded-xl bg-surface-container flex flex-col gap-2">
+              <div class="flex justify-between items-center text-on-surface"><span class="font-label-md text-label-md">Latensi Ping Sesi Ini</span><span class="font-label-sm text-label-sm text-secondary" id="kf-lat-avg">Belum ada data</span></div>
+              <div class="h-16 w-full flex items-end gap-1.5 pt-2" id="kf-spark"></div>
+            </div>
+          </div>
+          <div class="bg-surface-container-lowest rounded-xl p-space-md lg:p-space-lg shadow-sm">
+            <h2 class="font-headline-md text-headline-md text-on-surface mb-space-xs">Panel Uji Koneksi &amp; Pemeliharaan</h2>
+            <p class="font-body-sm text-body-sm text-on-surface-variant mb-space-lg justify">Validasi koneksi, segarkan cache publik setelah mengedit Sheets secara manual, atau unduh cadangan CSV seluruh tab.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-space-md mb-space-lg">
+              <button id="kf-ping" class="flex flex-col items-center justify-center text-center p-space-md rounded-xl bg-surface-container-low hover:bg-surface-container hover:-translate-y-0.5 transition-all text-on-surface shadow-sm"><span class="material-symbols-outlined text-primary text-headline-md mb-1">network_ping</span><span class="font-label-md text-label-md">Test API Ping &amp; Latency</span><span class="font-label-sm text-label-sm text-on-surface-variant mt-0.5">GET ?action=ping</span></button>
+              <button id="kf-refresh" class="flex flex-col items-center justify-center text-center p-space-md rounded-xl bg-primary hover:bg-primary-container text-on-primary hover:-translate-y-0.5 transition-all shadow-sm"><span class="material-symbols-outlined text-headline-md mb-1">sync</span><span class="font-label-lg text-label-lg">Segarkan Cache Publik</span><span class="font-label-sm text-label-sm opacity-80 mt-0.5">Hapus cache + baca ulang semua tab</span></button>
+              <button id="kf-export" class="flex flex-col items-center justify-center text-center p-space-md rounded-xl bg-surface-container-low hover:bg-surface-container hover:-translate-y-0.5 transition-all text-on-surface shadow-sm"><span class="material-symbols-outlined text-secondary text-headline-md mb-1">file_download</span><span class="font-label-md text-label-md">Export Backup CSV</span><span class="font-label-sm text-label-sm text-on-surface-variant mt-0.5">Satu berkas per tab</span></button>
+            </div>
+            <div class="p-space-md rounded-xl bg-surface-container-low flex flex-col md:flex-row items-start md:items-center justify-between gap-space-md">
+              <div class="flex items-center gap-3"><span class="material-symbols-outlined text-secondary text-headline-sm">schedule</span><div><span class="font-label-md text-label-md text-on-surface">Pembaruan Web Publik</span><p class="font-body-sm text-body-sm text-on-surface-variant justify">Perubahan dari panel ini langsung menghapus cache. Edit manual di Sheets tampil paling lambat setelah cache kedaluwarsa, atau segera setelah tombol Segarkan.</p></div></div>
+              <div class="flex items-center gap-2 bg-surface-container-lowest p-1 rounded-lg shrink-0"><span class="px-3 py-1.5 rounded-lg bg-primary text-on-primary font-label-sm text-label-sm font-semibold shadow-sm">Cache <span data-cache-ttl>10</span> menit</span><span class="px-3 py-1.5 rounded-lg text-on-surface-variant font-label-sm text-label-sm">Sesi admin <span id="kf-token-ttl">6</span> jam</span></div>
+            </div>
+            <div class="mt-space-lg">
+              <div class="flex items-center justify-between mb-space-sm"><span class="font-label-md text-label-md text-on-surface uppercase tracking-wide">Log Audit Terakhir</span><span class="font-label-sm text-label-sm text-on-surface-variant">20 event termutakhir</span></div>
+              <div class="overflow-x-auto rounded-lg bg-surface-container-low"><table class="w-full text-left font-body-sm text-body-sm"><thead class="bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm uppercase"><tr><th class="py-2.5 px-space-md">Waktu</th><th class="py-2.5 px-space-md">Aksi</th><th class="py-2.5 px-space-md">Tab</th><th class="py-2.5 px-space-md">ID</th><th class="py-2.5 px-space-md">Keterangan</th><th class="py-2.5 px-space-md text-right">Oleh</th></tr></thead><tbody id="kf-log" class="divide-y divide-surface-container text-on-surface"></tbody></table></div>
+            </div>
+          </div>
+        </div>
+        <div class="lg:col-span-5 flex flex-col gap-space-lg">
+          <div class="bg-surface-container-lowest rounded-xl p-space-md lg:p-space-lg shadow-sm">
+            <div class="flex items-center justify-between mb-space-md"><div class="flex items-center gap-2"><span class="w-8 h-8 rounded-lg bg-secondary-fixed text-secondary flex items-center justify-center"><span class="material-symbols-outlined text-headline-sm">account_tree</span></span><h2 class="font-headline-md text-headline-md text-on-surface">Pemetaan Tab Spreadsheet</h2></div><span class="font-label-sm text-label-sm text-secondary bg-secondary-fixed px-2 py-0.5 rounded-full" id="kf-tab-count">—</span></div>
+            <p class="font-body-sm text-body-sm text-on-surface-variant mb-space-lg justify">Setiap tab adalah satu tabel. Nama kolom (baris 1) harus persis seperti skema; urutan kolom bebas karena pemetaan berdasarkan nama header.</p>
+            <div id="kf-tabs" class="space-y-space-md"></div>
+            <div class="mt-space-lg p-space-md rounded-xl bg-surface-container flex flex-col gap-2"><div class="flex items-center gap-2 text-primary font-label-md text-label-md"><span class="material-symbols-outlined text-body-md">lightbulb</span><span>Panduan Teknis Penambahan Kolom</span></div><p class="font-body-sm text-body-sm text-on-surface-variant justify">Kolom baru boleh ditambahkan di sebelah kanan kolom terakhir. Kolom yang tidak dikenal API diabaikan, jadi aman untuk catatan internal. Jangan mengganti nama header yang sudah ada.</p></div>
+          </div>
+          <div class="bg-surface-container-lowest rounded-xl p-space-md lg:p-space-lg shadow-sm flex items-center justify-between"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-secondary-fixed text-secondary flex items-center justify-center"><span class="material-symbols-outlined">security</span></div><div><span class="font-label-md text-label-md text-on-surface block">Keamanan Panel</span><span class="font-label-sm text-label-sm text-on-surface-variant">HTTPS • token sesi 6 jam • password hash SHA-256 di Script Properties</span></div></div><span class="material-symbols-outlined text-secondary">verified</span></div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- bottom nav mobile -->
+<nav id="bottom-nav" class="lg:hidden fixed bottom-0 inset-x-0 z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-2px_12px_rgba(0,0,0,0.05)]">
+  <div class="flex items-center justify-around h-16 px-space-xs">
+    <a href="#ringkasan" data-nav="ringkasan" class="flex flex-col items-center justify-center w-14 h-12 gap-0.5 text-on-surface-variant"><span class="material-symbols-outlined text-[22px]">dashboard</span><span class="font-label-sm text-[10px] leading-tight">Ringkasan</span></a>
+    <a href="#berita" data-nav="berita" class="flex flex-col items-center justify-center w-14 h-12 gap-0.5 text-on-surface-variant"><span class="material-symbols-outlined text-[22px]">newspaper</span><span class="font-label-sm text-[10px] leading-tight">Berita</span></a>
+    <a href="#galeri" data-nav="galeri" class="flex flex-col items-center justify-center w-14 h-12 gap-0.5 text-on-surface-variant"><span class="material-symbols-outlined text-[22px]">photo_library</span><span class="font-label-sm text-[10px] leading-tight">Galeri</span></a>
+    <a href="#buku" data-nav="buku" class="flex flex-col items-center justify-center w-14 h-12 gap-0.5 text-on-surface-variant"><span class="material-symbols-outlined text-[22px]">menu_book</span><span class="font-label-sm text-[10px] leading-tight">Buku</span></a>
+    <a href="#donatur" data-nav="donatur" class="flex flex-col items-center justify-center w-14 h-12 gap-0.5 text-on-surface-variant"><span class="material-symbols-outlined text-[22px]">volunteer_activism</span><span class="font-label-sm text-[10px] leading-tight">Donatur</span></a>
+    <a href="#konfigurasi" data-nav="konfigurasi" class="flex flex-col items-center justify-center w-14 h-12 gap-0.5 text-on-surface-variant"><span class="material-symbols-outlined text-[22px]">database</span><span class="font-label-sm text-[10px] leading-tight">Sheets</span></a>
+  </div>
+</nav>
+</div>
+
+<!-- ===== MODAL: DONASI ===== -->
+<div id="modal-donasi" class="fixed inset-0 z-[70] hidden items-center justify-center bg-on-surface/40 backdrop-blur-sm p-4">
+  <div class="w-full max-w-xl bg-surface-container-lowest rounded-2xl shadow-xl p-space-md sm:p-space-lg flex flex-col gap-space-md max-h-[92vh] overflow-y-auto">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-2.5"><div class="w-10 h-10 rounded-lg bg-primary-fixed flex items-center justify-center text-primary"><span class="material-symbols-outlined text-headline-sm">add_box</span></div><div><h3 class="font-headline-sm text-headline-sm text-on-surface" id="dn-form-title">Pencatatan Donasi Masuk Baru</h3><span class="font-label-sm text-label-sm text-on-surface-variant">Simpan langsung ke tab DONASI</span></div></div>
+      <button type="button" data-close class="p-1 rounded-full text-on-surface-variant hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined">close</span></button>
+    </div>
+    <form id="form-donasi" class="flex flex-col gap-3.5" novalidate>
+      <input type="hidden" name="id"><input type="hidden" name="sumber" value="admin">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div class="flex flex-col gap-1"><label class="font-label-sm text-label-sm text-on-surface">Nama Donatur / Entitas <span class="text-tertiary">*</span></label><input name="nama" required maxlength="80" class="px-3 py-2 bg-surface-container-low rounded-lg border-0 font-body-sm text-on-surface focus:ring-2 focus:ring-secondary" placeholder="mis. Bagus Tarigan atau PT ..."></div>
+        <div class="flex flex-col gap-1"><label class="font-label-sm text-label-sm text-on-surface">Nomor WhatsApp <span class="text-tertiary">*</span></label><input name="whatsapp" required type="tel" class="px-3 py-2 bg-surface-container-low rounded-lg border-0 font-body-sm text-on-surface focus:ring-2 focus:ring-secondary" placeholder="mis. 08123456789"></div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div class="flex flex-col gap-1"><label class="font-label-sm text-label-sm text-on-surface">Tanggal</label><input name="tanggal" type="date" class="px-3 py-2 bg-surface-container-low rounded-lg border-0 font-body-sm text-on-surface focus:ring-2 focus:ring-secondary"></div>
+        <div class="flex flex-col gap-1 sm:col-span-2"><label class="font-label-sm text-label-sm text-on-surface">Asal Kota / Lembaga</label><input name="asal" maxlength="120" class="px-3 py-2 bg-surface-container-low rounded-lg border-0 font-body-sm text-on-surface focus:ring-2 focus:ring-secondary" placeholder="mis. Alumni SMAN 1 Siantar / Medan"></div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div class="flex flex-col gap-1"><label class="font-label-sm text-label-sm text-on-surface">Bentuk Dukungan</label><select name="jenis" class="px-3 py-2 bg-surface-container-low rounded-lg border-0 font-body-sm text-on-surface focus:ring-2 focus:ring-secondary"><option>Donasi Buku</option><option>Relawan Mengajar</option><option>Rak &amp; Alat Tulis</option><option>Dukungan Operasional</option><option>Kemitraan / CSR</option></select></div>
+        <div class="flex flex-col gap-1"><label class="font-label-sm text-label-sm text-on-surface">Kategori Buku</label><input name="kategori_buku" maxlength="80" list="dn-kat-list" class="px-3 py-2 bg-surface-container-low rounded-lg border-0 font-body-sm text-on-surface focus:ring-2 focus:ring-secondary" placeholder="Cerita Anak"><datalist id="dn-kat-list"><option>Buku Bacaan Anak & Cerita</option><option>Sains & Lingkungan Hidup</option><option>Sastra & Budaya Nusantara</option><option>Kamus & Pengetahuan Umum</option><option>Buku Pelajaran & Modul</option></datalist></div>
+        <div class="flex flex-col gap-1"><label class="font-label-sm text-label-sm text-on-surface">Jumlah Buku / Paket</label><input name="jumlah" type="number" min="0" class="px-3 py-2 bg-surface-container-low rounded-lg border-0 font-body-sm text-on-surface focus:ring-2 focus:ring-secondary" placeholder="mis. 50"></div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div class="flex flex-col gap-1"><label class="font-label-sm text-label-sm text-on-surface">Metode Kirim / Logistik</label><select name="logistik" class="px-3 py-2 bg-surface-container-low rounded-lg border-0 font-body-sm text-on-surface focus:ring-2 focus:ring-secondary"><option value="">—</option><option>Antar Langsung</option><option>Dijemput Relawan</option><option>JNE</option><option>J&amp;T</option><option>SiCepat</option><option>Pos Indonesia</option><option>Lainnya</option></select></div>
+        <div class="flex flex-col gap-1"><label class="font-label-sm text-label-sm text-on-surface">Nomor Resi</label><input name="resi" maxlength="40" class="px-3 py-2 bg-surface-container-low rounded-lg border-0 font-body-sm text-on-surface font-mono focus:ring-2 focus:ring-secondary" placeholder="mis. JNE 881290"></div>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div class="flex flex-col gap-1"><label class="font-label-sm text-label-sm text-on-surface">Status</label><select name="status" class="px-3 py-2 bg-surface-container-low rounded-lg border-0 font-body-sm text-on-surface focus:ring-2 focus:ring-secondary"><option>Baru</option><option>Dikonfirmasi</option><option>Dalam Pengiriman</option><option>Diterima</option><option>Terkatalog</option><option>Dibatalkan</option></select></div>
+        <div class="flex flex-col gap-1"><label class="font-label-sm text-label-sm text-on-surface">Apresiasi / Ucapan</label><select name="apresiasi" class="px-3 py-2 bg-surface-container-low rounded-lg border-0 font-body-sm text-on-surface focus:ring-2 focus:ring-secondary"><option>Belum</option><option>Terkirim</option></select></div>
+      </div>
+      <div class="flex flex-col gap-1"><label class="font-label-sm text-label-sm text-on-surface">Catatan Peruntukan / Pesan Khusus</label><textarea name="catatan" rows="2" maxlength="500" class="px-3 py-2 bg-surface-container-low rounded-lg border-0 font-body-sm text-on-surface focus:ring-2 focus:ring-secondary" placeholder="Catatan donatur untuk adik-adik nagori..."></textarea></div>
+      <div class="flex items-center justify-end gap-2.5 mt-2 pt-3">
+        <button type="button" data-close class="px-4 py-2 rounded-lg bg-surface-container-high text-on-surface font-label-md text-label-md hover:bg-surface-container-highest transition-colors">Batal</button>
+        <button type="submit" id="dn-simpan" class="flex items-center gap-1.5 px-5 py-2 rounded-lg bg-primary text-on-primary font-label-md text-label-md shadow-sm hover:bg-primary-container transition-all disabled:opacity-60"><span class="material-symbols-outlined text-body-md">save</span><span>Simpan ke Google Sheets</span></button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ===== MODAL: PRATINJAU BERITA ===== -->
+<div id="modal-berita" class="fixed inset-0 z-[70] hidden items-center justify-center bg-inverse-surface/60 backdrop-blur-sm p-4">
+  <div class="bg-surface-container-lowest rounded-xl max-w-2xl w-full shadow-xl overflow-hidden flex flex-col max-h-[85vh]">
+    <div class="px-space-lg py-space-md border-b border-surface-container-high flex items-center justify-between bg-surface-container-low"><div class="flex items-center gap-space-xs min-w-0"><span class="material-symbols-outlined text-primary text-[24px]">article</span><div class="min-w-0"><h3 class="font-headline-sm text-headline-sm text-on-surface font-bold truncate" id="mb-judul"></h3><p class="font-label-sm text-label-sm text-on-surface-variant" id="mb-meta"></p></div></div><button type="button" data-close class="p-1.5 rounded-lg hover:bg-surface-container-high text-on-surface-variant"><span class="material-symbols-outlined text-[20px]">close</span></button></div>
+    <div class="p-space-lg overflow-y-auto space-y-space-md"><div class="flex items-center gap-2 flex-wrap" id="mb-chips"></div><div id="mb-foto"></div><div id="mb-isi" class="prose-pb font-body-md text-body-md text-on-surface p-space-md bg-surface-container-low rounded-lg justify"></div></div>
+    <div class="px-space-lg py-space-sm border-t border-surface-container-high flex justify-end gap-space-sm bg-surface-container-low"><button type="button" data-close class="px-space-md py-2 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-md text-label-md">Tutup</button><button type="button" id="mb-edit" class="inline-flex items-center gap-1 px-space-md py-2 rounded-lg bg-secondary text-on-secondary font-label-md text-label-md"><span class="material-symbols-outlined text-[16px]">edit</span>Edit Teks Ini</button></div>
+  </div>
+</div>
+</body>
+</html>

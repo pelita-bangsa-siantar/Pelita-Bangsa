@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+
+<html lang="id"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary":"#8d4b00","surface-dim":"#cfdaf2","secondary-fixed":"#cce5ff","on-primary-fixed":"#2f1500","on-tertiary-fixed-variant":"#920028","inverse-primary":"#ffb77d","on-primary-container":"#fffbff","tertiary-container":"#e21e49","on-primary-fixed-variant":"#6e3900","on-secondary-container":"#00476e","on-primary":"#ffffff","on-secondary-fixed-variant":"#004b73","primary-container":"#b15f00","outline":"#887364","on-tertiary-container":"#fffbff","surface-container-highest":"#d8e3fb","primary-fixed":"#ffdcc3","on-surface":"#111c2d","on-tertiary-fixed":"#40000c","surface-container-low":"#f0f3ff","on-background":"#111c2d","on-surface-variant":"#554336","inverse-on-surface":"#ecf1ff","surface-container-high":"#dee8ff","surface-variant":"#d8e3fb","tertiary-fixed":"#ffdada","error":"#ba1a1a","surface-bright":"#f9f9ff","on-secondary":"#ffffff","surface":"#f9f9ff","tertiary":"#ba0035","tertiary-fixed-dim":"#ffb3b6","surface-tint":"#904d00","secondary-container":"#5bb8fe","background":"#f9f9ff","on-secondary-fixed":"#001d31","error-container":"#ffdad6","surface-container-lowest":"#ffffff","secondary":"#006398","primary-fixed-dim":"#ffb77d","on-error-container":"#93000a","on-tertiary":"#ffffff","inverse-surface":"#263143","outline-variant":"#dbc2b0","on-error":"#ffffff","secondary-fixed-dim":"#93ccff","surface-container":"#e7eeff"},borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},spacing:{"space-lg":"1.5rem","margin":"1.5rem","gutter":"1.25rem","space-xs":"0.25rem","space-xl":"2.5rem","space-md":"1rem","space-sm":"0.5rem"},fontFamily:{"label-lg":["Plus Jakarta Sans"],"body-md":["Plus Jakarta Sans"],"body-lg":["Plus Jakarta Sans"],"headline-xl":["Plus Jakarta Sans"],"headline-lg":["Plus Jakarta Sans"],"display-lg":["Plus Jakarta Sans"],"label-md":["Plus Jakarta Sans"],"headline-md":["Plus Jakarta Sans"],"body-sm":["Plus Jakarta Sans"],"display-lg-mobile":["Plus Jakarta Sans"],"label-sm":["Plus Jakarta Sans"],"headline-xl-mobile":["Plus Jakarta Sans"],"headline-sm":["Plus Jakarta Sans"]},fontSize:{"label-lg":["14px",{"lineHeight":"20px","fontWeight":"600"}],"body-md":["16px",{"lineHeight":"24px","fontWeight":"400"}],"body-lg":["18px",{"lineHeight":"28px","fontWeight":"400"}],"headline-xl":["36px",{"lineHeight":"44px","fontWeight":"700"}],"headline-lg":["28px",{"lineHeight":"36px","fontWeight":"700"}],"display-lg":["48px",{"lineHeight":"56px","fontWeight":"800"}],"label-md":["12px",{"lineHeight":"16px","fontWeight":"600"}],"headline-md":["22px",{"lineHeight":"30px","fontWeight":"600"}],"body-sm":["14px",{"lineHeight":"20px","fontWeight":"400"}],"display-lg-mobile":["34px",{"lineHeight":"42px","fontWeight":"800"}],"label-sm":["11px",{"lineHeight":"14px","fontWeight":"700"}],"headline-xl-mobile":["28px",{"lineHeight":"36px","fontWeight":"700"}],"headline-sm":["18px",{"lineHeight":"26px","fontWeight":"600"}]}}}}</script></head><body class="bg-surface font-body-md text-on-surface"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-low z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col"><div class="h-16 px-space-lg flex items-center gap-3 bg-surface-container-lowest"><div class="w-10 h-10 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-headline-sm">auto_stories</span></div><div class="flex flex-col"><span class="font-label-lg text-label-lg text-primary leading-tight">Pelita Bangsa</span><span class="font-label-sm text-label-sm text-on-surface-variant">Siantar - Simalungun</span></div></div><div class="p-space-md"><div class="bg-surface-container-lowest rounded-lg p-space-sm flex items-center justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-secondary animate-pulse"></span><span class="font-label-sm text-label-sm text-on-surface">Google Sheets</span></div><span class="font-label-sm text-label-sm text-secondary bg-secondary-fixed px-2 py-0.5 rounded-full">Terhubung</span></div></div><nav class="flex flex-col gap-1 px-space-md" data-active-classes="bg-primary-container text-on-primary-container font-headline-sm shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><a class="flex items-center gap-3 px-space-md py-space-sm rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="ringkasan-analitik" href="#"><span class="material-symbols-outlined text-headline-sm">dashboard</span>Ringkasan &amp; Analitik</a><a class="flex items-center gap-3 px-space-md py-space-sm rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="kelola-berita-artikel" href="#"><span class="material-symbols-outlined text-headline-sm">article</span>Kelola Berita &amp; Artikel</a><a class="flex items-center gap-3 px-space-md py-space-sm rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="katalog-koleksi-buku" href="#"><span class="material-symbols-outlined text-headline-sm">menu_book</span>Katalog Koleksi Buku</a><a class="flex items-center gap-3 px-space-md py-space-sm rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="donatur-relawan-komunitas" href="#"><span class="material-symbols-outlined text-headline-sm">volunteer_activism</span>Donatur &amp; Relawan</a><a aria-current="page" class="flex items-center gap-3 px-space-md py-space-sm rounded-lg transition-colors bg-primary-container text-on-primary-container font-headline-sm shadow-[0_1px_8px_rgba(0,0,0,0.04)]" data-path="konfigurasi-database-sheets" href="#"><span class="material-symbols-outlined text-headline-sm">sync_alt</span>Konfigurasi Sheets</a></nav></div><div class="p-space-md flex flex-col gap-2 bg-surface-container-low"><a class="flex items-center gap-2 px-space-md py-space-sm rounded-lg font-label-md text-label-md text-secondary hover:bg-secondary-fixed hover:text-on-secondary-fixed transition-colors" data-path="beranda-publik" href="#"><span class="material-symbols-outlined text-body-md">open_in_new</span>Kembali ke Web Publik</a><div class="flex items-center gap-3 p-space-sm rounded-lg bg-surface-container-lowest"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida/ALJJyrAxFbEARVrXjHuv-RLv_OF1S7Dj3E_ifYxgSiJfN9cQT2gcNgmjp7Lf9sjfdGqaivc1vzfDtGeyLHIf8voFYnUGK7iEw1JBi5TvRRPkAgUm9_xVY6JsOn3scnYBIjjyzTEomEIBWPZJmYonwKmWM52y4DT0mHSyh4M4Xtp2C570To3_kgVCs6aOfaSO5R9spUQtwkyFaKs_HbaDv3Qg6ICziZCWpsLGNuWnRvv9fPvu37pFMJGJBZA5RvjyoZ07xzsRgtVC_7Fltg4"/><div class="flex flex-col min-w-0 flex-1"><span class="font-label-md text-label-md text-on-surface truncate">Pengurus Literasi</span><span class="font-label-sm text-label-sm text-on-surface-variant truncate">Admin Siantar</span></div><span class="material-symbols-outlined text-body-md text-on-surface-variant">verified_user</span></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-space-lg"><div class="flex items-center gap-4"><div class="flex items-center gap-2 text-on-surface-variant font-label-md text-label-md"><span class="material-symbols-outlined text-body-md text-primary">pin_drop</span><span>Pematang Siantar – Simalungun</span><span class="text-outline-variant">•</span><span class="text-on-surface-variant">Sistem Manajemen Komunitas</span></div></div><div class="flex items-center gap-space-md"><div class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm"><span class="material-symbols-outlined text-label-md text-secondary">cloud_done</span><span>Auto-Sync Aktif</span></div><button class="p-2 rounded-full text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-headline-sm">notifications</span></button><button class="p-2 rounded-full text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-headline-sm">help_outline</span></button><div class="h-6 w-px bg-surface-container-highest"></div><div class="flex items-center gap-2 pl-2"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida/ALJJyrAxFbEARVrXjHuv-RLv_OF1S7Dj3E_ifYxgSiJfN9cQT2gcNgmjp7Lf9sjfdGqaivc1vzfDtGeyLHIf8voFYnUGK7iEw1JBi5TvRRPkAgUm9_xVY6JsOn3scnYBIjjyzTEomEIBWPZJmYonwKmWM52y4DT0mHSyh4M4Xtp2C570To3_kgVCs6aOfaSO5R9spUQtwkyFaKs_HbaDv3Qg6ICziZCWpsLGNuWnRvv9fPvu37pFMJGJBZA5RvjyoZ07xzsRgtVC_7Fltg4"/><span class="hidden lg:inline font-label-md text-label-md text-on-surface">Admin Pusat</span></div></div></header><main class="relative pt-16 w-full bg-surface px-space-lg pb-space-xl min-h-screen"><div class="flex flex-col w-full">
+<!-- Top Level Notification Banner / Sync Banner -->
+<div class="mb-space-lg p-space-md rounded-xl bg-gradient-to-r from-primary-fixed via-surface-container-low to-secondary-fixed text-on-surface flex flex-wrap items-center justify-between gap-space-md shadow-sm">
+<div class="flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-on-primary shadow-sm shrink-0">
+<span class="material-symbols-outlined text-headline-sm animate-pulse">cloud_sync</span>
+</div>
+<div>
+<p class="font-label-lg text-label-lg text-primary">Arsitektur Database Berbasis Cloud No-Code</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-justify">Sistem memanfaatkan Google Sheets v4 API dan Google Apps Script webhook sebagai data store terdesentralisasi, memungkinkan koordinator literasi mengelola inventaris buku dan publikasi tanpa server terpisah.</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="px-3 py-1 rounded-full bg-surface-container-lowest text-secondary font-label-sm text-label-sm flex items-center gap-1.5 shadow-sm">
+<span class="w-2 h-2 rounded-full bg-secondary"></span> API v4 Ready
+      </span>
+<span class="px-3 py-1 rounded-full bg-surface-container-lowest text-on-surface-variant font-label-sm text-label-sm shadow-sm">
+        Quota: 4.800 / 10.000 req
+      </span>
+</div>
+</div>
+<!-- Page Header Section -->
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-md mb-space-xl">
+<div>
+<div class="flex items-center gap-2 mb-space-xs text-primary font-label-md text-label-md tracking-wider uppercase">
+<span class="material-symbols-outlined text-body-md">database</span>
+<span>Infrastruktur Data Siantar - Simalungun</span>
+</div>
+<h1 class="font-headline-xl text-headline-xl text-on-surface tracking-tight">Konfigurasi Database &amp; Integrasi Google Sheets API</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1 text-justify">Pusat kendali pipeline integrasi data dua arah antara antarmuka manajemen literasi Pelita Bangsa dan Google Sheets master ledger.</p>
+</div>
+<!-- Live Status Indicators -->
+<div class="flex items-center gap-space-md bg-surface-container-lowest p-space-sm px-space-md rounded-xl shadow-sm shrink-0">
+<div class="flex items-center gap-3 pr-space-md">
+<div class="relative flex items-center justify-center">
+<span class="w-3.5 h-3.5 rounded-full bg-secondary"></span>
+<span class="absolute w-5 h-5 rounded-full bg-secondary opacity-30 animate-ping"></span>
+</div>
+<div>
+<span class="block font-label-sm text-label-sm text-on-surface-variant leading-none">Status Sesi API</span>
+<span class="font-label-lg text-label-lg text-on-surface leading-tight">Live &amp; Connected</span>
+</div>
+</div>
+<div class="w-px h-8 bg-surface-container-highest"></div>
+<div class="pl-space-xs">
+<span class="block font-label-sm text-label-sm text-on-surface-variant leading-none">Response Latency</span>
+<div class="flex items-baseline gap-1 mt-0.5">
+<span class="font-headline-sm text-headline-sm text-primary leading-none">142</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">ms</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Bento Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- Left Column: Master Connection Parameters & Interactive Testing -->
+<div class="lg:col-span-7 flex flex-col gap-space-lg">
+<!-- Parameter Spreadsheet Master Card -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+<div class="flex items-center justify-between mb-space-md">
+<div class="flex items-center gap-2">
+<span class="w-8 h-8 rounded-lg bg-primary-fixed text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-headline-sm">table_chart</span>
+</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Parameter Spreadsheet Master</h2>
+</div>
+<span class="font-label-sm text-label-sm bg-surface-container text-on-surface-variant px-2.5 py-1 rounded-full">
+            Kredensial Aktif
+          </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-lg text-justify">
+          Kredensial berikut mengatur jalur otentikasi aman melalui Google Service Account level institusional dan Webhook Apps Script untuk pengiriman event instan dari formulir relawan atau peminjaman buku perpustakaan.
+        </p>
+<div class="space-y-space-md">
+<!-- Param 1: Nama Spreadsheet -->
+<div class="bg-surface-container-low p-space-md rounded-lg flex flex-col md:flex-row md:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">description</span>
+<div>
+<span class="block font-label-sm text-label-sm text-on-surface-variant uppercase">Nama Spreadsheet</span>
+<span class="font-label-lg text-label-lg text-on-surface font-semibold">DB_PelitaBangsa_Master_2025</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="px-2.5 py-0.5 rounded font-label-sm text-label-sm bg-surface-container-highest text-on-surface">Sheet Utama</span>
+<a class="p-1.5 rounded-lg bg-surface-container text-on-surface-variant hover:text-primary transition-colors" href="https://docs.google.com/spreadsheets" target="_blank" title="Buka Spreadsheet Eksternal">
+<span class="material-symbols-outlined text-body-md">launch</span>
+</a>
+</div>
+</div>
+<!-- Param 2: Spreadsheet ID -->
+<div class="bg-surface-container-low p-space-md rounded-lg flex flex-col md:flex-row md:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-3 min-w-0">
+<span class="material-symbols-outlined text-secondary">vpn_key</span>
+<div class="min-w-0">
+<span class="block font-label-sm text-label-sm text-on-surface-variant uppercase">Spreadsheet ID</span>
+<code class="font-mono font-label-md text-label-md text-on-surface truncate block" id="text-sheet-id">1A9O-kL2m8Qx7YvPB_9901Za-PelitaSiantar_xZG9_PB</code>
+</div>
+</div>
+<button class="shrink-0 flex items-center gap-1.5 px-3 py-1.5 bg-surface-container-lowest hover:bg-surface-container text-on-surface font-label-sm text-label-sm rounded-lg transition-colors shadow-sm" onclick="navigator.clipboard.writeText('1A9O-kL2m8Qx7YvPB_9901Za-PelitaSiantar_xZG9_PB'); this.innerHTML='&lt;span class=\'material-symbols-outlined text-body-sm\'&gt;done&lt;/span&gt; Tersalin'; setTimeout(() =&gt; this.innerHTML='&lt;span class=\'material-symbols-outlined text-body-sm\'&gt;content_copy&lt;/span&gt; Salin ID', 2000)">
+<span class="material-symbols-outlined text-body-sm">content_copy</span> Salin ID
+            </button>
+</div>
+<!-- Param 3: Apps Script Webhook URL Endpoint -->
+<div class="bg-surface-container-low p-space-md rounded-lg flex flex-col md:flex-row md:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-3 min-w-0">
+<span class="material-symbols-outlined text-tertiary">webhook</span>
+<div class="min-w-0">
+<span class="block font-label-sm text-label-sm text-on-surface-variant uppercase">Apps Script Webhook URL Endpoint</span>
+<code class="font-mono font-label-md text-label-md text-on-surface truncate block" id="text-webhook">https://script.google.com/macros/s/AKfycb...••••••••...9xKz/exec</code>
+</div>
+</div>
+<button class="shrink-0 flex items-center gap-1.5 px-3 py-1.5 bg-surface-container-lowest hover:bg-surface-container text-on-surface font-label-sm text-label-sm rounded-lg transition-colors shadow-sm" onclick="navigator.clipboard.writeText('https://script.google.com/macros/s/AKfycbxN72b8XwQL_pelita99sml/exec'); this.innerHTML='&lt;span class=\'material-symbols-outlined text-body-sm\'&gt;done&lt;/span&gt; Tersalin'; setTimeout(() =&gt; this.innerHTML='&lt;span class=\'material-symbols-outlined text-body-sm\'&gt;content_copy&lt;/span&gt; Salin URL', 2000)">
+<span class="material-symbols-outlined text-body-sm">content_copy</span> Salin URL
+            </button>
+</div>
+<!-- Param 4: Akun Service Google Drive -->
+<div class="bg-surface-container-low p-space-md rounded-lg flex flex-col md:flex-row md:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-3 min-w-0">
+<span class="material-symbols-outlined text-primary">admin_panel_settings</span>
+<div class="min-w-0">
+<span class="block font-label-sm text-label-sm text-on-surface-variant uppercase">Akun Service Google Drive (Service Account)</span>
+<span class="font-label-md text-label-md text-on-surface truncate block">relawan-sync@pelita-bangsa.iam.gserviceaccount.com</span>
+</div>
+</div>
+<span class="shrink-0 px-2.5 py-1 rounded bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm">
+              Hak Akses: Editor Master
+            </span>
+</div>
+</div>
+<!-- Latency Chart / Micro Sparkline Visual -->
+<div class="mt-space-lg p-space-md rounded-xl bg-surface-container flex flex-col gap-2">
+<div class="flex justify-between items-center text-on-surface">
+<span class="font-label-md text-label-md">Stabilitas Latensi Sinkronisasi (6 Jam Terakhir)</span>
+<span class="font-label-sm text-label-sm text-secondary">Rata-rata: 145 ms (Sangat Stabil)</span>
+</div>
+<div class="h-16 w-full flex items-end gap-1.5 pt-2">
+<div class="flex-1 bg-secondary/30 hover:bg-secondary rounded-t h-[60%] transition-all" title="07:00 - 150ms"></div>
+<div class="flex-1 bg-secondary/30 hover:bg-secondary rounded-t h-[52%] transition-all" title="08:00 - 138ms"></div>
+<div class="flex-1 bg-secondary/40 hover:bg-secondary rounded-t h-[75%] transition-all" title="09:00 - 165ms"></div>
+<div class="flex-1 bg-secondary/30 hover:bg-secondary rounded-t h-[48%] transition-all" title="10:00 - 130ms"></div>
+<div class="flex-1 bg-secondary/30 hover:bg-secondary rounded-t h-[55%] transition-all" title="11:00 - 142ms"></div>
+<div class="flex-1 bg-secondary/50 hover:bg-secondary rounded-t h-[80%] transition-all" title="12:00 - 172ms"></div>
+<div class="flex-1 bg-secondary/40 hover:bg-secondary rounded-t h-[62%] transition-all" title="13:00 - 149ms"></div>
+<div class="flex-1 bg-secondary/30 hover:bg-secondary rounded-t h-[45%] transition-all" title="14:00 - 128ms"></div>
+<div class="flex-1 bg-secondary/30 hover:bg-secondary rounded-t h-[50%] transition-all" title="15:00 - 135ms"></div>
+<div class="flex-1 bg-secondary/40 hover:bg-secondary rounded-t h-[65%] transition-all" title="16:00 - 154ms"></div>
+<div class="flex-1 bg-primary rounded-t h-[56%] transition-all" title="Sekarang - 142ms"></div>
+</div>
+</div>
+</div>
+<!-- Control Panel: Maintenance & Diagnostics -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-space-xs">Panel Uji Koneksi &amp; Pemeliharaan</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-lg text-justify">
+          Gunakan perintah manual untuk memvalidasi pertukaran paket, memaksa peremajaan data cache lokal, serta mengekspor cadangan berkas mandiri format CSV terenkripsi demi menjamin integritas catatan perpustakaan komunitas.
+        </p>
+<!-- Action Button Cluster -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-space-md mb-space-lg">
+<button class="flex flex-col items-center justify-center text-center p-space-md rounded-xl bg-surface-container-low hover:bg-surface-container hover:-translate-y-0.5 transition-all text-on-surface shadow-sm" id="btn-ping" onclick="simulatePing()">
+<span class="material-symbols-outlined text-primary text-headline-md mb-1">network_ping</span>
+<span class="font-label-md text-label-md">Test API Ping &amp; Latency</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant mt-0.5">Uji handshake 2 arah</span>
+</button>
+<button class="flex flex-col items-center justify-center text-center p-space-md rounded-xl bg-primary hover:bg-primary-container text-on-primary hover:-translate-y-0.5 transition-all shadow-sm" id="btn-force-sync" onclick="simulateSync()">
+<span class="material-symbols-outlined text-headline-md mb-1">sync</span>
+<span class="font-label-lg text-label-lg">Force Sync Semua Data</span>
+<span class="font-label-sm text-label-sm opacity-80 mt-0.5">Tarik 4 tab simultan</span>
+</button>
+<button class="flex flex-col items-center justify-center text-center p-space-md rounded-xl bg-surface-container-low hover:bg-surface-container hover:-translate-y-0.5 transition-all text-on-surface shadow-sm" onclick="simulateExport()">
+<span class="material-symbols-outlined text-secondary text-headline-md mb-1">file_download</span>
+<span class="font-label-md text-label-md">Export Backup CSV / Excel</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant mt-0.5">Arsip lokal terkompresi</span>
+</button>
+</div>
+<!-- Sync Frequency Settings -->
+<div class="p-space-md rounded-xl bg-surface-container-low flex flex-col md:flex-row items-start md:items-center justify-between gap-space-md">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary text-headline-sm">schedule</span>
+<div>
+<span class="font-label-md text-label-md text-on-surface">Interval Sinkronisasi Otomatis</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-justify">Pilih frekuensi polling berkala atau gunakan event webhook langsung saat ada perubahan baris.</p>
+</div>
+</div>
+<div class="flex items-center gap-2 bg-surface-container-lowest p-1 rounded-lg">
+<button class="px-3 py-1.5 rounded-lg bg-primary text-on-primary font-label-sm text-label-sm font-semibold shadow-sm">Setiap 5 Menit</button>
+<button class="px-3 py-1.5 rounded-lg hover:bg-surface-container text-on-surface-variant font-label-sm text-label-sm transition-colors">Realtime Webhook</button>
+</div>
+</div>
+<!-- Audit Log of Recent Sync Activities -->
+<div class="mt-space-lg">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-md text-label-md text-on-surface uppercase tracking-wide">Log Audit Sinkronisasi Terakhir</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Memuat 4 event termutakhir</span>
+</div>
+<div class="overflow-x-auto rounded-lg bg-surface-container-low">
+<table class="w-full text-left font-body-sm text-body-sm">
+<thead class="bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm uppercase">
+<tr>
+<th class="py-2.5 px-space-md">Waktu Server</th>
+<th class="py-2.5 px-space-md">Tab Target</th>
+<th class="py-2.5 px-space-md">Status Respons</th>
+<th class="py-2.5 px-space-md">Perubahan Baris</th>
+<th class="py-2.5 px-space-md text-right">Durasi</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container text-on-surface">
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="py-2.5 px-space-md font-mono text-label-sm">17:42:10 WIB</td>
+<td class="py-2.5 px-space-md font-label-md">Posts_Live</td>
+<td class="py-2.5 px-space-md">
+<span class="inline-flex items-center gap-1 text-label-sm font-semibold text-secondary">
+<span class="material-symbols-outlined text-body-sm">check_circle</span> HTTP 200 OK
+                    </span>
+</td>
+<td class="py-2.5 px-space-md font-label-sm text-primary">+1 Baris Ditambahkan</td>
+<td class="py-2.5 px-space-md text-right font-mono text-label-sm text-on-surface-variant">118 ms</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="py-2.5 px-space-md font-mono text-label-sm">17:35:00 WIB</td>
+<td class="py-2.5 px-space-md font-label-md">Katalog_Buku</td>
+<td class="py-2.5 px-space-md">
+<span class="inline-flex items-center gap-1 text-label-sm font-semibold text-secondary">
+<span class="material-symbols-outlined text-body-sm">check_circle</span> HTTP 200 OK
+                    </span>
+</td>
+<td class="py-2.5 px-space-md font-label-sm text-on-surface-variant">Sinkron Penuh (0 modifikasi)</td>
+<td class="py-2.5 px-space-md text-right font-mono text-label-sm text-on-surface-variant">210 ms</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="py-2.5 px-space-md font-mono text-label-sm">17:30:15 WIB</td>
+<td class="py-2.5 px-space-md font-label-md">Donatur_Relawan</td>
+<td class="py-2.5 px-space-md">
+<span class="inline-flex items-center gap-1 text-label-sm font-semibold text-secondary">
+<span class="material-symbols-outlined text-body-sm">check_circle</span> HTTP 200 OK
+                    </span>
+</td>
+<td class="py-2.5 px-space-md font-label-sm text-primary">+3 Baris Ditambahkan</td>
+<td class="py-2.5 px-space-md text-right font-mono text-label-sm text-on-surface-variant">142 ms</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="py-2.5 px-space-md font-mono text-label-sm">17:25:02 WIB</td>
+<td class="py-2.5 px-space-md font-label-md">Aktivitas_Log</td>
+<td class="py-2.5 px-space-md">
+<span class="inline-flex items-center gap-1 text-label-sm font-semibold text-secondary">
+<span class="material-symbols-outlined text-body-sm">check_circle</span> HTTP 200 OK
+                    </span>
+</td>
+<td class="py-2.5 px-space-md font-label-sm text-primary">+8 Baris Ditambahkan</td>
+<td class="py-2.5 px-space-md text-right font-mono text-label-sm text-on-surface-variant">95 ms</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Sheet Schema Mapping & Field Architecture -->
+<div class="lg:col-span-5 flex flex-col gap-space-lg">
+<!-- Schema Architecture Card -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+<div class="flex items-center justify-between mb-space-md">
+<div class="flex items-center gap-2">
+<span class="w-8 h-8 rounded-lg bg-secondary-fixed text-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-headline-sm">account_tree</span>
+</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Pemetaan Tab Spreadsheet</h2>
+</div>
+<span class="font-label-sm text-label-sm text-secondary bg-secondary-fixed px-2 py-0.5 rounded-full">
+            4 Tab Aktif
+          </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-lg text-justify">
+          Setiap tab di bawah ini merepresentasikan tabel entitas relasional terpisah dalam buku kerja Google Sheets. Struktur kolom terikat secara statis untuk mencegah anomali tipe data saat koordinator lapangan menambahkan baris secara langsung via aplikasi Google Sheets di ponsel pintar.
+        </p>
+<!-- Mapping List Accordions / Structural Cards -->
+<div class="space-y-space-md">
+<!-- Tab 1: Posts_Live -->
+<div class="p-space-md rounded-xl bg-surface-container-low transition-all">
+<div class="flex items-start justify-between gap-2 mb-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-headline-sm">article</span>
+<div>
+<h3 class="font-label-lg text-label-lg text-on-surface">Tab: Posts_Live</h3>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Artikel, Liputan Lapangan, &amp; Rilis</span>
+</div>
+</div>
+<span class="px-2.5 py-0.5 rounded-full font-label-sm text-label-sm bg-primary-fixed text-on-primary-fixed font-bold">
+                27 Baris Aktif
+              </span>
+</div>
+<div class="mt-space-sm pt-space-sm bg-surface-container-lowest p-2.5 rounded-lg">
+<div class="text-label-sm font-label-sm text-on-surface-variant mb-1 uppercase tracking-wider">Pemetaan Kolom (A - G):</div>
+<div class="flex flex-wrap gap-1">
+<span class="px-2 py-0.5 rounded bg-surface-container font-mono text-label-sm text-on-surface">A: Timestamp</span>
+<span class="px-2 py-0.5 rounded bg-surface-container font-mono text-label-sm text-on-surface">B: Title</span>
+<span class="px-2 py-0.5 rounded bg-surface-container font-mono text-label-sm text-on-surface">C: Category</span>
+<span class="px-2 py-0.5 rounded bg-surface-container font-mono text-label-sm text-on-surface">D: Author</span>
+<span class="px-2 py-0.5 rounded bg-surface-container font-mono text-label-sm text-on-surface">E: Content</span>
+<span class="px-2 py-0.5 rounded bg-surface-container font-mono text-label-sm text-on-surface">F: ImageURL</span>
+<span class="px-2 py-0.5 rounded bg-surface-container font-mono text-label-sm text-primary font-semibold">G: Status</span>
+</div>
+</div>
+</div>
+<!-- Tab 2: Katalog_Buku -->
+<div class="p-space-md rounded-xl bg-surface-container-low transition-all">
+<div class="flex items-start justify-between gap-2 mb-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-headline-sm">menu_book</span>
+<div>
+<h3 class="font-label-lg text-label-lg text-on-surface">Tab: Katalog_Buku</h3>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Master Inventaris Sirkulasi Buku</span>
+</div>
+</div>
+<span class="px-2.5 py-0.5 rounded-full font-label-sm text-label-sm bg-secondary-fixed text-on-secondary-fixed font-bold">
+                1.850 Baris Aktif
+              </span>
+</div>
+<div class="mt-space-sm pt-space-sm bg-surface-container-lowest p-2.5 rounded-lg">
+<div class="text-label-sm font-label-sm text-on-surface-variant mb-1 uppercase tracking-wider">Pemetaan Kolom (A - F):</div>
+<div class="flex flex-wrap gap-1">
+<span class="px-2 py-0.5 rounded bg-surface-container font-mono text-label-sm text-on-surface">A: ISBN</span>
+<span class="px-2 py-0.5 rounded bg-surface-container font-mono text-label-sm text-on-surface">B: Title</span>
+<span class="px-2 py-0.5 rounded bg-surface-container font-mono text-label-sm text-on-surface">C: Author</span>
+<span class="px-2 py-0.5 rounded bg-surface-container font-mono text-label-sm text-on-surface">D: Category</span>
+<span class="px-2 py-0.5 rounded bg-surface-container font-mono text-label-sm text-on-surface">E: ShelfLocation</span>
+<span class="px-2 py-0.5 rounded bg-surface-container font-mono text-label-sm text-secondary font-semibold">F: StockAvailable</span>
+</div>
+</div>
+</div>
+<!-- Tab 3: Donatur_Relawan -->
+<div class="p-space-md rounded-xl bg-surface-container-low transition-all">
+<div class="flex items-start justify-between gap-2 mb-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-headline-sm">volunteer_activism</span>
+<div>
+<h3 class="font-label-lg text-label-lg text-on-surface">Tab: Donatur_Relawan</h3>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Registrasi Donasi &amp; Personel</span>
+</div>
+</div>
+<span class="px-2.5 py-0.5 rounded-full font-label-sm text-label-sm bg-tertiary-fixed text-on-tertiary-fixed font-bold">
+                142 Baris Aktif
+              </span>
+</div>
+<div class="mt-space-sm pt-space-sm bg-surface-container-lowest p-2.5 rounded-lg">
+<div class="text-label-sm font-label-sm text-on-surface-variant mb-1 uppercase tracking-wider">Pemetaan Kolom (A - F):</div>
+<div class="flex flex-wrap gap-1">
+<span class="px-2 py-0.5 rounded bg-surface-container font-mono text-label-sm text-on-surface">A: Date</span>
+<span class="px-2 py-0.5 rounded bg-surface-container font-mono text-label-sm text-on-surface">B: DonorName</span>
+<span class="px-2 py-0.5 rounded bg-surface-container font-mono text-label-sm text-on-surface">C: Contact</span>
+<span class="px-2 py-0.5 rounded bg-surface-container font-mono text-label-sm text-on-surface">D: BookCount</span>
+<span class="px-2 py-0.5 rounded bg-surface-container font-mono text-label-sm text-on-surface">E: Notes</span>
+<span class="px-2 py-0.5 rounded bg-surface-container font-mono text-label-sm text-tertiary font-semibold">F: Status</span>
+</div>
+</div>
+</div>
+<!-- Tab 4: Aktivitas_Log -->
+<div class="p-space-md rounded-xl bg-surface-container-low transition-all">
+<div class="flex items-start justify-between gap-2 mb-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface text-headline-sm">receipt_long</span>
+<div>
+<h3 class="font-label-lg text-label-lg text-on-surface">Tab: Aktivitas_Log</h3>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Jejak Audit &amp; Riwayat Peminjaman</span>
+</div>
+</div>
+<span class="px-2.5 py-0.5 rounded-full font-label-sm text-label-sm bg-surface-container-highest text-on-surface font-bold">
+                520 Baris Audit Trail
+              </span>
+</div>
+<div class="mt-space-sm pt-space-sm bg-surface-container-lowest p-2.5 rounded-lg">
+<div class="text-label-sm font-label-sm text-on-surface-variant mb-1 uppercase tracking-wider">Struktur Log:</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-justify">
+                Merekam identitas sesi pengubah, IP origin, ringkasan baris sebelum modifikasi, dan timestamp UTC+7 secara otomatis melalui pemicu Apps Script onEdit().
+              </p>
+</div>
+</div>
+</div>
+<!-- Technical Guide Callout -->
+<div class="mt-space-lg p-space-md rounded-xl bg-surface-container flex flex-col gap-2">
+<div class="flex items-center gap-2 text-primary font-label-md text-label-md">
+<span class="material-symbols-outlined text-body-md">lightbulb</span>
+<span>Panduan Teknis Penambahan Kolom Baru</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-justify">
+            Bila pengurus ingin menambahkan atribut baru pada katalog buku (misal: 'Kondisi Fisik' atau 'Tahun Terbit'), tambahkan kolom di sebelah kanan kolom terakhir pada berkas Google Sheets. Jangan pernah menyisipkan kolom di tengah skema terdaftar karena pemetaan indeks v4 API mengandalkan posisi indeks absolut.
+          </p>
+</div>
+</div>
+<!-- Quick Server Health Box -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed text-secondary flex items-center justify-center">
+<span class="material-symbols-outlined">security</span>
+</div>
+<div>
+<span class="font-label-md text-label-md text-on-surface block">Enkripsi Data In-Transit</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">TLS 1.3 / OAuth 2.0 Token Bearer</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-secondary">verified</span>
+</div>
+</div>
+</div>
+<!-- Realtime Toast / Notification Feedback Placeholder -->
+<div class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none" id="sync-toast">
+<div class="bg-inverse-surface text-inverse-on-surface px-space-lg py-space-sm rounded-xl shadow-xl flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary" id="toast-icon">check_circle</span>
+<div>
+<p class="font-label-md text-label-md" id="toast-title">Sinkronisasi Berhasil</p>
+<p class="font-body-sm text-body-sm text-surface-dim" id="toast-desc">Semua 4 tab spreadsheet telah dimutakhirkan secara sempurna.</p>
+</div>
+</div>
+</div>
+<script>
+    function showToast(title, desc, icon = 'check_circle') {
+      const toast = document.getElementById('sync-toast');
+      document.getElementById('toast-title').innerText = title;
+      document.getElementById('toast-desc').innerText = desc;
+      document.getElementById('toast-icon').innerText = icon;
+      toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+      setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+      }, 3500);
+    }
+
+    function simulatePing() {
+      const btn = document.getElementById('btn-ping');
+      btn.classList.add('opacity-50', 'pointer-events-none');
+      setTimeout(() => {
+        btn.classList.remove('opacity-50', 'pointer-events-none');
+        showToast('Koneksi Ping Berhasil', 'Waktu bolak-balik: 139 ms. Google Apps Script merespons status HTTP 200.', 'network_check');
+      }, 600);
+    }
+
+    function simulateSync() {
+      const btn = document.getElementById('btn-force-sync');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<span class="material-symbols-outlined animate-spin text-headline-md mb-1">sync</span><span class="font-label-lg text-label-lg">Menyinkronkan...</span>';
+      btn.classList.add('opacity-75', 'pointer-events-none');
+      
+      setTimeout(() => {
+        btn.innerHTML = originalText;
+        btn.classList.remove('opacity-75', 'pointer-events-none');
+        showToast('Sinkronisasi Komprehensif Selesai', 'Total 2.539 baris terverifikasi di seluruh 4 tab database.', 'done_all');
+      }, 1200);
+    }
+
+    function simulateExport() {
+      showToast('Cadangan Diproses', 'Mengompresi data 4 tab ke berkas DB_PelitaBangsa_Backup_2025.zip...', 'inventory_2');
+    }
+  </script>
+</div></main></div></body></html>
