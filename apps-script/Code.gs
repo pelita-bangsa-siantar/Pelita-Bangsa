@@ -18,7 +18,7 @@ const CONFIG = {
     BUKU: 'BUKU', BERITA: 'BERITA', DONASI: 'DONASI', ALBUM: 'ALBUM', ADMIN: 'ADMIN', KUNJUNGAN: 'KUNJUNGAN', LOG: 'LOG'
   },
   // Tab yang boleh DITULIS dari panel admin. Tab fitur wajib tetap diedit langsung di Sheets.
-  ADMIN_WRITE: ['BUKU', 'BERITA', 'DONASI', 'ALBUM'],
+  ADMIN_WRITE: ['BUKU', 'BERITA', 'DONASI', 'ALBUM', 'AGENDA'],   // PROFIL ditulis lewat aksi khusus profil_save
   FOLDER_TTL: 21600,             // detik, cache daftar foto per folder Drive (album)
   ALBUM_MAX_FOTO: 300,           // foto maksimum yang dibaca dari satu folder album
   LOG_MAX: 1000                  // baris LOG maksimum sebelum dipangkas

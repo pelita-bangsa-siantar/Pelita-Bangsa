@@ -800,7 +800,7 @@ Formulir donasi publik (`publicDonasi_`): honeypot `website` harus kosong, valid
 
 ## Skill 17 — CRUD generik berdasarkan kolom id + log audit
 
-Satu set fungsi melayani semua tab yang boleh ditulis (`CONFIG.ADMIN_WRITE = ['BUKU','BERITA','DONASI','ALBUM']`). Khusus `ALBUM`, `checkAlbum_()` memvalidasi link folder Drive sebelum menulis dan respons `save` membawa `foto` (jumlah) + `publik` (status berbagi). Pemetaan **berdasarkan nama header**, bukan indeks kolom, jadi pengurus boleh menambah kolom di kanan.
+Satu set fungsi melayani semua tab yang boleh ditulis (`CONFIG.ADMIN_WRITE = ['BUKU','BERITA','DONASI','ALBUM','AGENDA']`; `PROFIL` lewat `saveProfil_`/aksi `profil_save`). Khusus `ALBUM`, `checkAlbum_()` memvalidasi link folder Drive sebelum menulis dan respons `save` membawa `foto` (jumlah) + `publik` (status berbagi). Pemetaan **berdasarkan nama header**, bukan indeks kolom, jadi pengurus boleh menambah kolom di kanan.
 
 ```js
 function saveRow_(name, data) {                       // upsert
@@ -830,7 +830,7 @@ Aturan: setiap tulisan → `clearCache()` (web publik langsung segar) + `logRow_
 
 ## Skill 18 — Panel admin satu shell (hash routing) + PB.post
 
-`admin/index.html` berisi login + `<section data-view="...">` untuk 6 modul; `assets/js/admin.js` memilih view dari `location.hash` (`#ringkasan #berita #galeri #buku #donatur #konfigurasi`). Satu header/sidebar, satu bottom-nav mobile, satu file JS — lebih ringan daripada 5 halaman.
+`admin/index.html` berisi login + `<section data-view="...">` untuk 8 modul; `assets/js/admin.js` memilih view dari `location.hash` (`#ringkasan #berita #galeri #agenda #konten #buku #donatur #konfigurasi`). Satu header/sidebar, satu bottom-nav mobile, satu file JS — lebih ringan daripada 5 halaman.
 
 ```js
 // assets/js/api.js

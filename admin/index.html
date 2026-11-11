@@ -66,6 +66,8 @@
       <a href="#ringkasan" data-nav="ringkasan" class="flex items-center gap-3 px-space-md py-space-sm rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-headline-sm">dashboard</span>Ringkasan &amp; Analitik</a>
       <a href="#berita" data-nav="berita" class="flex items-center gap-3 px-space-md py-space-sm rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-headline-sm">article</span>Kelola Berita &amp; Artikel</a>
       <a href="#galeri" data-nav="galeri" class="flex items-center gap-3 px-space-md py-space-sm rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-headline-sm">photo_library</span>Galeri &amp; Album Drive</a>
+      <a href="#agenda" data-nav="agenda" class="flex items-center gap-3 px-space-md py-space-sm rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-headline-sm">event</span>Agenda Kegiatan</a>
+      <a href="#konten" data-nav="konten" class="flex items-center gap-3 px-space-md py-space-sm rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-headline-sm">home_app_logo</span>Isi &amp; Foto Beranda</a>
       <a href="#buku" data-nav="buku" class="flex items-center gap-3 px-space-md py-space-sm rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-headline-sm">menu_book</span>Katalog Koleksi Buku</a>
       <a href="#donatur" data-nav="donatur" class="flex items-center gap-3 px-space-md py-space-sm rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-headline-sm">volunteer_activism</span>Donatur &amp; Relawan</a>
       <a href="#konfigurasi" data-nav="konfigurasi" class="flex items-center gap-3 px-space-md py-space-sm rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-headline-sm">sync_alt</span>Konfigurasi Sheets</a>
@@ -104,6 +106,8 @@
       <a href="#ringkasan" data-nav="ringkasan" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm whitespace-nowrap"><span class="material-symbols-outlined text-[16px]">dashboard</span><span>Ringkasan</span></a>
       <a href="#berita" data-nav="berita" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm whitespace-nowrap"><span class="material-symbols-outlined text-[16px]">edit_note</span><span>Kelola Berita</span></a>
       <a href="#galeri" data-nav="galeri" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm whitespace-nowrap"><span class="material-symbols-outlined text-[16px]">photo_library</span><span>Galeri</span></a>
+      <a href="#agenda" data-nav="agenda" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm whitespace-nowrap"><span class="material-symbols-outlined text-[16px]">event</span><span>Agenda</span></a>
+      <a href="#konten" data-nav="konten" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm whitespace-nowrap"><span class="material-symbols-outlined text-[16px]">home_app_logo</span><span>Isi &amp; Foto Beranda</span></a>
       <a href="#buku" data-nav="buku" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm whitespace-nowrap"><span class="material-symbols-outlined text-[16px]">menu_book</span><span>Katalog Buku</span></a>
       <a href="#donatur" data-nav="donatur" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm whitespace-nowrap"><span class="material-symbols-outlined text-[16px]">groups</span><span>Donatur &amp; Relawan</span></a>
       <a href="#konfigurasi" data-nav="konfigurasi" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm whitespace-nowrap"><span class="material-symbols-outlined text-[16px]">database</span><span>Database API</span></a>
@@ -325,6 +329,93 @@
       </div>
     </section>
 
+    <!-- ===== AGENDA KEGIATAN (tab AGENDA; boleh juga diisi langsung di Sheets) ===== -->
+    <section data-view="agenda" class="hidden flex-col w-full gap-space-lg pt-space-sm">
+      <div class="w-full bg-surface-container-lowest rounded-xl p-space-md lg:p-space-lg shadow-sm flex flex-col lg:flex-row items-start lg:items-center justify-between gap-space-md">
+        <div class="flex items-start gap-space-md">
+          <div class="w-12 h-12 rounded-xl bg-primary-fixed text-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-[28px]">event</span></div>
+          <div>
+            <div class="flex items-center gap-space-xs flex-wrap"><h1 class="font-headline-md text-headline-md text-on-surface">Agenda Kegiatan</h1><span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm" id="ag-count">—</span></div>
+            <p class="font-body-sm text-body-sm text-on-surface-variant mt-1 justify">Agenda bisa ditulis di sini atau langsung di tab AGENDA Google Sheets — dua-duanya muncul di daftar ini. Setiap agenda boleh diberi gambar/poster (link file Google Drive) yang ikut tampil di web.</p>
+          </div>
+        </div>
+        <button data-reload="AGENDA" class="self-stretch sm:self-auto inline-flex items-center justify-center gap-space-xs px-space-md py-2.5 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-lg text-label-lg transition-colors shadow-sm shrink-0"><span class="material-symbols-outlined text-[18px]">sync</span><span>Muat Ulang dari Sheets</span></button>
+      </div>
+      <div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg items-start">
+        <div class="xl:col-span-5 bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+          <div class="p-4 flex items-center justify-between bg-primary-container text-on-primary-container">
+            <div class="flex items-center gap-2.5"><div class="w-8 h-8 rounded-full bg-on-primary-container/20 flex items-center justify-center"><span class="material-symbols-outlined text-[20px]">edit_calendar</span></div><div><h2 class="font-headline-sm text-headline-sm leading-none" id="ag-form-title">Agenda Baru</h2><p class="font-label-sm text-label-sm text-primary-fixed opacity-90 mt-0.5">Tersimpan ke tab AGENDA</p></div></div>
+            <button type="button" id="ag-batal" class="hidden font-label-sm text-label-sm underline">Batal edit</button>
+          </div>
+          <form id="form-agenda" class="p-space-md lg:p-space-lg space-y-space-md" novalidate>
+            <input type="hidden" name="id">
+            <div><label class="block font-label-lg text-label-lg text-on-surface mb-1.5" for="ag-nama">Nama Kegiatan <span class="text-tertiary">*</span></label><input id="ag-nama" name="nama_kegiatan" required maxlength="160" class="w-full px-space-md py-2.5 rounded-lg bg-surface-container-low border-0 text-on-surface font-body-md focus:ring-2 focus:ring-secondary" placeholder="Contoh: Festival Dongeng Nusantara"></div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+              <div><label class="block font-label-lg text-label-lg text-on-surface mb-1.5" for="ag-mulai">Tanggal Mulai</label><input id="ag-mulai" name="tanggal_mulai" type="date" class="w-full px-space-md py-2.5 rounded-lg bg-surface-container-low border-0 text-on-surface font-body-md focus:ring-2 focus:ring-secondary"></div>
+              <div><label class="block font-label-lg text-label-lg text-on-surface mb-1.5" for="ag-selesai">Tanggal Selesai</label><input id="ag-selesai" name="tanggal_selesai" type="date" class="w-full px-space-md py-2.5 rounded-lg bg-surface-container-low border-0 text-on-surface font-body-md focus:ring-2 focus:ring-secondary"></div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+              <div><label class="block font-label-lg text-label-lg text-on-surface mb-1.5" for="ag-kategori">Kategori</label><select id="ag-kategori" name="kategori" class="w-full px-space-md py-2.5 rounded-lg bg-surface-container-low border-0 text-on-surface font-body-md focus:ring-2 focus:ring-secondary"><option>Literasi Anak</option><option>Literasi Digital</option><option>Pemberdayaan Warga</option><option>Perayaan</option><option>Lainnya</option></select></div>
+              <div><label class="block font-label-lg text-label-lg text-on-surface mb-1.5" for="ag-status">Status</label><select id="ag-status" name="status" class="w-full px-space-md py-2.5 rounded-lg bg-surface-container-low border-0 text-on-surface font-body-md focus:ring-2 focus:ring-secondary"><option value="">Otomatis</option><option>Akan Datang</option><option>Berlangsung</option><option>Selesai</option><option>Ditunda</option><option>Dibatalkan</option></select></div>
+            </div>
+            <div><label class="block font-label-lg text-label-lg text-on-surface mb-1.5" for="ag-lokasi">Lokasi</label><input id="ag-lokasi" name="lokasi" maxlength="120" class="w-full px-space-md py-2.5 rounded-lg bg-surface-container-low border-0 text-on-surface font-body-md focus:ring-2 focus:ring-secondary" placeholder="Balai Baca Utama"></div>
+            <div><label class="block font-label-lg text-label-lg text-on-surface mb-1.5" for="ag-deskripsi">Deskripsi</label><textarea id="ag-deskripsi" name="deskripsi" rows="3" maxlength="600" class="w-full px-space-md py-2.5 rounded-lg bg-surface-container-low border-0 text-on-surface font-body-md focus:ring-2 focus:ring-secondary" placeholder="Keterangan singkat kegiatan..."></textarea></div>
+            <div>
+              <label class="block font-label-lg text-label-lg text-on-surface mb-1.5" for="ag-poster">Gambar / Poster Agenda (link file Google Drive)</label>
+              <div class="relative"><input id="ag-poster" name="poster_drive_id" class="w-full pl-10 pr-space-md py-2.5 rounded-lg bg-surface-container-low border-0 text-on-surface font-body-md focus:ring-2 focus:ring-secondary" placeholder="https://drive.google.com/file/d/..."><span class="material-symbols-outlined absolute left-3 top-2.5 text-on-surface-variant text-[20px]">add_photo_alternate</span></div>
+              <p class="font-label-sm text-label-sm text-on-surface-variant mt-1">Opsional. Cocok untuk agenda yang sudah dibuat sebagai gambar: cukup isi nama kegiatan dan tempel link gambarnya.</p>
+              <div id="ag-preview" class="mt-2"></div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+              <div><label class="block font-label-lg text-label-lg text-on-surface mb-1.5" for="ag-album">Album Foto Kegiatan</label><select id="ag-album" name="album_id" class="w-full px-space-md py-2.5 rounded-lg bg-surface-container-low border-0 text-on-surface font-body-md focus:ring-2 focus:ring-secondary"><option value="">Tidak ada</option></select></div>
+              <div><label class="block font-label-lg text-label-lg text-on-surface mb-1.5" for="ag-tahun">Tahun (jika tanpa tanggal)</label><input id="ag-tahun" name="tahun" inputmode="numeric" maxlength="4" class="w-full px-space-md py-2.5 rounded-lg bg-surface-container-low border-0 text-on-surface font-body-md focus:ring-2 focus:ring-secondary" placeholder="2026"></div>
+            </div>
+            <label class="flex items-center gap-2 font-label-md text-label-md text-on-surface"><input type="checkbox" name="sembunyikan" class="w-4 h-4 rounded accent-primary">Sembunyikan dari web</label>
+            <button type="submit" id="ag-simpan" class="w-full inline-flex items-center justify-center gap-space-xs px-space-lg py-2.5 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-lg text-label-lg transition-all shadow-md disabled:opacity-60"><span class="material-symbols-outlined text-[20px]">cloud_sync</span><span>Simpan Agenda</span></button>
+          </form>
+        </div>
+        <div class="xl:col-span-7 bg-surface-container-lowest rounded-xl p-space-md lg:p-space-lg shadow-sm">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm mb-space-md">
+            <div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-primary text-[24px]">calendar_month</span><h2 class="font-headline-sm text-headline-sm text-on-surface">Daftar Agenda</h2></div>
+            <div class="flex items-center gap-space-sm">
+              <div class="relative flex-1 sm:w-56"><input id="ag-cari" aria-label="Cari agenda" class="w-full pl-9 pr-space-md py-2 rounded-lg bg-surface-container-low border-0 text-on-surface font-body-sm focus:ring-2 focus:ring-secondary" placeholder="Cari kegiatan, lokasi..."><span class="material-symbols-outlined absolute left-2.5 top-2 text-on-surface-variant text-[18px]">search</span></div>
+              <select id="ag-filter-tahun" aria-label="Filter tahun" class="pl-space-md pr-9 py-2 rounded-lg bg-surface-container-low border-0 text-on-surface font-label-md focus:ring-2 focus:ring-secondary"><option value="">Semua Tahun</option></select>
+            </div>
+          </div>
+          <div class="overflow-x-auto rounded-lg"><table class="w-full text-left font-body-sm text-body-sm"><thead class="bg-surface-container font-label-md text-label-md uppercase tracking-wider text-on-surface-variant"><tr><th class="py-3 px-space-sm sm:px-space-md">Kegiatan</th><th class="py-3 px-space-md hidden sm:table-cell">Tanggal</th><th class="py-3 px-space-md hidden sm:table-cell">Status</th><th class="py-3 px-space-sm sm:px-space-md text-right">Aksi</th></tr></thead><tbody id="ag-rows" class="divide-y divide-surface-container-high"></tbody></table></div>
+          <div id="ag-pager" class="mt-space-md pt-space-sm flex flex-col sm:flex-row items-center justify-between gap-space-sm border-t border-surface-container-high text-on-surface-variant font-label-sm text-label-sm"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ISI & FOTO BERANDA (tab PROFIL) ===== -->
+    <section data-view="konten" class="hidden flex-col w-full gap-space-lg pt-space-sm">
+      <div class="w-full bg-surface-container-lowest rounded-xl p-space-md lg:p-space-lg shadow-sm flex flex-col lg:flex-row items-start lg:items-center justify-between gap-space-md">
+        <div class="flex items-start gap-space-md">
+          <div class="w-12 h-12 rounded-xl bg-secondary-container/20 text-secondary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-[28px]">home_app_logo</span></div>
+          <div>
+            <h1 class="font-headline-md text-headline-md text-on-surface">Isi &amp; Foto Beranda</h1>
+            <p class="font-body-sm text-body-sm text-on-surface-variant mt-1 justify">Ubah foto utama, logo, tulisan sambutan, sejarah, visi-misi, kontak, dan angka statistik di halaman depan. Tersimpan ke tab PROFIL dan langsung tampil di web.</p>
+          </div>
+        </div>
+        <a href="../" target="_blank" rel="noopener" class="self-stretch sm:self-auto inline-flex items-center justify-center gap-space-xs px-space-md py-2.5 rounded-lg bg-secondary text-on-secondary hover:bg-secondary/90 font-label-lg text-label-lg transition-colors shadow-sm shrink-0"><span class="material-symbols-outlined text-[18px]">open_in_new</span><span>Lihat Beranda</span></a>
+      </div>
+      <form id="form-konten" class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg items-start" novalidate>
+        <div id="kt-fields" class="xl:col-span-8 flex flex-col gap-space-md"></div>
+        <div class="xl:col-span-4 flex flex-col gap-space-md xl:sticky xl:top-20">
+          <div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm">
+            <span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Pratinjau foto utama</span>
+            <div id="kt-prev-hero" class="mt-2 rounded-lg overflow-hidden bg-surface-container h-44"></div>
+            <span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant block mt-space-md">Pratinjau logo</span>
+            <div id="kt-prev-logo" class="mt-2 w-20 h-20 rounded-full overflow-hidden bg-surface-container"></div>
+            <p class="font-body-sm text-body-sm text-on-surface-variant mt-space-md justify">Foto harus berupa <strong class="text-on-surface">file gambar</strong> di Google Drive yang dibagikan "Siapa saja yang memiliki link". Kalau pratinjau kosong, periksa izin berbaginya.</p>
+          </div>
+          <button type="submit" id="kt-simpan" class="w-full inline-flex items-center justify-center gap-space-xs px-space-lg py-3 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-lg text-label-lg transition-all shadow-md disabled:opacity-60"><span class="material-symbols-outlined text-[20px]">cloud_sync</span><span>Simpan Perubahan</span></button>
+          <p class="font-label-sm text-label-sm text-on-surface-variant text-center" id="kt-note">Hanya isian yang berubah yang dikirim.</p>
+        </div>
+      </form>
+    </section>
+
     <!-- ===== KATALOG BUKU ===== -->
     <section data-view="buku" class="hidden flex-col w-full pt-space-sm">
       <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-space-md mb-space-lg">
@@ -438,7 +529,7 @@
     <!-- ===== KONFIGURASI SHEETS ===== -->
     <section data-view="konfigurasi" class="hidden flex-col w-full pt-space-sm">
       <div class="mb-space-lg p-space-md rounded-xl bg-gradient-to-r from-primary-fixed via-surface-container-low to-secondary-fixed text-on-surface flex flex-wrap items-center justify-between gap-space-md shadow-sm">
-        <div class="flex items-center gap-space-md"><div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-on-primary shadow-sm shrink-0"><span class="material-symbols-outlined text-headline-sm animate-pulse">cloud_sync</span></div><div><p class="font-label-lg text-label-lg text-primary">Arsitektur Database Berbasis Google Sheets</p><p class="font-body-sm text-body-sm text-on-surface-variant justify">Web statis di GitHub Pages membaca JSON dari Apps Script Web App; panel ini menulis ke tab BUKU, BERITA, DONASI, dan ALBUM lewat aksi POST bertoken. Tidak ada server terpisah.</p></div></div>
+        <div class="flex items-center gap-space-md"><div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-on-primary shadow-sm shrink-0"><span class="material-symbols-outlined text-headline-sm animate-pulse">cloud_sync</span></div><div><p class="font-label-lg text-label-lg text-primary">Arsitektur Database Berbasis Google Sheets</p><p class="font-body-sm text-body-sm text-on-surface-variant justify">Web statis di GitHub Pages membaca JSON dari Apps Script Web App; panel ini menulis ke tab BUKU, BERITA, DONASI, ALBUM, AGENDA, dan PROFIL lewat aksi POST bertoken. Tidak ada server terpisah.</p></div></div>
         <div class="flex items-center gap-2"><span class="px-3 py-1 rounded-full bg-surface-container-lowest text-secondary font-label-sm text-label-sm flex items-center gap-1.5 shadow-sm"><span class="w-2 h-2 rounded-full bg-secondary"></span>Apps Script V8</span><span class="px-3 py-1 rounded-full bg-surface-container-lowest text-on-surface-variant font-label-sm text-label-sm shadow-sm">Zona waktu <span id="kf-tz">Asia/Jakarta</span></span></div>
       </div>
       <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-md mb-space-lg">

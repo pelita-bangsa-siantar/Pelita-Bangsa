@@ -51,7 +51,7 @@
   $$('[data-logout]').forEach(b => b.addEventListener('click', () => { post({ action: 'logout' }).catch(() => {}); forceLogout(); }));
 
   /* ---------- Routing ---------- */
-  const VIEWS = ['ringkasan', 'berita', 'galeri', 'buku', 'donatur', 'konfigurasi'];
+  const VIEWS = ['ringkasan', 'berita', 'galeri', 'agenda', 'konten', 'buku', 'donatur', 'konfigurasi'];
   function route() {
     if (!S.token) return;   // belum login (mis. hash berubah saat proses login) → jangan memicu "sesi berakhir"
     const v = VIEWS.includes(location.hash.slice(1)) ? location.hash.slice(1) : 'ringkasan';
@@ -61,7 +61,7 @@
     $$('#bottom-nav [data-nav]').forEach(a => { a.className = `flex flex-col items-center justify-center w-14 h-12 gap-0.5 ${a.dataset.nav === v ? 'text-primary font-bold' : 'text-on-surface-variant'}`; });
     window.scrollTo({ top: 0 });
     setErr('');
-    ({ ringkasan: loadRingkasan, berita: () => ensureList('BERITA').then(renderBerita), galeri: () => ensureList('ALBUM').then(renderGaleri), buku: () => ensureList('BUKU').then(renderBuku), donatur: () => Promise.all([ensureList('DONASI'), ensureStats()]).then(renderDonatur), konfigurasi: () => ensureConfig(true).then(renderKonfigurasi) })[v]().catch(err => setErr(err.message));
+    ({ ringkasan: loadRingkasan, berita: () => ensureList('BERITA').then(renderBerita), galeri: () => ensureList('ALBUM').then(renderGaleri), agenda: () => Promise.all([ensureList('AGENDA'), ensureList('ALBUM')]).then(renderAgendaAdm), konten: () => ensureList('PROFIL').then(renderKonten), buku: () => ensureList('BUKU').then(renderBuku), donatur: () => Promise.all([ensureList('DONASI'), ensureStats()]).then(renderDonatur), konfigurasi: () => ensureConfig(true).then(renderKonfigurasi) })[v]().catch(err => setErr(err.message));
   }
   window.addEventListener('hashchange', route);
 
@@ -75,7 +75,7 @@
   $$('[data-refresh]').forEach(b => b.addEventListener('click', () => { const ic = $('[data-refresh-icon]'); ic.classList.add('animate-spin'); S.stats = null; S.lists = {}; S.config = null; route(); setTimeout(() => ic.classList.remove('animate-spin'), 1200); PB.toast('Memuat ulang data dari Google Sheets…', 'sync'); }));
   $$('[data-reload]').forEach(b => b.addEventListener('click', () => { S.stats = null; ensureList(b.dataset.reload, true).then(() => { route(); PB.toast(`Tab ${b.dataset.reload} dimuat ulang dari Sheets.`, 'cloud_done'); }).catch(err => setErr(err.message)); }));
   $$('[data-export]').forEach(b => b.addEventListener('click', () => ensureList(b.dataset.export).then(L => { csvDownload(b.dataset.export, L.headers, L.rows); PB.toast(`CSV tab ${b.dataset.export} diunduh.`, 'download'); })));
-  document.addEventListener('click', e => { const p = e.target.closest('[data-page]'); if (!p) return; const [k, i] = p.dataset.page.split(':'); S.page[k] = Number(i); ({ BERITA: renderBerita, BUKU: renderBuku, DONASI: renderDonatur, ALBUM: renderGaleri })[k](); });
+  document.addEventListener('click', e => { const p = e.target.closest('[data-page]'); if (!p) return; const [k, i] = p.dataset.page.split(':'); S.page[k] = Number(i); ({ BERITA: renderBerita, BUKU: renderBuku, DONASI: renderDonatur, ALBUM: renderGaleri, AGENDA: renderAgendaAdm })[k](); });
   $$('[data-close]').forEach(b => b.addEventListener('click', () => b.closest('.fixed').classList.replace('flex', 'hidden')));
   const openModal = id => { const m = $(id); m.classList.remove('hidden'); m.classList.add('flex'); };
   const closeModal = id => { const m = $(id); m.classList.add('hidden'); m.classList.remove('flex'); };
@@ -254,6 +254,132 @@
     if (act === 'hapus' && confirm(`Hapus album "${r.judul}" dari web? Foto di Google Drive tidak ikut terhapus.`)) {
       post({ action: 'delete', sheet: 'ALBUM', id: r.id }).then(x => { if (!x.ok) throw new Error(x.error); removeLocal('ALBUM', r.id); renderGaleri(); PB.toast(`Album ${r.id} dihapus.`, 'delete'); }).catch(err => setErr(err.message));
     }
+  });
+
+  /* ---------- Agenda kegiatan (tab AGENDA; baris buatan Sheets ikut tampil & bisa diedit) ---------- */
+  const fg = $('#form-agenda');
+  const posterPrev = () => { const u = fotoUrl(fg.elements.poster_drive_id.value); $('#ag-preview').innerHTML = u ? PB.img(u, 'Pratinjau poster', 'w-full max-h-56 object-contain rounded-lg bg-surface-container') : ''; };
+  function renderAgendaAdm() {
+    const all = S.lists.AGENDA.rows.filter(r => r.nama_kegiatan).sort((a, b) => (b.tanggal_mulai || b.tahun || '').localeCompare(a.tanggal_mulai || a.tahun || '') || (b._row - a._row));
+    $('#ag-count').textContent = `${PB.num(all.length)} agenda`;
+    const thn = r => r.tahun || (r.tanggal_mulai || '').slice(0, 4);
+    const selT = $('#ag-filter-tahun'), curT = selT.value;
+    selT.innerHTML = '<option value="">Semua Tahun</option>' + [...new Set(all.map(thn).filter(Boolean))].sort().reverse().map(t => `<option>${PB.esc(t)}</option>`).join(''); selT.value = curT;
+    // Pilihan album: tab ALBUM + nilai lama yang tidak ada di daftar (album dari tab GALERI)
+    const selA = fg.elements.album_id, curA = selA.value, albums = ((S.lists.ALBUM || {}).rows || []);
+    const lain = [...new Set(all.map(r => r.album_id).filter(v => v && !albums.some(a => a.id === v)))];
+    selA.innerHTML = '<option value="">Tidak ada</option>' + albums.map(a => `<option value="${PB.esc(a.id)}">${PB.esc(a.judul)}</option>`).join('') + lain.map(v => `<option value="${PB.esc(v)}">${PB.esc(v)}</option>`).join(''); selA.value = curA;
+    const q = $('#ag-cari').value.toLowerCase(), ft = selT.value, today = PB.today();
+    const status = r => r.status || (!r.tanggal_mulai ? '' : today < r.tanggal_mulai ? 'Akan Datang' : today > (r.tanggal_selesai || r.tanggal_mulai) ? 'Selesai' : 'Berlangsung');
+    const rows = all.filter(r => (!ft || thn(r) === ft) && (!q || `${r.nama_kegiatan} ${r.lokasi} ${r.kategori} ${r.id}`.toLowerCase().includes(q)));
+    const pg = paginate(rows, 'AGENDA');
+    const tgl = r => PB.fmtTanggal(r.tanggal_mulai, r.tanggal_selesai) || (thn(r) ? `Tahun ${thn(r)}` : '—');
+    $('#ag-rows').innerHTML = pg.slice.map(r => `<tr class="hover:bg-surface-container-low/60 transition-colors ${isTrue(r.sembunyikan) ? 'opacity-60' : ''}">
+      <td class="py-3 px-space-sm sm:px-space-md"><div class="font-semibold text-on-surface">${PB.esc(r.nama_kegiatan)}${isTrue(r.sembunyikan) ? ' <span class="font-label-sm text-on-surface-variant">(disembunyikan)</span>' : ''}</div>
+        <div class="flex flex-wrap items-center gap-1.5 mt-1">${PB.chip(r.kategori)}${r.poster_drive_id ? '<span class="inline-flex items-center gap-0.5 font-label-sm text-label-sm text-secondary"><span class="material-symbols-outlined text-[14px]">image</span>poster</span>' : ''}${r.lokasi ? `<span class="font-label-sm text-label-sm text-on-surface-variant">${PB.esc(r.lokasi)}</span>` : ''}</div>
+        <div class="sm:hidden font-label-sm text-label-sm text-on-surface-variant mt-1">${PB.esc(tgl(r))}${status(r) ? ' · ' + PB.esc(status(r)) : ''}</div></td>
+      <td class="py-3 px-space-md whitespace-nowrap text-on-surface-variant hidden sm:table-cell">${PB.esc(tgl(r))}</td>
+      <td class="py-3 px-space-md whitespace-nowrap hidden sm:table-cell">${PB.chip(status(r)) || '—'}</td>
+      <td class="py-3 px-space-sm sm:px-space-md text-right"><div class="inline-flex items-center gap-1">
+        <button data-act="edit" data-id="${PB.esc(r.id)}" title="Edit agenda" class="p-2 rounded hover:bg-surface-container text-secondary"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+        <button data-act="hapus" data-id="${PB.esc(r.id)}" title="Hapus agenda" class="p-2 rounded hover:bg-error-container text-tertiary"><span class="material-symbols-outlined text-[18px]">delete</span></button></div></td></tr>`).join('') || `<tr><td colspan="4" class="py-space-lg text-center text-on-surface-variant">${all.length ? 'Tidak ada agenda yang cocok.' : 'Belum ada agenda. Isi formulir, atau tulis langsung di tab AGENDA Google Sheets.'}</td></tr>`;
+    $('#ag-pager').innerHTML = pagerHtml(pg, 'AGENDA', 'agenda');
+  }
+  fg.elements.poster_drive_id.addEventListener('input', posterPrev);
+  ['#ag-cari', '#ag-filter-tahun'].forEach(s => $(s).addEventListener('input', () => { S.page.AGENDA = 1; renderAgendaAdm(); }));
+  $('#ag-batal').addEventListener('click', () => { fg.reset(); posterPrev(); $('#ag-batal').classList.add('hidden'); $('#ag-form-title').textContent = 'Agenda Baru'; });
+  fg.addEventListener('submit', e => {
+    e.preventDefault(); const d = formData(fg);
+    if (!d.nama_kegiatan) return setErr('Nama kegiatan wajib diisi.');
+    if (d.tanggal_mulai && d.tanggal_selesai && d.tanggal_selesai < d.tanggal_mulai) return setErr('Tanggal selesai tidak boleh sebelum tanggal mulai.');
+    if (d.tanggal_mulai) d.tahun = d.tanggal_mulai.slice(0, 4);
+    if (d.tahun && !/^\d{4}$/.test(d.tahun)) return setErr('Tahun harus 4 angka, mis. 2026.');
+    busy($('#ag-simpan'), true); setErr('');
+    post({ action: 'save', sheet: 'AGENDA', data: d }).then(r => {
+      if (!r.ok) throw new Error(r.error);
+      upsertLocal('AGENDA', r.row); PB.toast(`Agenda "${r.row.nama_kegiatan}" tersimpan dan tampil di web.`, 'event_available'); $('#ag-batal').click(); renderAgendaAdm();
+    }).catch(err => setErr(err.message)).finally(() => busy($('#ag-simpan'), false));
+  });
+  $('#ag-rows').addEventListener('click', e => {
+    const b = e.target.closest('[data-act]'); if (!b) return;
+    const r = S.lists.AGENDA.rows.find(x => x.id === b.dataset.id);
+    if (!r) return setErr('Agenda ini belum punya kode id. Klik "Muat Ulang dari Sheets" lalu coba lagi.');
+    if (b.dataset.act === 'edit') { fillForm(fg, r); posterPrev(); $('#ag-batal').classList.remove('hidden'); $('#ag-form-title').textContent = `Edit Agenda ${r.id}`; fg.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    if (b.dataset.act === 'hapus' && confirm(`Hapus agenda "${r.nama_kegiatan}" dari Google Sheets? Tindakan ini tidak bisa dibatalkan.`)) {
+      post({ action: 'delete', sheet: 'AGENDA', id: r.id }).then(x => { if (!x.ok) throw new Error(x.error); removeLocal('AGENDA', r.id); renderAgendaAdm(); PB.toast(`Agenda ${r.id} dihapus.`, 'delete'); }).catch(err => setErr(err.message));
+    }
+  });
+
+  /* ---------- Isi & foto beranda (tab PROFIL, kunci–nilai) ---------- */
+  const fkn = $('#form-konten');
+  // [kunci, label, jenis ('' teks | area | area5 | num | url | tel), placeholder]
+  const KONTEN = [
+    ['Foto Beranda & Logo', 'image', [
+      ['hero_foto_drive_id', 'Foto utama beranda (link file gambar Google Drive)', 'url', 'https://drive.google.com/file/d/...'],
+      ['logo_drive_id', 'Logo (link file gambar Google Drive)', 'url', 'https://drive.google.com/file/d/...']]],
+    ['Identitas & Sambutan', 'badge', [
+      ['nama_organisasi', 'Nama organisasi', '', 'Rumah Baca Pelita Bangsa'],
+      ['tagline', 'Tagline (judul besar; bagian setelah " di " terakhir diberi warna)', '', 'Nyalakan Lentera Literasi Generasi Muda di Pematang Siantar & Simalungun'],
+      ['deskripsi_singkat', 'Deskripsi singkat', 'area', '1–2 kalimat tentang rumah baca'],
+      ['tahun_berdiri', 'Tahun berdiri', 'num', '2021']]],
+    ['Sejarah, Visi & Misi', 'history_edu', [
+      ['sejarah_judul', 'Judul sejarah', '', 'Dimulai dari Teras Rumah dan Tumpukan Buku'],
+      ['sejarah', 'Sejarah (baris kosong = paragraf baru)', 'area5', ''],
+      ['visi', 'Visi', 'area', ''],
+      ['misi_1', 'Misi 1 — tulis: Judul — deskripsi', '', 'Literasi Baca-Tulis — Penyediaan buku dan bimbingan membaca'],
+      ['misi_2', 'Misi 2', '', ''], ['misi_3', 'Misi 3', '', '']]],
+    ['Kontak & Alamat', 'call', [
+      ['alamat', 'Alamat', 'area', ''], ['jam_operasional', 'Jam operasional', '', 'Selasa – Minggu, 10:00 – 17:30 WIB'],
+      ['whatsapp', 'Nomor WhatsApp', 'tel', '08123456789'], ['email', 'Email', '', 'kontak@contoh.org'],
+      ['rekening', 'Rekening donasi (kosong = tidak tampil)', 'area', 'Bank …: 123-xxx (a.n. …)'],
+      ['maps_embed', 'Link embed Google Maps (kosong = peta tidak tampil)', 'url', 'https://www.google.com/maps/embed?...']]],
+    ['Media Sosial', 'share', [
+      ['instagram', 'Instagram', 'url', 'https://instagram.com/...'], ['facebook', 'Facebook', 'url', 'https://facebook.com/...'],
+      ['youtube', 'YouTube', 'url', 'https://youtube.com/...'], ['tiktok', 'TikTok', 'url', 'https://tiktok.com/@...']]],
+    ['Angka Statistik Beranda', 'monitoring', [
+      ['stat_koleksi_buku', 'Koleksi buku (kosong = dihitung dari Katalog Buku)', 'num', ''],
+      ['stat_anak_terbina', 'Anak terbina', 'num', ''], ['stat_relawan', 'Relawan aktif', 'num', '']]]
+  ];
+  const KT_CLS = 'w-full px-space-md py-2.5 rounded-lg bg-surface-container-low border-0 text-on-surface font-body-md focus:ring-2 focus:ring-secondary';
+  $('#kt-fields').innerHTML = KONTEN.map(([judul, ikon, fields]) => `<fieldset class="bg-surface-container-lowest rounded-xl p-space-md lg:p-space-lg shadow-sm">
+    <legend class="sr-only">${judul}</legend>
+    <div class="flex items-center gap-2 mb-space-md"><span class="w-8 h-8 rounded-lg bg-primary-fixed text-primary flex items-center justify-center"><span class="material-symbols-outlined text-[20px]">${ikon}</span></span><h2 class="font-headline-sm text-headline-sm text-on-surface">${judul}</h2></div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">${fields.map(([k, label, jenis, ph]) => `<div class="${/area|url/.test(jenis) || /tagline|misi|sejarah_judul/.test(k) ? 'md:col-span-2' : ''}"><label class="block font-label-lg text-label-lg text-on-surface mb-1.5" for="kt-${k}">${PB.esc(label)}</label>${/area/.test(jenis)
+      ? `<textarea id="kt-${k}" name="${k}" rows="${jenis === 'area5' ? 6 : 2}" maxlength="5000" class="${KT_CLS} resize-y" placeholder="${PB.esc(ph)}"></textarea>`
+      : `<input id="kt-${k}" name="${k}" ${jenis === 'num' ? 'inputmode="numeric"' : jenis === 'tel' ? 'type="tel" inputmode="tel"' : jenis === 'url' ? 'inputmode="url" autocapitalize="none" spellcheck="false"' : ''} maxlength="${jenis === 'url' ? 1000 : 300}" class="${KT_CLS}" placeholder="${PB.esc(ph)}">`}</div>`).join('')}</div></fieldset>`).join('');
+  const KT_KEYS = KONTEN.flatMap(g => g[2].map(f => f[0]));
+  const kontenPrev = () => {
+    const h = fotoUrl(fkn.elements.hero_foto_drive_id.value), l = fotoUrl(fkn.elements.logo_drive_id.value);
+    $('#kt-prev-hero').innerHTML = PB.img(h, 'Pratinjau foto utama', 'w-full h-full object-cover');
+    $('#kt-prev-logo').innerHTML = PB.img(l || PB.BASE + 'assets/img/logo.png', 'Pratinjau logo', 'w-full h-full object-cover');
+  };
+  const kontenNilai = () => { const o = {}; S.lists.PROFIL.rows.forEach(r => { if (r.kunci) o[r.kunci] = r.nilai || ''; }); return o; };
+  function renderKonten() {
+    const v = kontenNilai();
+    KT_KEYS.forEach(k => { fkn.elements[k].value = v[k] || ''; });
+    kontenPrev();
+  }
+  ['hero_foto_drive_id', 'logo_drive_id'].forEach(k => fkn.elements[k].addEventListener('input', kontenPrev));
+  fkn.addEventListener('submit', e => {
+    e.preventDefault();
+    const lama = kontenNilai(), d = {};
+    KT_KEYS.forEach(k => { const v = fkn.elements[k].value.trim(); if (v !== (lama[k] || '')) d[k] = v; });
+    const keys = Object.keys(d);
+    if (!keys.length) return PB.toast('Tidak ada perubahan untuk disimpan.', 'info');
+    const salah = keys.find(k => /^(stat_|tahun_berdiri)/.test(k) && d[k] && !/^\d{1,7}$/.test(d[k]));
+    if (salah) { fkn.elements[salah].focus(); return setErr('Isian angka hanya boleh berisi angka (tanpa titik atau huruf).'); }
+    const link = keys.find(k => /^(instagram|facebook|youtube|tiktok|maps_embed)$/.test(k) && d[k] && !/^https:\/\//i.test(d[k]));
+    if (link) { fkn.elements[link].focus(); return setErr('Link harus diawali https://'); }
+    busy($('#kt-simpan'), true); setErr('');
+    post({ action: 'profil_save', data: d }).then(r => {
+      if (!r.ok) throw new Error(r.error);
+      const L = S.lists.PROFIL;
+      Object.keys(r.profil).forEach(k => { const row = L.rows.find(x => x.kunci === k); if (row) row.nilai = r.profil[k]; else L.rows.push({ kunci: k, nilai: r.profil[k] }); });
+      S.profil = null; S.stats = null;
+      try { localStorage.removeItem(PB.CONFIG.CACHE_KEY); } catch (_) {}
+      renderKonten();
+      PB.toast(`${keys.length} isian beranda tersimpan dan tampil di web.`, 'done_all');
+    }).catch(err => setErr(err.message)).finally(() => busy($('#kt-simpan'), false));
   });
 
   /* ---------- Katalog Buku ---------- */

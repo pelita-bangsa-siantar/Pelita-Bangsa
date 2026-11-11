@@ -135,7 +135,7 @@ pelita-bangsa-web/
 
 | Lewat **Google Sheets** | Lewat **Panel Admin** (`/admin/`) |
 |---|---|
-| Profil, Pengurus, Relawan, Agenda | Berita & artikel, Galeri (album folder Drive), Katalog buku, Donatur & logistik |
+| Pengurus, Relawan (Profil & Agenda juga boleh) | Isi & foto beranda, Agenda (+ poster), Berita & artikel, Galeri (album folder Drive), Katalog buku, Donatur & logistik |
 | Setelah edit: menu **Pelita Bangsa → Segarkan Web** | Langsung tersimpan ke Sheets dan web ikut berubah |
 
 Panel admin dibuka dari tombol **Login Admin** di web. Password diminta ke pengurus yang memegang spreadsheet. Sesi berakhir otomatis setelah 6 jam.
@@ -202,6 +202,12 @@ Satu baris = satu akun. Ketik username dan password biasa di selnya. Setelah aku
 ### Jumlah pengunjung website
 Lihat di **Panel Admin → Ringkasan → Pengunjung Website**: hari ini, kemarin, bulan ini, bulan lalu, grafik 14 hari, dan 6 bulan terakhir. Satu perangkat (HP/laptop) dihitung sekali per hari dan sekali per bulan; kunjungan ke panel admin tidak dihitung. Angkanya tersimpan otomatis di tab `KUNJUNGAN` — jangan diedit.
 
+### Panel Admin — Agenda Kegiatan
+Isi nama kegiatan, tanggal, kategori, lokasi → **Simpan Agenda**. Agenda yang ditulis langsung di tab AGENDA ikut muncul di daftar dan bisa diedit/dihapus dari panel. Kalau agenda sudah dibuat sebagai gambar (poster/kalender), upload gambarnya ke Google Drive, bagikan "Siapa saja yang memiliki link", lalu tempel link filenya di kolom **Gambar / Poster** — cukup dengan nama kegiatan saja pun bisa. Poster tampil di web dan bisa diklik untuk diperbesar.
+
+### Panel Admin — Isi & Foto Beranda
+Mengubah foto utama beranda, logo, tagline, sejarah, visi-misi, kontak, media sosial, dan angka statistik. Untuk foto: tempel link **file gambar** Google Drive (dibagikan "Siapa saja yang memiliki link"), lihat pratinjaunya, lalu **Simpan Perubahan**. Isinya sama dengan tab PROFIL, jadi boleh juga diedit di Sheets.
+
 ### Panel Admin — Berita
 Isi judul, kategori, penulis, tanggal, foto (link Drive), ringkasan, dan isi. **Simpan Draf** = belum tampil; **Simpan & Publikasikan** = langsung tampil di web. Isi mendukung `**tebal**`, `*miring*`, baris `- ` untuk daftar, `> ` untuk kutipan.
 
@@ -258,6 +264,7 @@ Formulir "Partisipasi Cepat" di web masuk otomatis dengan status **Baru**. Alur:
 |---|---|---|
 | v1.0 | – | Rancangan awal: profil, pengurus, relawan, agenda tahunan, galeri |
 | v1.1 | 10 Nov 2026 | Implementasi penuh web publik + panel admin (katalog buku, donatur & logistik, berita, analitik, konfigurasi, login), `doPost` bertoken, tab BUKU/BERITA/DONASI/LOG |
+| v1.3 | 11 Nov 2026 | Panel admin: Agenda Kegiatan (+ poster gambar) dan Isi & Foto Beranda (tab PROFIL); kolom `id` & `poster_drive_id` di AGENDA |
 | v1.2 | 11 Nov 2026 | URL tanpa `.html` (`/album`, `/berita`); album galeri dari link folder Google Drive lewat panel admin (`admin/#galeri`, tab ALBUM, scope `drive.readonly`) |
 #   P e l i t a - B a n g s a  
  

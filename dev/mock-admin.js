@@ -27,10 +27,14 @@
       { id: 'AL-251020-A1B', tanggal: ago(1), judul: 'Festival Baca Nyaring 2026', folder_drive: 'https://drive.google.com/drive/folders/1DEMO_folderxxxxxxxxxxxxxxxxxxxxx', sembunyikan: 'FALSE', _foto: '24' }
     ],
     LOG: [{ waktu: ago(0) + ' 09:12:00', aksi: 'donasi-web', tab: 'DONASI', id: 'DN-251011-G4H', keterangan: 'Keluarga Besar Purba Tambak · Donasi Buku', oleh: 'web' }],
-    PROFIL: [{ kunci: 'stat_anak_terbina', nilai: '420' }], PENGURUS: [{}, {}, {}, {}], RELAWAN: Array(6).fill({ nama: 'x' }), AGENDA: Array(5).fill({ nama_kegiatan: 'x', tanggal_mulai: '2026-12-01' }), GALERI: Array(3).fill({ foto_drive_id: 'x', album_id: 'a' })
+    PROFIL: [{ kunci: 'nama_organisasi', nilai: 'Rumah Baca Pelita Bangsa' }, { kunci: 'tagline', nilai: 'Nyalakan Lentera Literasi Generasi Muda di Pematang Siantar & Simalungun' }, { kunci: 'tahun_berdiri', nilai: '2021' }, { kunci: 'whatsapp', nilai: '6281263889021' }, { kunci: 'hero_foto_drive_id', nilai: '' }, { kunci: 'stat_anak_terbina', nilai: '420' }], PENGURUS: [{}, {}, {}, {}], RELAWAN: Array(6).fill({ nama: 'x' }), AGENDA: [
+      { id: 'AG-251101-A1B', tahun: String(today.getFullYear()), tanggal_mulai: ago(-1), tanggal_selesai: '', nama_kegiatan: 'Kelas Kreatif & Literasi Digital', lokasi: 'Pojok Baca Siantar Utara', kategori: 'Literasi Digital', deskripsi: 'Pengenalan komputer dan etika berinternet untuk remaja.', status: '', album_id: '', poster_drive_id: '', sembunyikan: 'FALSE' },
+      { id: '', tahun: String(today.getFullYear()), tanggal_mulai: ago(2), tanggal_selesai: '', nama_kegiatan: 'Lomba Membaca 17-an (ditulis di Sheets)', lokasi: 'Teras Rumah Baca', kategori: 'Perayaan', deskripsi: '', status: '', album_id: '', poster_drive_id: '', sembunyikan: 'FALSE' },
+      { id: 'AG-251101-C2D', tahun: String(today.getFullYear()), tanggal_mulai: '', tanggal_selesai: '', nama_kegiatan: 'Kalender Kegiatan Tahunan (poster)', lokasi: '', kategori: 'Lainnya', deskripsi: '', status: '', album_id: '', poster_drive_id: '../assets/img/og-image.png', sembunyikan: 'FALSE' }
+    ], GALERI: Array(3).fill({ foto_drive_id: 'x', album_id: 'a' })
   };
-  const SK = { PROFIL: ['kunci', 'nilai'], PENGURUS: ['urutan', 'nama', 'jabatan', 'periode', 'foto_drive_id', 'deskripsi', 'sembunyikan'], RELAWAN: ['nama', 'asal_instansi', 'bidang', 'sejak_tahun', 'foto_drive_id', 'sembunyikan'], AGENDA: ['tahun', 'tanggal_mulai', 'tanggal_selesai', 'nama_kegiatan', 'lokasi', 'kategori', 'deskripsi', 'status', 'album_id', 'sembunyikan'], GALERI: ['album_id', 'judul_album', 'tanggal', 'foto_drive_id', 'keterangan', 'sampul', 'sembunyikan'], BUKU: ['id', 'isbn', 'judul', 'penulis', 'penerbit_tahun', 'kategori', 'rak', 'jumlah', 'dipinjam', 'sumber', 'catatan', 'sembunyikan'], BERITA: ['id', 'tanggal', 'judul', 'kategori', 'penulis', 'lokasi', 'ringkasan', 'isi', 'foto_drive_id', 'status', 'sembunyikan'], DONASI: ['id', 'tanggal', 'nama', 'whatsapp', 'asal', 'jenis', 'kategori_buku', 'jumlah', 'logistik', 'resi', 'status', 'apresiasi', 'catatan', 'sumber'], ALBUM: ['id', 'tanggal', 'judul', 'folder_drive', 'sembunyikan'], LOG: ['waktu', 'aksi', 'tab', 'id', 'keterangan', 'oleh'] };
-  const WRITE = ['BUKU', 'BERITA', 'DONASI', 'ALBUM'];
+  const SK = { PROFIL: ['kunci', 'nilai'], PENGURUS: ['urutan', 'nama', 'jabatan', 'periode', 'foto_drive_id', 'deskripsi', 'sembunyikan'], RELAWAN: ['nama', 'asal_instansi', 'bidang', 'sejak_tahun', 'foto_drive_id', 'sembunyikan'], AGENDA: ['id', 'tahun', 'tanggal_mulai', 'tanggal_selesai', 'nama_kegiatan', 'lokasi', 'kategori', 'deskripsi', 'status', 'album_id', 'poster_drive_id', 'sembunyikan'], GALERI: ['album_id', 'judul_album', 'tanggal', 'foto_drive_id', 'keterangan', 'sampul', 'sembunyikan'], BUKU: ['id', 'isbn', 'judul', 'penulis', 'penerbit_tahun', 'kategori', 'rak', 'jumlah', 'dipinjam', 'sumber', 'catatan', 'sembunyikan'], BERITA: ['id', 'tanggal', 'judul', 'kategori', 'penulis', 'lokasi', 'ringkasan', 'isi', 'foto_drive_id', 'status', 'sembunyikan'], DONASI: ['id', 'tanggal', 'nama', 'whatsapp', 'asal', 'jenis', 'kategori_buku', 'jumlah', 'logistik', 'resi', 'status', 'apresiasi', 'catatan', 'sumber'], ALBUM: ['id', 'tanggal', 'judul', 'folder_drive', 'sembunyikan'], LOG: ['waktu', 'aksi', 'tab', 'id', 'keterangan', 'oleh'] };
+  const WRITE = ['BUKU', 'BERITA', 'DONASI', 'ALBUM', 'AGENDA'];
   // Sesi demo bertahan saat halaman dimuat ulang (token demo tetap, tersimpan di sessionStorage oleh admin.js)
   let TOKEN = ''; try { if (sessionStorage.getItem('pb_admin_token') === 'a'.repeat(32)) TOKEN = 'a'.repeat(32); } catch (_) {}
   const log = (aksi, tab, id, ket) => DB.LOG.push({ waktu: new Date().toISOString().slice(0, 19).replace('T', ' '), aksi, tab, id, keterangan: ket, oleh: 'admin' });
@@ -44,7 +48,8 @@
     if (b.action === 'login') { if (b.password !== 'demo1234') return { ok: false, error: 'Password salah. (demo: demo1234)' }; TOKEN = 'a'.repeat(32); log('login', '-', '-', 'Admin masuk (demo)'); return { ok: true, token: TOKEN, user: { nama: 'Pengurus Literasi (Demo)', email: 'demo@localhost' } }; }
     if (b.action === 'donasi') { const id = 'DN-DEMO-' + Date.now().toString(36).toUpperCase(); DB.DONASI.push(Object.assign({ id, tanggal: ago(0), status: 'Baru', apresiasi: 'Belum', sumber: 'web', logistik: '', resi: '' }, b.data)); return { ok: true, id }; }
     if (!b.token || b.token !== TOKEN) return { ok: false, auth: false, error: 'Sesi tidak valid' };
-    const list = s => ({ ok: true, sheet: s, headers: SK[s], rows: (DB[s] || []).map((r, i) => Object.assign({ _row: i + 2 }, r)), writable: WRITE.includes(s) });
+    const list = s => { if (WRITE.includes(s)) DB[s].forEach((r, i) => { if (!r.id) r.id = 'AG-DEMO-' + (i + 1); });   // seperti server: baris tanpa id diberi id
+      return { ok: true, sheet: s, headers: SK[s], rows: (DB[s] || []).map((r, i) => Object.assign({ _row: i + 2 }, r)), writable: WRITE.includes(s) }; };
     switch (b.action) {
       case 'me': return { ok: true, user: { nama: 'Pengurus Literasi (Demo)', email: 'demo@localhost' } };
       case 'logout': TOKEN = ''; return { ok: true };
@@ -56,11 +61,12 @@
         const extra = b.sheet === 'ALBUM' && 'folder_drive' in d ? { foto: 12 + Math.floor(Math.random() * 30), publik: true } : {};
         if (b.sheet === 'ALBUM' && 'folder_drive' in d && !/folders\/[\w-]{15,}/.test(d.folder_drive)) return { ok: false, error: 'Link folder tidak dikenali. Tempel link seperti https://drive.google.com/drive/folders/...' };
         if (extra.foto != null) d._foto = String(extra.foto);
-        if (i === -1) { d.id = d.id || ({ BUKU: 'BK', BERITA: 'PB', DONASI: 'DN', ALBUM: 'AL' }[b.sheet]) + '-DEMO-' + Date.now().toString(36).toUpperCase().slice(-5); rows.push(d); i = rows.length - 1; log('tambah', b.sheet, d.id, d.judul || d.nama || ''); }
-        else { Object.assign(rows[i], d); log('ubah', b.sheet, d.id, d.judul || d.nama || ''); }
+        if (i === -1) { d.id = d.id || ({ BUKU: 'BK', BERITA: 'PB', DONASI: 'DN', ALBUM: 'AL', AGENDA: 'AG' }[b.sheet]) + '-DEMO-' + Date.now().toString(36).toUpperCase().slice(-5); rows.push(d); i = rows.length - 1; log('tambah', b.sheet, d.id, d.judul || d.nama || d.nama_kegiatan || ''); }
+        else { Object.assign(rows[i], d); log('ubah', b.sheet, d.id, d.judul || d.nama || d.nama_kegiatan || ''); }
         return Object.assign({ ok: true, row: Object.assign({ _row: i + 2 }, rows[i]) }, extra);
       }
       case 'delete': { if (!WRITE.includes(b.sheet)) return { ok: false, error: 'Tidak diizinkan' }; DB[b.sheet] = DB[b.sheet].filter(r => r.id !== b.id); log('hapus', b.sheet, b.id, ''); return { ok: true }; }
+      case 'profil_save': { const d = b.data || {}; Object.keys(d).forEach(k => { const r = DB.PROFIL.find(x => x.kunci === k); if (r) r.nilai = d[k]; else DB.PROFIL.push({ kunci: k, nilai: d[k] }); }); log('ubah', 'PROFIL', '-', Object.keys(d).join(', ')); return { ok: true, profil: d }; }
       case 'refresh': log('refresh', '-', '-', 'Cache publik disegarkan'); return { ok: true };
       case 'stats': {
         const kat = {}, zona = {}; let total = 0, dip = 0;

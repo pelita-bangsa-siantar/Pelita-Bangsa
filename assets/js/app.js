@@ -82,9 +82,16 @@
           ${a.lokasi ? `<span class="inline-flex items-center gap-0.5"><span class="material-symbols-outlined text-[14px] text-primary">location_on</span>${PB.esc(a.lokasi)}</span>` : ''}
         </p>
         ${a.deskripsi ? `<p class="font-body-sm text-body-sm text-on-surface-variant mt-space-xs ${besar ? 'justify' : 'clamp-2'}">${PB.esc(a.deskripsi)}</p>` : ''}
+        ${a.poster && !besar ? `<button type="button" data-poster="${PB.esc(a.poster)}" data-ket="${PB.esc(a.nama_kegiatan)}" class="block w-full mt-space-xs rounded-lg overflow-hidden bg-surface-container cursor-zoom-in" title="Lihat poster ${PB.esc(a.nama_kegiatan)}">${PB.img(a.poster, 'Poster ' + a.nama_kegiatan, 'w-full max-h-48 object-cover')}</button>` : ''}
         ${a.album_id ? `<a class="inline-flex items-center gap-0.5 mt-space-xs py-2 font-label-sm text-label-sm text-secondary hover:underline" href="album?id=${encodeURIComponent(a.album_id)}"><span class="material-symbols-outlined text-[16px]">photo_library</span>Lihat foto</a>` : ''}
       </div>
+      ${a.poster && besar ? `<button type="button" data-poster="${PB.esc(a.poster)}" data-ket="${PB.esc(a.nama_kegiatan)}" class="block w-full sm:w-56 shrink-0 rounded-xl overflow-hidden bg-surface-container cursor-zoom-in self-start" title="Lihat poster ${PB.esc(a.nama_kegiatan)}">${PB.img(a.poster, 'Poster ' + a.nama_kegiatan, 'w-full max-h-72 sm:max-h-56 object-cover')}</button>` : ''}
     </div>`;
+  // Poster agenda → tampil besar (lightbox)
+  PB.q('#agenda').addEventListener('click', e => {
+    const b = e.target.closest('[data-poster]');
+    if (b) PB.openLightbox([{ url: b.dataset.poster, ket: b.dataset.ket }], 0);
+  });
 
   PB.renderAgenda = function (ag) {
     const items = ag.items || [], tahunList = ag.tahunList || [];

@@ -39,7 +39,9 @@ File ini adalah konteks utama untuk Claude (Claude Code / Claude.ai) setiap kali
 
 12. **Album galeri dari folder Google Drive** (disetujui Andre, 11 Nov 2026) — tab `ALBUM`, panel admin `admin/#galeri`: tempel link folder Drive → semua foto di folder jadi satu album. Foto tidak disalin (hemat penyimpanan). Tab `GALERI` lama tetap dibaca.
 
-**Pengelolaan data fitur wajib (1–4) = langsung edit di Google Sheets; album galeri (5) lewat panel admin.** Panel admin hanya boleh menulis ke tab `BUKU`, `BERITA`, `DONASI`, `ALBUM` (lihat `CONFIG.ADMIN_WRITE`). Tab lain tetap read-only dari web.
+13. **Agenda & isi beranda dari panel admin** (disetujui Andre, 11 Nov 2026) — `admin/#agenda` (CRUD tab `AGENDA`, tiap agenda boleh punya gambar/poster `poster_drive_id`; baris yang ditulis langsung di Sheets tetap tampil dan bisa diedit) dan `admin/#konten` (isi tab `PROFIL`: foto utama beranda, logo, sambutan, sejarah, visi-misi, kontak, statistik).
+
+**Pengurus & Relawan = edit di Google Sheets. Agenda & Profil = Sheets ATAU panel admin. Album, berita, buku, donasi = panel admin.** Panel admin menulis ke tab `BUKU`, `BERITA`, `DONASI`, `ALBUM`, `AGENDA` (lihat `CONFIG.ADMIN_WRITE`) dan ke `PROFIL` lewat aksi khusus `profil_save`. Tab lain tetap read-only dari web.
 
 ### Belum dibuat (di luar v1.1, jangan dibuat kecuali diminta)
 
@@ -75,7 +77,7 @@ Foto: <img src="https://lh3.googleusercontent.com/d/<ID>=w600">  ← langsung da
 - **Fetch harus "simple request"**: GET biasa dan POST dengan body string (Content-Type default `text/plain`) — **tanpa** header kustom. Apps Script tidak menangani preflight `OPTIONS`; request sederhana mengikuti redirect ke `script.googleusercontent.com` yang mengizinkan CORS.
 - **Cache 2 lapis:** server `CacheService` 600 detik (dihapus otomatis setiap tulisan admin) + browser `localStorage` stale-while-revalidate.
 - **Tanpa build step.** Tailwind via CDN (sama seperti Stitch) dengan token di `assets/js/tailwind-config.js`, font via Google Fonts. Kode dibuat ringan: JavaScript vanilla, helper bersama di `ui.js`, header/footer publik dari satu sumber (`layout.js`), panel admin satu shell dengan hash routing.
-- **Halaman:** `index.html` (anchor `#beranda #profil #pengurus #relawan #agenda #berita #galeri #donasi-kontak`), `album.html?id=`, `berita.html?id=`, `admin/` (hash `#ringkasan #berita #galeri #buku #donatur #konfigurasi`), `404.html`.
+- **Halaman:** `index.html` (anchor `#beranda #profil #pengurus #relawan #agenda #berita #galeri #donasi-kontak`), `album.html?id=`, `berita.html?id=`, `admin/` (hash `#ringkasan #berita #galeri #agenda #konten #buku #donatur #konfigurasi`), `404.html`.
 - **URL bersih:** semua tautan antarhalaman ditulis **tanpa `.html`** (`album?id=`, `berita`, `./#profil`, `../`). GitHub Pages dan `npx serve` melayani `/album` dari `album.html`. `config.js` merapikan alamat lama berakhiran `.html` lewat `history.replaceState` (tidak di localhost).
 - **URL API disimpan di satu tempat:** `assets/js/config.js`.
 - **Rahasia hanya di Script Properties** (`ADMIN_PASSWORD_HASH`), diatur dari menu Sheets. Repo publik tidak pernah memuat password/token.
@@ -93,7 +95,7 @@ pelita-bangsa-web/                  ← repo GitHub, GitHub Pages dari branch ma
 ├── berita.html                     ← daftar berita / satu artikel
 ├── 404.html
 ├── admin/
-│   └── index.html                  ← panel admin (login + 6 modul, hash routing)
+│   └── index.html                  ← panel admin (login + 8 modul, hash routing)
 ├── assets/
 │   ├── css/custom.css              ← skeleton, teks rata, prose berita, print
 │   ├── js/
@@ -144,7 +146,8 @@ Nama tab **HURUF BESAR**, baris 1 = header, data mulai baris 2. Header **harus p
 ### Tab `PENGURUS` — `urutan | nama | jabatan | periode | foto_drive_id | deskripsi | sembunyikan`
 ### Tab `RELAWAN` — `nama | asal_instansi | bidang | sejak_tahun | foto_drive_id | sembunyikan`
 `bidang`: Pengajar, Dongeng, Literasi Digital, Dokumentasi, Logistik, Lainnya.
-### Tab `AGENDA` — `tahun | tanggal_mulai | tanggal_selesai | nama_kegiatan | lokasi | kategori | deskripsi | status | album_id | sembunyikan`
+### Tab `AGENDA` (Sheets atau panel admin) — `id | tahun | tanggal_mulai | tanggal_selesai | nama_kegiatan | lokasi | kategori | deskripsi | status | album_id | poster_drive_id | sembunyikan`
+`id` otomatis `AG-yymmdd-XXX`; baris buatan Sheets tanpa id diberi id saat panel memuat daftar (`ensureIds_`). Kolom skema yang belum ada di tab lama ditambahkan di kanan (`ensureSchemaCols_`). `poster_drive_id` = link file gambar Drive → `agenda.items[].poster` (=w900), tampil di web + lightbox; agenda boleh hanya nama + poster (tanpa tanggal → kelompok "Tanggal Menyusul").
 Tanggal `yyyy-mm-dd` Plain text. `status` kosong → dihitung server. `kategori`: Literasi Anak, Literasi Digital, Pemberdayaan Warga, Perayaan, Lainnya.
 ### Tab `GALERI` — `album_id | judul_album | tanggal | foto_drive_id | keterangan | sampul | sembunyikan`
 Satu baris = satu foto; `album_id` sama = satu album; `sampul` TRUE = foto sampul.
@@ -212,8 +215,9 @@ Satu baris = satu foto; `album_id` sama = satu album; `sampul` TRUE = foto sampu
 | `kunjungan` | – | `{ baru: bool }` | `{ ok }` — +1 pengunjung hari ini (tab KUNJUNGAN) |
 | `me`, `logout` | ✓ | – | `{ ok }` |
 | `list` | ✓ | `{ sheet }` | `{ ok, headers, rows:[{_row,...}], writable }` — semua tab |
-| `save` | ✓ | `{ sheet, data:{ id?, ... } }` | `{ ok, row }` — upsert by `id`; hanya BUKU/BERITA/DONASI/ALBUM; kolom tak dikirim dipertahankan. ALBUM: folder divalidasi, respons ditambah `foto` (jumlah) & `publik` (bool) |
+| `save` | ✓ | `{ sheet, data:{ id?, ... } }` | `{ ok, row }` — upsert by `id`; hanya BUKU/BERITA/DONASI/ALBUM/AGENDA; kolom tak dikirim dipertahankan. ALBUM: folder divalidasi, respons ditambah `foto` (jumlah) & `publik` (bool) |
 | `delete` | ✓ | `{ sheet, id }` | `{ ok }` |
+| `profil_save` | ✓ | `{ data: { kunci: nilai, ... } }` | `{ ok, profil }` — hanya kunci di `PROFIL_KEYS`; kunci tak dikirim tidak diubah |
 | `stats` | ✓ | – | `{ ok, stats }` (KPI, kategori, perBulan, rows, log, cache) |
 | `config` | ✓ | – | `{ ok, config }` (spreadsheet, api, tabs+skema, log, passwordDiatur) |
 | `refresh` | ✓ | – | `{ ok }` — hapus & panaskan cache publik |

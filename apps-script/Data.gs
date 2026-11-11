@@ -69,7 +69,8 @@ function buildAgenda_(rows) {
       bulan: mulai ? Number(mulai.slice(5, 7)) : 0,
       tanggal_mulai: mulai, tanggal_selesai: r.tanggal_selesai,
       nama_kegiatan: r.nama_kegiatan, lokasi: r.lokasi, kategori: r.kategori || 'Lainnya',
-      deskripsi: r.deskripsi, status: status || 'Akan Datang', album_id: r.album_id
+      deskripsi: r.deskripsi, status: status || 'Akan Datang', album_id: r.album_id,
+      poster: driveImageUrl(r.poster_drive_id, 900)
     };
   }).sort((a, b) => (a.tanggal_mulai || '9999').localeCompare(b.tanggal_mulai || '9999'));
 

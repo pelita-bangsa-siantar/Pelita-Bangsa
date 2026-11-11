@@ -4,7 +4,9 @@ const SCHEMA = {
   PROFIL:   ['kunci', 'nilai'],
   PENGURUS: ['urutan', 'nama', 'jabatan', 'periode', 'foto_drive_id', 'deskripsi', 'sembunyikan'],
   RELAWAN:  ['nama', 'asal_instansi', 'bidang', 'sejak_tahun', 'foto_drive_id', 'sembunyikan'],
-  AGENDA:   ['tahun', 'tanggal_mulai', 'tanggal_selesai', 'nama_kegiatan', 'lokasi', 'kategori', 'deskripsi', 'status', 'album_id', 'sembunyikan'],
+  // AGENDA boleh diisi di Sheets ATAU dari panel admin. id kosong (baris buatan Sheets) diisi otomatis.
+  // poster_drive_id = gambar/poster agenda (link file Drive), opsional.
+  AGENDA:   ['id', 'tahun', 'tanggal_mulai', 'tanggal_selesai', 'nama_kegiatan', 'lokasi', 'kategori', 'deskripsi', 'status', 'album_id', 'poster_drive_id', 'sembunyikan'],
   GALERI:   ['album_id', 'judul_album', 'tanggal', 'foto_drive_id', 'keterangan', 'sampul', 'sembunyikan'],
   // Tab tambahan (dikelola dari panel admin, boleh juga diedit langsung di Sheets)
   BUKU:     ['id', 'isbn', 'judul', 'penulis', 'penerbit_tahun', 'kategori', 'rak', 'jumlah', 'dipinjam', 'sumber', 'catatan', 'sembunyikan'],
@@ -29,7 +31,7 @@ const SCHEMA_DESC = {
 };
 
 const PROFIL_KEYS = [
-  'nama_organisasi', 'tagline', 'deskripsi_singkat', 'tahun_berdiri', 'sejarah', 'visi',
+  'nama_organisasi', 'tagline', 'deskripsi_singkat', 'tahun_berdiri', 'sejarah_judul', 'sejarah', 'visi',
   'misi_1', 'misi_2', 'misi_3', 'alamat', 'jam_operasional', 'whatsapp', 'email', 'rekening',
   'instagram', 'facebook', 'youtube', 'tiktok', 'maps_embed',
   'logo_drive_id', 'hero_foto_drive_id',
@@ -50,12 +52,39 @@ const DROPDOWN = {
   'DONASI.apresiasi':  ['Belum', 'Terkirim']
 };
 
-/** Jalankan manual dari editor atau menu. Aman diulang: tab yang sudah ada tidak ditimpa. */
+/**
+ * Tambahkan kolom skema yang belum ada ke kanan header tab lama (mis. id & poster_drive_id di AGENDA).
+ * Data yang sudah ada tidak disentuh. Kembalikan jumlah kolom yang ditambahkan.
+ */
+function ensureSchemaCols_(key, sh) {
+  const have = headersOf_(sh);
+  const missing = (SCHEMA[key] || []).filter(h => have.indexOf(h) === -1);
+  missing.forEach((h, i) => {
+    const col = have.length + i + 1;
+    if (col > sh.getMaxColumns()) sh.insertColumnAfter(sh.getMaxColumns());
+    sh.getRange(1, col).setValue(h).setFontWeight('bold').setBackground('#FEF3C7');
+  });
+  return missing.length;
+}
+
+/** Kunci PROFIL yang belum ada ditambahkan sebagai baris baru (nilai kosong). */
+function ensureProfilKeys_(sh) {
+  const n = sh.getLastRow();
+  const have = n >= 2 ? sh.getRange(2, 1, n - 1, 1).getDisplayValues().map(r => String(r[0]).trim()) : [];
+  const missing = PROFIL_KEYS.filter(k => have.indexOf(k) === -1);
+  if (missing.length) sh.getRange(n + 1, 1, missing.length, 1).setValues(missing.map(k => [k]));
+}
+
+/** Jalankan manual dari editor atau menu. Aman diulang: tab yang sudah ada tidak ditimpa (hanya dilengkapi kolomnya). */
 function setupSpreadsheet() {
   const ss = getSS_();
-  let dibuat = 0;
+  let dibuat = 0, kolom = 0;
   Object.keys(SCHEMA).forEach(name => {
-    if (ss.getSheetByName(name)) return;
+    const lama = ss.getSheetByName(name);
+    if (lama) {
+      if (name === 'PROFIL') ensureProfilKeys_(lama); else kolom += ensureSchemaCols_(name, lama);
+      return;
+    }
     const headers = SCHEMA[name];
     const sh = ss.insertSheet(name);
     sh.getRange(1, 1, 1, headers.length).setValues([headers])
@@ -90,7 +119,7 @@ function setupSpreadsheet() {
     const s = ss.getSheetByName(n);
     if (s && s.getLastRow() === 0 && ss.getSheets().length > 1) ss.deleteSheet(s);
   });
-  try { SpreadsheetApp.getUi().alert(dibuat ? dibuat + ' tab database dibuat. Silakan isi datanya.' : 'Semua tab sudah ada.'); } catch (_) {}
+  try { SpreadsheetApp.getUi().alert((dibuat ? dibuat + ' tab database dibuat. ' : 'Semua tab sudah ada. ') + (kolom ? kolom + ' kolom baru ditambahkan ke tab lama.' : '')); } catch (_) {}
 }
 
 const WEB_URL = 'https://<user>.github.io/<repo>/';   // isi setelah GitHub Pages aktif

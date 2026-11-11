@@ -19,6 +19,7 @@ function handleAdmin_(b) {
     case 'list':    return listRows_(b.sheet);
     case 'save':    return saveRow_(b.sheet, b.data || {});
     case 'delete':  return deleteRow_(b.sheet, b.id);
+    case 'profil_save': return saveProfil_(b.data || {});
     case 'stats':   return { ok: true, stats: buildStats_() };
     case 'config':  return { ok: true, config: buildConfig_() };
     case 'refresh': clearFolderCache_(); clearCache(); getAllData(); logRow_('refresh', '-', '-', 'Cache publik disegarkan'); return { ok: true };
@@ -142,6 +143,7 @@ function headersOf_(sh) {
 function listRows_(name) {
   try {
     const { key, sh } = sheetFor_(name, false);
+    if (CONFIG.ADMIN_WRITE.indexOf(key) !== -1) ensureIds_(key, sh);   // baris buatan Sheets tanpa id → diberi id
     const headers = headersOf_(sh);
     const n = sh.getLastRow();
     const rows = [];
@@ -163,7 +165,88 @@ function listRows_(name) {
   } catch (err) { return { ok: false, error: err.message }; }
 }
 
-const ID_PREFIX = { BUKU: 'BK', BERITA: 'PB', DONASI: 'DN', ALBUM: 'AL' };
+const ID_PREFIX = { BUKU: 'BK', BERITA: 'PB', DONASI: 'DN', ALBUM: 'AL', AGENDA: 'AG' };
+
+/**
+ * Tab yang boleh ditulis panel wajib punya kolom id yang terisi, supaya baris yang dibuat langsung
+ * di Sheets (mis. agenda) tetap bisa diedit/dihapus dari panel. Kolom skema yang hilang ditambahkan.
+ */
+function ensureIds_(key, sh) {
+  const lock = LockService.getScriptLock();
+  try {
+    lock.waitLock(10000);
+    ensureSchemaCols_(key, sh);
+    const headers = headersOf_(sh), col = headers.indexOf('id'), n = sh.getLastRow();
+    if (col === -1 || n < 2) return;
+    const data = sh.getRange(2, 1, n - 1, headers.length).getDisplayValues();
+    const used = {};
+    data.forEach(r => { used[String(r[col]).trim()] = true; });
+    data.forEach((r, i) => {
+      // lewati baris kosong (kotak centang yang belum dicentang terbaca "FALSE")
+      if (String(r[col]).trim() || !r.some(c => String(c).trim() !== '' && String(c).trim() !== 'FALSE')) return;
+      let id;
+      do { id = newId_(ID_PREFIX[key] || 'ID'); } while (used[id]);
+      used[id] = true;
+      sh.getRange(i + 2, col + 1).setValue(id);
+    });
+  } catch (err) {
+    console.error('ensureIds gagal: ' + err);
+  } finally { try { lock.releaseLock(); } catch (_) {} }
+}
+
+/** Validasi agenda: nama wajib, tahun diisi dari tanggal mulai, pilihan kategori/status sesuai daftar. */
+function checkAgenda_(clean, isUpdate) {
+  if ((!isUpdate || 'nama_kegiatan' in clean) && !clean.nama_kegiatan) throw new Error('Nama kegiatan wajib diisi');
+  if (clean.tanggal_mulai && clean.tanggal_selesai && clean.tanggal_selesai < clean.tanggal_mulai) throw new Error('Tanggal selesai tidak boleh sebelum tanggal mulai');
+  if (clean.tanggal_mulai) clean.tahun = clean.tanggal_mulai.slice(0, 4);
+  else if (clean.tahun && !/^\d{4}$/.test(clean.tahun)) throw new Error('Tahun harus 4 angka, mis. 2026');
+  else if (!clean.tahun && (!isUpdate || 'tahun' in clean)) clean.tahun = todayStr_().slice(0, 4);
+  ['kategori', 'status'].forEach(h => {
+    if (clean[h] && DROPDOWN['AGENDA.' + h].indexOf(clean[h]) === -1) throw new Error('Pilihan ' + h + ' tidak dikenal');
+  });
+}
+
+/**
+ * Simpan isi beranda (tab PROFIL, bentuk kunci–nilai) dari panel admin, termasuk foto beranda & logo.
+ * Hanya kunci di PROFIL_KEYS; kunci yang tidak dikirim tidak diubah. Kembalikan { ok, profil }.
+ */
+function saveProfil_(data) {
+  const lock = LockService.getScriptLock();
+  try {
+    lock.waitLock(10000);
+    const sh = getSS_().getSheetByName(CONFIG.SHEETS.PROFIL);
+    if (!sh) throw new Error('Tab PROFIL belum dibuat. Jalankan Siapkan Tab Database.');
+    const headers = headersOf_(sh), ck = headers.indexOf('kunci'), cv = headers.indexOf('nilai');
+    if (ck === -1 || cv === -1) throw new Error('Tab PROFIL harus punya kolom kunci dan nilai');
+    const clean = {};
+    Object.keys(data || {}).forEach(k => {
+      if (PROFIL_KEYS.indexOf(k) === -1) return;
+      let v = clip_(data[k], 5000);
+      if (k === 'whatsapp') v = normalizeWa_(v);
+      if (/^(stat_|tahun_berdiri)/.test(k) && v && !/^\d{1,7}$/.test(v)) throw new Error(k + ' harus berupa angka');
+      if (/^(instagram|facebook|youtube|tiktok|maps_embed)$/.test(k) && v && !/^https:\/\//i.test(v)) throw new Error(k + ' harus berupa link https://');
+      clean[k] = v;
+    });
+    const keys = Object.keys(clean);
+    if (!keys.length) throw new Error('Tidak ada isian yang dikirim');
+    const n = sh.getLastRow();
+    const kunci = n >= 2 ? sh.getRange(2, ck + 1, n - 1, 1).getDisplayValues().map(r => String(r[0]).trim()) : [];
+    const baru = [];
+    keys.forEach(k => {
+      const i = kunci.indexOf(k);
+      // Awalan ' memaksa teks biasa: nomor WA/angka tidak berubah bentuk, teks berawalan "=" tidak jadi rumus
+      const cell = clean[k] === '' ? '' : "'" + clean[k];
+      if (i !== -1) sh.getRange(i + 2, cv + 1).setValue(cell);
+      else baru.push(headers.map(h => (h === 'kunci' ? k : h === 'nilai' ? cell : '')));
+    });
+    if (baru.length) sh.getRange(sh.getLastRow() + 1, 1, baru.length, headers.length).setValues(baru);
+    clearCache();
+    logRow_('ubah', 'PROFIL', '-', clip_(keys.join(', '), 200));
+    return { ok: true, profil: clean };
+  } catch (err) {
+    return { ok: false, error: err.message };
+  } finally { try { lock.releaseLock(); } catch (_) {} }
+}
 
 /**
  * Validasi album: judul + link folder Drive yang bisa dibaca dan berisi foto.
@@ -198,11 +281,13 @@ function saveRow_(name, data) {
   try {
     lock.waitLock(10000);
     const { key, sh } = sheetFor_(name, true);
+    ensureSchemaCols_(key, sh);
     const headers = headersOf_(sh);
     const clean = sanitizeRow_(key, data);
     let row = clean.id ? findRowById_(sh, headers, clean.id) : 0;
     const isUpdate = row > 0;
     const extra = key === 'ALBUM' ? checkAlbum_(clean, isUpdate) : {};
+    if (key === 'AGENDA') checkAgenda_(clean, isUpdate);
     if (!clean.id) clean.id = newId_(ID_PREFIX[key] || 'ID');
     const values = headers.map(h => {
       if (h === 'sembunyikan') return parseBool_(clean[h], false);
@@ -221,7 +306,7 @@ function saveRow_(name, data) {
       row = sh.getLastRow();
     }
     clearCache();
-    logRow_(isUpdate ? 'ubah' : 'tambah', key, clean.id, clip_(clean.judul || clean.nama || '', 80));
+    logRow_(isUpdate ? 'ubah' : 'tambah', key, clean.id, clip_(clean.judul || clean.nama || clean.nama_kegiatan || '', 80));
     const saved = { _row: row };
     headers.forEach((h, i) => { saved[h] = String(values[i]); });
     if (extra.foto != null) saved._foto = String(extra.foto);
