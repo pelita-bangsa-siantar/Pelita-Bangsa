@@ -16,7 +16,8 @@ const SCHEMA = {
   ALBUM:    ['id', 'tanggal', 'judul', 'folder_drive', 'sembunyikan'],
   // Akun panel admin. Password diketik biasa di sel, otomatis diganti hash saat login pertama.
   // Tab ini TIDAK PERNAH keluar lewat API (bukan ?action=all, bukan action=list).
-  ADMIN:    ['username', 'password', 'nama', 'nonaktif'],
+  // peran: Utama (boleh mengelola akun lewat panel) / Admin. Belum ada yang "Utama" → baris pertama dianggap utama.
+  ADMIN:    ['username', 'password', 'nama', 'nonaktif', 'peran'],
   // Penghitung pengunjung (hanya ditulis server). Satu baris = satu hari.
   // pengunjung = perangkat unik hari itu; pengunjung_baru = perangkat yang pertama kali datang di bulan itu.
   KUNJUNGAN: ['tanggal', 'pengunjung', 'pengunjung_baru'],
@@ -49,7 +50,8 @@ const DROPDOWN = {
   'DONASI.jenis':      ['Donasi Buku', 'Relawan Mengajar', 'Rak & Alat Tulis', 'Dukungan Operasional', 'Kemitraan / CSR'],
   'DONASI.logistik':   ['Antar Langsung', 'Dijemput Relawan', 'JNE', 'J&T', 'SiCepat', 'Pos Indonesia', 'Lainnya'],
   'DONASI.status':     ['Baru', 'Dikonfirmasi', 'Dalam Pengiriman', 'Diterima', 'Terkatalog', 'Dibatalkan'],
-  'DONASI.apresiasi':  ['Belum', 'Terkirim']
+  'DONASI.apresiasi':  ['Belum', 'Terkirim'],
+  'ADMIN.peran':       ['Utama', 'Admin']
 };
 
 /**
@@ -108,6 +110,7 @@ function setupSpreadsheet() {
     if (name === 'ADMIN') {
       // Satu akun awal; password sengaja kosong (belum bisa login) sampai diisi sendiri di sel B2.
       sh.getRange(2, 1, 1, 3).setValues([['Admin', '', 'Administrator']]);
+      sh.getRange(2, headers.indexOf('peran') + 1).setValue('Utama');
       sh.getRange('B2').setNote('Ketik password di sini. Setelah login pertama, isinya otomatis berubah jadi kode acak (hash) — itu normal.');
       sh.getRange(2, 1, 999, 2).setNumberFormat('@');   // teks biasa: password angka tidak berubah bentuk
       sh.setColumnWidth(2, 260);
@@ -181,6 +184,6 @@ function setAdminPassword(pw, user) {
   const headers = headersOf_(sh), t = adminTable_();
   const a = t && t.rows.find(r => r.username.toLowerCase() === user.toLowerCase());
   if (a) { sh.getRange(a.row, t.cp + 1).setValue(pwHash_(a.username, pw)); return; }
-  const baru = { username: user, password: pwHash_(user, pw), nama: user, nonaktif: false };
+  const baru = { username: user, password: pwHash_(user, pw), nama: user, nonaktif: false, peran: t ? 'Admin' : 'Utama' };
   sh.appendRow(headers.map(h => (h in baru ? baru[h] : '')));
 }

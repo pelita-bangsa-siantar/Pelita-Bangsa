@@ -196,7 +196,10 @@ Satu baris = satu foto; `album_id` sama = satu album; `album_id` huruf kecil tan
 
 Semua foto di folder tampil otomatis (urut nama file, foto pertama jadi sampul, maksimal 300 foto per album). Foto tetap di Drive — tidak ada yang disalin. Setelah menambah foto ke folder, klik tombol 🔄 pada album itu. Agar agenda punya tombol "Lihat foto", isi `album_id` di tab AGENDA dengan kode album (mis. `AL-261111-A7K`). Data tersimpan di tab `ALBUM` — `id | tanggal | judul | folder_drive | sembunyikan`.
 
-### Tab ADMIN — `username | password | nama | nonaktif` (akun login panel admin)
+### Panel Admin — Pengguna Admin (hanya admin utama)
+Menu **Pengguna Admin** hanya muncul untuk admin utama. Di sana admin utama bisa menambah akun, mengganti nama/password, mengubah peran (Admin / Admin Utama), menonaktifkan, dan menghapus akun. Admin biasa tetap bisa mengelola isi website tetapi tidak bisa menyentuh akun. Password minimal 6 karakter dan tidak pernah ditampilkan; lupa password → edit akunnya lalu isi password baru. Akun sendiri tidak bisa dihapus/dinonaktifkan, dan harus selalu ada minimal satu admin utama aktif. Akun di baris pertama tab `ADMIN` otomatis menjadi admin utama.
+
+### Tab ADMIN — `username | password | nama | nonaktif | peran` (akun login panel admin)
 Satu baris = satu akun. Ketik username dan password biasa di selnya. Setelah akun itu berhasil login pertama kali, isi kolom `password` otomatis berubah menjadi kode acak `sha256:...` — itu normal dan lebih aman. Lupa password: hapus isi selnya, ketik password baru. Centang `nonaktif` untuk mematikan akun tanpa menghapusnya. Mengganti `username` berarti password harus diketik ulang.
 
 ### Jumlah pengunjung website

@@ -71,6 +71,7 @@
       <a href="#buku" data-nav="buku" class="flex items-center gap-3 px-space-md py-space-sm rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-headline-sm">menu_book</span>Katalog Koleksi Buku</a>
       <a href="#donatur" data-nav="donatur" class="flex items-center gap-3 px-space-md py-space-sm rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-headline-sm">volunteer_activism</span>Donatur &amp; Relawan</a>
       <a href="#konfigurasi" data-nav="konfigurasi" class="flex items-center gap-3 px-space-md py-space-sm rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-headline-sm">sync_alt</span>Konfigurasi Sheets</a>
+      <a href="#pengguna" data-nav="pengguna" data-utama style="display:none" class="flex items-center gap-3 px-space-md py-space-sm rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-headline-sm">manage_accounts</span>Pengguna Admin</a>
     </nav>
   </div>
   <div class="p-space-md flex flex-col gap-2 bg-surface-container-low">
@@ -111,6 +112,7 @@
       <a href="#buku" data-nav="buku" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm whitespace-nowrap"><span class="material-symbols-outlined text-[16px]">menu_book</span><span>Katalog Buku</span></a>
       <a href="#donatur" data-nav="donatur" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm whitespace-nowrap"><span class="material-symbols-outlined text-[16px]">groups</span><span>Donatur &amp; Relawan</span></a>
       <a href="#konfigurasi" data-nav="konfigurasi" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm whitespace-nowrap"><span class="material-symbols-outlined text-[16px]">database</span><span>Database API</span></a>
+      <a href="#pengguna" data-nav="pengguna" data-utama style="display:none" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm whitespace-nowrap"><span class="material-symbols-outlined text-[16px]">manage_accounts</span><span>Pengguna</span></a>
     </div>
     <div id="app-err" class="hidden mb-space-md p-space-md rounded-xl bg-error-container text-on-error-container font-body-sm text-body-sm flex items-start gap-2"><span class="material-symbols-outlined">error</span><span data-msg></span></div>
 
@@ -527,6 +529,38 @@
     </section>
 
     <!-- ===== KONFIGURASI SHEETS ===== -->
+    <!-- ===== PENGGUNA ADMIN (hanya admin utama; tab ADMIN) ===== -->
+    <section data-view="pengguna" class="hidden flex-col w-full gap-space-lg pt-space-sm">
+      <div class="w-full bg-surface-container-lowest rounded-xl p-space-md lg:p-space-lg shadow-sm flex items-start gap-space-md">
+        <div class="w-12 h-12 rounded-xl bg-primary-fixed text-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-[28px]">manage_accounts</span></div>
+        <div>
+          <div class="flex items-center gap-space-xs flex-wrap"><h1 class="font-headline-md text-headline-md text-on-surface">Pengguna Admin</h1><span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm" id="us-count">—</span></div>
+          <p class="font-body-sm text-body-sm text-on-surface-variant mt-1 justify">Hanya admin utama yang bisa membuka halaman ini. Admin biasa bisa mengelola isi website, tetapi tidak bisa menambah, mengubah, atau menghapus akun.</p>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg items-start">
+        <div class="xl:col-span-5 bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+          <div class="p-4 flex items-center justify-between bg-primary-container text-on-primary-container">
+            <div class="flex items-center gap-2.5"><div class="w-8 h-8 rounded-full bg-on-primary-container/20 flex items-center justify-center"><span class="material-symbols-outlined text-[20px]">person_add</span></div><div><h2 class="font-headline-sm text-headline-sm leading-none" id="us-form-title">Akun Baru</h2><p class="font-label-sm text-label-sm text-primary-fixed opacity-90 mt-0.5">Tersimpan ke tab ADMIN</p></div></div>
+            <button type="button" id="us-batal" class="hidden font-label-sm text-label-sm underline">Batal edit</button>
+          </div>
+          <form id="form-pengguna" class="p-space-md lg:p-space-lg space-y-space-md" novalidate autocomplete="off">
+            <div><label class="block font-label-lg text-label-lg text-on-surface mb-1.5" for="us-username">Username <span class="text-tertiary">*</span></label><input id="us-username" name="username" required maxlength="30" autocapitalize="none" spellcheck="false" autocomplete="off" class="w-full px-space-md py-2.5 rounded-lg bg-surface-container-low border-0 text-on-surface font-body-md focus:ring-2 focus:ring-secondary read-only:opacity-60" placeholder="mis. tiara"><p class="font-label-sm text-label-sm text-on-surface-variant mt-1" id="us-username-note">3–30 karakter, diawali huruf. Tidak bisa diganti setelah dibuat.</p></div>
+            <div><label class="block font-label-lg text-label-lg text-on-surface mb-1.5" for="us-nama">Nama Lengkap</label><input id="us-nama" name="nama" maxlength="80" class="w-full px-space-md py-2.5 rounded-lg bg-surface-container-low border-0 text-on-surface font-body-md focus:ring-2 focus:ring-secondary" placeholder="mis. Tiara Purba"></div>
+            <div><label class="block font-label-lg text-label-lg text-on-surface mb-1.5" for="us-password">Password <span class="text-tertiary" id="us-pw-wajib">*</span></label><input id="us-password" name="password" type="password" autocomplete="new-password" maxlength="100" class="w-full px-space-md py-2.5 rounded-lg bg-surface-container-low border-0 text-on-surface font-body-md focus:ring-2 focus:ring-secondary" placeholder="Minimal 6 karakter"><p class="font-label-sm text-label-sm text-on-surface-variant mt-1" id="us-pw-note">Minimal 6 karakter dan tidak sama dengan username.</p></div>
+            <div><label class="block font-label-lg text-label-lg text-on-surface mb-1.5" for="us-peran">Peran</label><select id="us-peran" name="peran" class="w-full px-space-md py-2.5 rounded-lg bg-surface-container-low border-0 text-on-surface font-body-md focus:ring-2 focus:ring-secondary"><option value="Admin">Admin — mengelola isi website</option><option value="Utama">Admin Utama — juga mengelola akun</option></select></div>
+            <label class="flex items-center gap-2 font-label-md text-label-md text-on-surface"><input type="checkbox" name="nonaktif" class="w-4 h-4 rounded accent-primary">Nonaktifkan akun (tidak bisa login)</label>
+            <button type="submit" id="us-simpan" class="w-full inline-flex items-center justify-center gap-space-xs px-space-lg py-2.5 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-lg text-label-lg transition-all shadow-md disabled:opacity-60"><span class="material-symbols-outlined text-[20px]">save</span><span>Simpan Akun</span></button>
+          </form>
+        </div>
+        <div class="xl:col-span-7 bg-surface-container-lowest rounded-xl p-space-md lg:p-space-lg shadow-sm">
+          <div class="flex items-center gap-space-xs mb-space-md"><span class="material-symbols-outlined text-primary text-[24px]">group</span><h2 class="font-headline-sm text-headline-sm text-on-surface">Daftar Akun</h2></div>
+          <div class="overflow-x-auto rounded-lg"><table class="w-full text-left font-body-sm text-body-sm"><thead class="bg-surface-container font-label-md text-label-md uppercase tracking-wider text-on-surface-variant"><tr><th class="py-3 px-space-sm sm:px-space-md">Akun</th><th class="py-3 px-space-md hidden sm:table-cell">Peran</th><th class="py-3 px-space-md hidden sm:table-cell">Status</th><th class="py-3 px-space-sm sm:px-space-md text-right">Aksi</th></tr></thead><tbody id="us-rows" class="divide-y divide-surface-container-high"></tbody></table></div>
+          <p class="font-label-sm text-label-sm text-on-surface-variant mt-space-md justify">Password tidak pernah ditampilkan. Jika seseorang lupa password, klik edit pada akunnya lalu isi password baru. Mengganti password, menonaktifkan, atau menghapus akun langsung mengeluarkan orang itu dari panel.</p>
+        </div>
+      </div>
+    </section>
+
     <section data-view="konfigurasi" class="hidden flex-col w-full pt-space-sm">
       <div class="mb-space-lg p-space-md rounded-xl bg-gradient-to-r from-primary-fixed via-surface-container-low to-secondary-fixed text-on-surface flex flex-wrap items-center justify-between gap-space-md shadow-sm">
         <div class="flex items-center gap-space-md"><div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-on-primary shadow-sm shrink-0"><span class="material-symbols-outlined text-headline-sm animate-pulse">cloud_sync</span></div><div><p class="font-label-lg text-label-lg text-primary">Arsitektur Database Berbasis Google Sheets</p><p class="font-body-sm text-body-sm text-on-surface-variant justify">Web statis di GitHub Pages membaca JSON dari Apps Script Web App; panel ini menulis ke tab BUKU, BERITA, DONASI, ALBUM, AGENDA, dan PROFIL lewat aksi POST bertoken. Tidak ada server terpisah.</p></div></div>

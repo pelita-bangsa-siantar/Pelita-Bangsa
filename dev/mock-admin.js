@@ -36,6 +36,9 @@
   const SK = { PROFIL: ['kunci', 'nilai'], PENGURUS: ['urutan', 'nama', 'jabatan', 'periode', 'foto_drive_id', 'deskripsi', 'sembunyikan'], RELAWAN: ['nama', 'asal_instansi', 'bidang', 'sejak_tahun', 'foto_drive_id', 'sembunyikan'], AGENDA: ['id', 'tahun', 'tanggal_mulai', 'tanggal_selesai', 'nama_kegiatan', 'lokasi', 'kategori', 'deskripsi', 'status', 'album_id', 'poster_drive_id', 'sembunyikan'], GALERI: ['album_id', 'judul_album', 'tanggal', 'foto_drive_id', 'keterangan', 'sampul', 'sembunyikan'], BUKU: ['id', 'isbn', 'judul', 'penulis', 'penerbit_tahun', 'kategori', 'rak', 'jumlah', 'dipinjam', 'sumber', 'catatan', 'sembunyikan'], BERITA: ['id', 'tanggal', 'judul', 'kategori', 'penulis', 'lokasi', 'ringkasan', 'isi', 'foto_drive_id', 'status', 'sembunyikan'], DONASI: ['id', 'tanggal', 'nama', 'whatsapp', 'asal', 'jenis', 'kategori_buku', 'jumlah', 'logistik', 'resi', 'status', 'apresiasi', 'catatan', 'sumber'], ALBUM: ['id', 'tanggal', 'judul', 'folder_drive', 'sembunyikan'], LOG: ['waktu', 'aksi', 'tab', 'id', 'keterangan', 'oleh'] };
   const WRITE = ['BUKU', 'BERITA', 'DONASI', 'ALBUM', 'AGENDA'];
   // Sesi demo bertahan saat halaman dimuat ulang (token demo tetap, tersimpan di sessionStorage oleh admin.js)
+  // Akun demo untuk modul Pengguna Admin (password tidak disimpan di mock)
+  let ADMINS = [{ username: 'Admin', nama: 'Administrator', peran: 'Utama', nonaktif: false, password: true, saya: true }, { username: 'tiara', nama: 'Tiara Purba', peran: 'Admin', nonaktif: false, password: true, saya: false }];
+  const DEMO_USER = { nama: 'Admin', email: 'demo@localhost', utama: true };
   let TOKEN = ''; try { if (sessionStorage.getItem('pb_admin_token') === 'a'.repeat(32)) TOKEN = 'a'.repeat(32); } catch (_) {}
   const log = (aksi, tab, id, ket) => DB.LOG.push({ waktu: new Date().toISOString().slice(0, 19).replace('T', ' '), aksi, tab, id, keterangan: ket, oleh: 'admin' });
   const months = n => { const o = []; for (let i = n - 1; i >= 0; i--) { const d = new Date(today.getFullYear(), today.getMonth() - i, 1); o.push(ym(d)); } return o; };
@@ -45,13 +48,31 @@
     return new Promise(res => setTimeout(() => res(handle(b)), 250 + Math.random() * 300));
   };
   function handle(b) {
-    if (b.action === 'login') { if (b.password !== 'demo1234') return { ok: false, error: 'Password salah. (demo: demo1234)' }; TOKEN = 'a'.repeat(32); log('login', '-', '-', 'Admin masuk (demo)'); return { ok: true, token: TOKEN, user: { nama: 'Pengurus Literasi (Demo)', email: 'demo@localhost' } }; }
+    if (b.action === 'login') { if (b.password !== 'demo1234') return { ok: false, error: 'Password salah. (demo: demo1234)' }; TOKEN = 'a'.repeat(32); log('login', '-', '-', 'Admin masuk (demo)'); return { ok: true, token: TOKEN, user: DEMO_USER }; }
     if (b.action === 'donasi') { const id = 'DN-DEMO-' + Date.now().toString(36).toUpperCase(); DB.DONASI.push(Object.assign({ id, tanggal: ago(0), status: 'Baru', apresiasi: 'Belum', sumber: 'web', logistik: '', resi: '' }, b.data)); return { ok: true, id }; }
     if (!b.token || b.token !== TOKEN) return { ok: false, auth: false, error: 'Sesi tidak valid' };
     const list = s => { if (WRITE.includes(s)) DB[s].forEach((r, i) => { if (!r.id) r.id = 'AG-DEMO-' + (i + 1); });   // seperti server: baris tanpa id diberi id
       return { ok: true, sheet: s, headers: SK[s], rows: (DB[s] || []).map((r, i) => Object.assign({ _row: i + 2 }, r)), writable: WRITE.includes(s) }; };
     switch (b.action) {
-      case 'me': return { ok: true, user: { nama: 'Pengurus Literasi (Demo)', email: 'demo@localhost' } };
+      case 'me': return { ok: true, user: DEMO_USER };
+      case 'admin_list': return { ok: true, rows: ADMINS };
+      case 'admin_save': {
+        const d = b.data || {}, a = ADMINS.find(x => x.username.toLowerCase() === String(d.username).toLowerCase());
+        if (d.baru && a) return { ok: false, error: 'Username "' + a.username + '" sudah dipakai.' };
+        if (!d.baru && !a) return { ok: false, error: 'Akun tidak ditemukan.' };
+        const non = d.nonaktif === 'TRUE';
+        if (a && a.peran === 'Utama' && (d.peran !== 'Utama' || non) && !ADMINS.some(x => x !== a && x.peran === 'Utama' && !x.nonaktif)) return { ok: false, error: 'Harus ada minimal satu admin utama yang aktif.' };
+        if (a) Object.assign(a, { nama: d.nama, peran: d.peran, nonaktif: non }); else ADMINS.push({ username: d.username, nama: d.nama || d.username, peran: d.peran, nonaktif: non, password: true, saya: false });
+        log(a ? 'ubah' : 'tambah', 'ADMIN', d.username, d.peran);
+        return { ok: true, rows: ADMINS };
+      }
+      case 'admin_delete': {
+        const a = ADMINS.find(x => x.username === b.username);
+        if (!a) return { ok: false, error: 'Akun tidak ditemukan.' };
+        if (a.saya) return { ok: false, error: 'Anda tidak bisa menghapus akun sendiri.' };
+        ADMINS = ADMINS.filter(x => x !== a); log('hapus', 'ADMIN', a.username, '');
+        return { ok: true, rows: ADMINS };
+      }
       case 'logout': TOKEN = ''; return { ok: true };
       case 'list': return SK[b.sheet] ? list(b.sheet) : { ok: false, error: 'Tab tidak dikenal' };
       case 'save': {

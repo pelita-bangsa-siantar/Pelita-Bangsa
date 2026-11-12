@@ -34,7 +34,7 @@
 
   /* ---------- Auth ---------- */
   function showLogin() { $('#view-login').classList.remove('hidden'); $('#app').classList.add('hidden'); }
-  function showApp() { $('#view-login').classList.add('hidden'); $('#app').classList.remove('hidden'); $$('[data-user-nama]').forEach(e => { e.textContent = (S.user && S.user.nama) || 'Pengurus'; }); $$('[data-user-email]').forEach(e => { e.textContent = (S.user && S.user.email) || 'Admin'; }); route(); }
+  function showApp() { $('#view-login').classList.add('hidden'); $('#app').classList.remove('hidden'); $$('[data-user-nama]').forEach(e => { e.textContent = (S.user && S.user.nama) || 'Pengurus'; }); $$('[data-user-email]').forEach(e => { e.textContent = (S.user && S.user.email) || 'Admin'; }); $$('[data-utama]').forEach(e => { e.style.display = S.user && S.user.utama ? '' : 'none'; }); route(); }
   function forceLogout(msg) { S.token = ''; try { sessionStorage.removeItem('pb_admin_token'); } catch (_) {} showLogin(); if (msg) { const e = $('#login-err'); e.textContent = msg; e.classList.remove('hidden'); } }
   $('#form-login').addEventListener('submit', e => {
     e.preventDefault();
@@ -51,17 +51,18 @@
   $$('[data-logout]').forEach(b => b.addEventListener('click', () => { post({ action: 'logout' }).catch(() => {}); forceLogout(); }));
 
   /* ---------- Routing ---------- */
-  const VIEWS = ['ringkasan', 'berita', 'galeri', 'agenda', 'konten', 'buku', 'donatur', 'konfigurasi'];
+  const VIEWS = ['ringkasan', 'berita', 'galeri', 'agenda', 'konten', 'buku', 'donatur', 'konfigurasi', 'pengguna'];
   function route() {
     if (!S.token) return;   // belum login (mis. hash berubah saat proses login) → jangan memicu "sesi berakhir"
-    const v = VIEWS.includes(location.hash.slice(1)) ? location.hash.slice(1) : 'ringkasan';
+    let v = VIEWS.includes(location.hash.slice(1)) ? location.hash.slice(1) : 'ringkasan';
+    if (v === 'pengguna' && !(S.user && S.user.utama)) v = 'ringkasan';   // hanya admin utama (server juga menolak)
     $$('[data-view]').forEach(s => { const on = s.dataset.view === v; s.classList.toggle('hidden', !on); s.classList.toggle('flex', on); });
     $$('#side-nav [data-nav]').forEach(a => { a.className = `flex items-center gap-3 px-space-md py-space-sm rounded-lg transition-colors ${a.dataset.nav === v ? 'bg-primary-container text-on-primary-container font-headline-sm shadow-[0_1px_8px_rgba(0,0,0,0.04)]' : 'font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface'}`; });
     $$('#chip-nav [data-nav]').forEach(a => { a.className = `flex items-center gap-1.5 px-3 py-1.5 rounded-full font-label-sm whitespace-nowrap ${a.dataset.nav === v ? 'bg-primary text-on-primary shadow-sm' : 'bg-surface-container text-on-surface-variant'}`; });
     $$('#bottom-nav [data-nav]').forEach(a => { a.className = `flex flex-col items-center justify-center w-14 h-12 gap-0.5 ${a.dataset.nav === v ? 'text-primary font-bold' : 'text-on-surface-variant'}`; });
     window.scrollTo({ top: 0 });
     setErr('');
-    ({ ringkasan: loadRingkasan, berita: () => ensureList('BERITA').then(renderBerita), galeri: () => ensureList('ALBUM').then(renderGaleri), agenda: () => Promise.all([ensureList('AGENDA'), ensureList('ALBUM')]).then(renderAgendaAdm), konten: () => ensureList('PROFIL').then(renderKonten), buku: () => ensureList('BUKU').then(renderBuku), donatur: () => Promise.all([ensureList('DONASI'), ensureStats()]).then(renderDonatur), konfigurasi: () => ensureConfig(true).then(renderKonfigurasi) })[v]().catch(err => setErr(err.message));
+    ({ ringkasan: loadRingkasan, berita: () => ensureList('BERITA').then(renderBerita), galeri: () => ensureList('ALBUM').then(renderGaleri), agenda: () => Promise.all([ensureList('AGENDA'), ensureList('ALBUM')]).then(renderAgendaAdm), konten: () => ensureList('PROFIL').then(renderKonten), buku: () => ensureList('BUKU').then(renderBuku), donatur: () => Promise.all([ensureList('DONASI'), ensureStats()]).then(renderDonatur), konfigurasi: () => ensureConfig(true).then(renderKonfigurasi), pengguna: loadPengguna })[v]().catch(err => setErr(err.message));
   }
   window.addEventListener('hashchange', route);
 
@@ -504,6 +505,58 @@
     if (act === 'edit') { fillForm(fd, r); $('#dn-form-title').textContent = `Detail Pencatatan ${r.id}`; openModal('#modal-donasi'); return; }
     if (act === 'hapus') { if (!confirm(`Hapus catatan donasi ${r.nama} (${r.id})?`)) return; return post({ action: 'delete', sheet: 'DONASI', id: r.id }).then(x => { if (!x.ok) throw new Error(x.error); removeLocal('DONASI', r.id); renderDonatur(); PB.toast(`Baris ${r.id} dihapus.`, 'delete'); }).catch(err => setErr(err.message)); }
     if (act === 'next') { const ns = NEXT[r.status || 'Baru']; post({ action: 'save', sheet: 'DONASI', data: { id: r.id, status: ns } }).then(x => { if (!x.ok) throw new Error(x.error); upsertLocal('DONASI', x.row); renderDonatur(); PB.toast(`Status ${r.nama} → ${ns}`, 'check_circle'); }).catch(err => setErr(err.message)); }
+  });
+
+  /* ---------- Pengguna admin (hanya admin utama; tab ADMIN, password tidak pernah dikirim ke browser) ---------- */
+  const fu = $('#form-pengguna');
+  let editUser = '';
+  const setAdmins = r => { if (!r.ok) throw new Error(r.error); S.admins = r.rows; renderPengguna(); return r; };
+  function loadPengguna() { return post({ action: 'admin_list' }).then(setAdmins); }
+  function penggunaMode(a) {
+    editUser = a ? a.username : '';
+    fu.reset();
+    fu.elements.username.readOnly = !!a;
+    if (a) { fu.elements.username.value = a.username; fu.elements.nama.value = a.nama || ''; fu.elements.peran.value = a.peran; fu.elements.nonaktif.checked = !!a.nonaktif; }
+    $('#us-batal').classList.toggle('hidden', !a);
+    $('#us-form-title').textContent = a ? `Edit Akun ${a.username}` : 'Akun Baru';
+    $('#us-pw-wajib').classList.toggle('hidden', !!a);
+    $('#us-pw-note').textContent = a ? 'Kosongkan jika password tidak diganti.' : 'Minimal 6 karakter dan tidak sama dengan username.';
+    fu.elements.password.placeholder = a ? 'Password baru (opsional)' : 'Minimal 6 karakter';
+    // Akun sendiri: peran & status tidak bisa diubah (mencegah terkunci dari panel)
+    fu.elements.peran.disabled = fu.elements.nonaktif.disabled = !!(a && a.saya);
+  }
+  function renderPengguna() {
+    const rows = S.admins || [];
+    $('#us-count').textContent = `${PB.num(rows.length)} akun`;
+    const status = a => a.nonaktif ? ['Nonaktif', 'bg-surface-container-highest text-on-surface-variant'] : !a.password ? ['Belum ada password', 'bg-amber-100 text-amber-800'] : ['Aktif', 'bg-emerald-100 text-emerald-800'];
+    const badge = ([l, c]) => `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-label-sm text-label-sm font-bold ${c}">${l}</span>`;
+    const peran = a => badge(a.peran === 'Utama' ? ['Admin Utama', 'bg-primary-fixed text-primary'] : ['Admin', 'bg-secondary-fixed text-secondary']);
+    $('#us-rows').innerHTML = rows.map(a => `<tr class="hover:bg-surface-container-low/60 transition-colors ${a.nonaktif ? 'opacity-60' : ''}">
+      <td class="py-3 px-space-sm sm:px-space-md"><div class="font-semibold text-on-surface">${PB.esc(a.username)}${a.saya ? ' <span class="font-label-sm text-label-sm text-secondary">(Anda)</span>' : ''}</div><div class="font-label-sm text-label-sm text-on-surface-variant">${PB.esc(a.nama || '—')}</div><div class="sm:hidden flex flex-wrap gap-1 mt-1">${peran(a)}${badge(status(a))}</div></td>
+      <td class="py-3 px-space-md whitespace-nowrap hidden sm:table-cell">${peran(a)}</td>
+      <td class="py-3 px-space-md whitespace-nowrap hidden sm:table-cell">${badge(status(a))}</td>
+      <td class="py-3 px-space-sm sm:px-space-md text-right"><div class="inline-flex items-center gap-1">
+        <button data-act="edit" data-u="${PB.esc(a.username)}" title="Edit akun / ganti password" class="p-2 rounded hover:bg-surface-container text-secondary"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+        <button data-act="hapus" data-u="${PB.esc(a.username)}" ${a.saya ? 'disabled' : ''} title="${a.saya ? 'Akun sendiri tidak bisa dihapus' : 'Hapus akun'}" class="p-2 rounded hover:bg-error-container text-tertiary disabled:opacity-30"><span class="material-symbols-outlined text-[18px]">delete</span></button></div></td></tr>`).join('') || '<tr><td colspan="4" class="py-space-lg text-center text-on-surface-variant">Belum ada akun.</td></tr>';
+  }
+  $('#us-batal').addEventListener('click', () => penggunaMode(null));
+  fu.addEventListener('submit', e => {
+    e.preventDefault();
+    const d = { username: fu.elements.username.value.trim(), nama: fu.elements.nama.value.trim(), password: fu.elements.password.value, peran: fu.elements.peran.value, nonaktif: fu.elements.nonaktif.checked ? 'TRUE' : 'FALSE', baru: !editUser };
+    if (!/^[A-Za-z][A-Za-z0-9._-]{2,29}$/.test(d.username)) return setErr('Username 3–30 karakter, diawali huruf; boleh huruf, angka, titik, garis.');
+    if ((d.baru || d.password) && d.password.length < 6) return setErr('Password minimal 6 karakter.');
+    if (d.password && d.password.toLowerCase() === d.username.toLowerCase()) return setErr('Password tidak boleh sama dengan username.');
+    busy($('#us-simpan'), true); setErr('');
+    post({ action: 'admin_save', data: d }).then(setAdmins).then(() => { PB.toast(d.baru ? `Akun ${d.username} dibuat.` : `Akun ${d.username} diperbarui.`, 'manage_accounts'); penggunaMode(null); })
+      .catch(err => setErr(err.message)).finally(() => busy($('#us-simpan'), false));
+  });
+  $('#us-rows').addEventListener('click', e => {
+    const b = e.target.closest('[data-act]'); if (!b || b.disabled) return;
+    const a = (S.admins || []).find(x => x.username === b.dataset.u); if (!a) return;
+    if (b.dataset.act === 'edit') { penggunaMode(a); fu.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    if (b.dataset.act === 'hapus' && confirm(`Hapus akun "${a.username}"? Orang ini langsung tidak bisa masuk ke panel admin.`)) {
+      post({ action: 'admin_delete', username: a.username }).then(setAdmins).then(() => { PB.toast(`Akun ${a.username} dihapus.`, 'delete'); if (editUser === a.username) penggunaMode(null); }).catch(err => setErr(err.message));
+    }
   });
 
   /* ---------- Konfigurasi ---------- */

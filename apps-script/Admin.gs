@@ -1,5 +1,5 @@
 /**
- * Aksi POST: login admin bertoken, CRUD tab BUKU/BERITA/DONASI/ALBUM, statistik, konfigurasi,
+ * Aksi POST: login admin bertoken, CRUD tab BUKU/BERITA/DONASI/ALBUM/AGENDA, kelola akun admin, statistik, konfigurasi,
  * serta formulir donasi publik (tanpa token, dibatasi).
  *
  * Body POST = JSON teks: { action, token?, ...payload }
@@ -20,6 +20,9 @@ function handleAdmin_(b) {
     case 'save':    return saveRow_(b.sheet, b.data || {});
     case 'delete':  return deleteRow_(b.sheet, b.id);
     case 'profil_save': return saveProfil_(b.data || {});
+    case 'admin_list':   return utamaOnly_(() => listAdmins_());
+    case 'admin_save':   return utamaOnly_(() => saveAdmin_(b.data || {}));
+    case 'admin_delete': return utamaOnly_(() => deleteAdmin_(b.username));
     case 'stats':   return { ok: true, stats: buildStats_() };
     case 'config':  return { ok: true, config: buildConfig_() };
     case 'refresh': clearFolderCache_(); clearCache(); getAllData(); logRow_('refresh', '-', '-', 'Cache publik disegarkan'); return { ok: true };
@@ -47,20 +50,49 @@ function pwHash_(user, pw) {
 }
 
 /**
- * Akun dari tab ADMIN: { sh, cp (indeks kolom password), rows:[{row, username, password, nama, nonaktif}] }.
+ * Akun dari tab ADMIN: { sh, cp (indeks kolom password), headers, rows:[{row, username, password, nama, peran, nonaktif}] }.
  * null jika tab belum ada / belum berisi akun → login memakai akun lama di Script Properties.
  */
 function adminTable_() {
   const sh = getSS_().getSheetByName(CONFIG.SHEETS.ADMIN);
   if (!sh || sh.getLastRow() < 2) return null;
   const headers = headersOf_(sh);
-  const cu = headers.indexOf('username'), cp = headers.indexOf('password'), cn = headers.indexOf('nama'), cx = headers.indexOf('nonaktif');
+  const cu = headers.indexOf('username'), cp = headers.indexOf('password'), cn = headers.indexOf('nama'), cx = headers.indexOf('nonaktif'), cr = headers.indexOf('peran');
   if (cu === -1 || cp === -1) return null;
   const rows = sh.getRange(2, 1, sh.getLastRow() - 1, headers.length).getDisplayValues()
     .map((r, i) => ({ row: i + 2, username: String(r[cu]).trim(), password: String(r[cp]).trim(),
-                      nama: cn === -1 ? '' : String(r[cn]).trim(), nonaktif: cx !== -1 && parseBool_(r[cx], false) }))
+                      nama: cn === -1 ? '' : String(r[cn]).trim(), peran: cr === -1 ? '' : String(r[cr]).trim(),
+                      nonaktif: cx !== -1 && parseBool_(r[cx], false) }))
     .filter(r => r.username);
-  return rows.length ? { sh, cp, rows } : null;
+  return rows.length ? { sh, cp, rows, headers } : null;
+}
+
+/**
+ * Admin utama = baris dengan peran "Utama". Jika belum ada yang ditandai (tab lama tanpa kolom peran),
+ * akun di baris pertama dianggap admin utama. Kembalikan daftar username (huruf kecil).
+ */
+function utamaNames_(t) {
+  const u = t.rows.filter(r => r.peran.toLowerCase() === 'utama');
+  return (u.length ? u : t.rows.slice(0, 1)).map(r => r.username.toLowerCase());
+}
+
+/** Apakah admin pada request ini admin utama (dan akunnya masih aktif)? Tanpa tab ADMIN: akun tunggal = utama. */
+function isUtama_() {
+  const t = adminTable_();
+  if (!t) return true;
+  const me = CURRENT_ADMIN_.toLowerCase();
+  const a = t.rows.find(r => r.username.toLowerCase() === me);
+  return !!a && !a.nonaktif && utamaNames_(t).indexOf(me) !== -1;
+}
+
+function utamaOnly_(fn) {
+  if (!isUtama_()) return { ok: false, error: 'Hanya admin utama yang boleh mengelola akun.' };
+  return fn();
+}
+
+/** Semua sesi milik username ini yang dibuat sebelum sekarang menjadi tidak berlaku (lihat auth_). */
+function revokeSessions_(username) {
+  PropertiesService.getScriptProperties().setProperty('rev_' + String(username).trim().toLowerCase(), String(Date.now()));
 }
 
 /** Password yang diketik polos di tab ADMIN diganti hash (dipanggil saat login berhasil & menu Segarkan). */
@@ -101,7 +133,7 @@ function login_(user, password) {
   if (t) hashAdminPasswords_();
   CURRENT_ADMIN_ = nama;
   const token = Utilities.getUuid().replace(/-/g, '');
-  cache.put('tok_' + token, nama, CONFIG.TOKEN_TTL);
+  cache.put('tok_' + token, nama + '|' + Date.now(), CONFIG.TOKEN_TTL);   // "username|waktu dibuat"
   logRow_('login', '-', '-', 'Admin masuk');
   return { ok: true, token, expiresIn: CONFIG.TOKEN_TTL, user: adminUser_() };
 }
@@ -111,15 +143,110 @@ function auth_(token) {
   const cache = CacheService.getScriptCache();
   const who = cache.get('tok_' + token);
   if (!who) return false;
+  const cut = who.lastIndexOf('|');
+  const nama = who === '1' ? '' : cut === -1 ? who : who.slice(0, cut);
+  const dibuat = cut === -1 ? 0 : Number(who.slice(cut + 1)) || 0;
+  // Akun dihapus / dinonaktifkan / ganti password → sesi lamanya ditolak
+  const rev = nama ? Number(PropertiesService.getScriptProperties().getProperty('rev_' + nama.toLowerCase()) || 0) : 0;
+  if (rev && dibuat <= rev) { cache.remove('tok_' + token); return false; }
   cache.put('tok_' + token, who, CONFIG.TOKEN_TTL);   // sesi bergeser (sliding)
-  CURRENT_ADMIN_ = who === '1' ? '' : who;
+  CURRENT_ADMIN_ = nama;
   return true;
 }
 
 function adminUser_() {
   let email = '';
   try { email = Session.getEffectiveUser().getEmail(); } catch (_) {}
-  return { nama: CURRENT_ADMIN_ || 'Admin', email };
+  return { nama: CURRENT_ADMIN_ || 'Admin', email, utama: isUtama_() };
+}
+
+/* ---------- Kelola akun admin (hanya admin utama; password tidak pernah dikirim ke browser) ---------- */
+
+const PW_MIN_ = 6;
+
+function listAdmins_() {
+  const t = adminTable_();
+  if (!t) return { ok: false, error: 'Tab ADMIN belum dibuat. Buka Sheets → menu Pelita Bangsa → Siapkan Tab Database.' };
+  const utama = utamaNames_(t), me = CURRENT_ADMIN_.toLowerCase();
+  return { ok: true, rows: t.rows.map(r => ({
+    username: r.username, nama: r.nama, peran: utama.indexOf(r.username.toLowerCase()) !== -1 ? 'Utama' : 'Admin',
+    nonaktif: r.nonaktif, password: !!r.password, saya: r.username.toLowerCase() === me })) };
+}
+
+/** Tambah (data.baru = true) atau ubah satu akun. Username tidak bisa diganti; password kosong saat ubah = tetap. */
+function saveAdmin_(d) {
+  const lock = LockService.getScriptLock();
+  try {
+    lock.waitLock(10000);
+    const sh = getSS_().getSheetByName(CONFIG.SHEETS.ADMIN);
+    if (!sh) throw new Error('Tab ADMIN belum dibuat. Buka Sheets → menu Pelita Bangsa → Siapkan Tab Database.');
+    ensureSchemaCols_('ADMIN', sh);
+    const t = adminTable_() || { sh, rows: [], headers: headersOf_(sh) };
+    const col = h => t.headers.indexOf(h) + 1;
+    const username = String(d.username || '').trim(), nama = clip_(d.nama, 80), pw = String(d.password || '');
+    const peran = String(d.peran || '').toLowerCase() === 'utama' ? 'Utama' : 'Admin';
+    const nonaktif = parseBool_(d.nonaktif, false), me = CURRENT_ADMIN_.toLowerCase();
+    if (!/^[A-Za-z][A-Za-z0-9._-]{2,29}$/.test(username)) throw new Error('Username 3–30 karakter, diawali huruf; boleh huruf, angka, titik, garis.');
+    const a = t.rows.find(r => r.username.toLowerCase() === username.toLowerCase());
+    if (d.baru && a) throw new Error('Username "' + a.username + '" sudah dipakai.');
+    if (!d.baru && !a) throw new Error('Akun tidak ditemukan. Muat ulang daftar.');
+    if ((d.baru || pw) && pw.length < PW_MIN_) throw new Error('Password minimal ' + PW_MIN_ + ' karakter.');
+    if (pw && pw.toLowerCase() === username.toLowerCase()) throw new Error('Password tidak boleh sama dengan username.');
+
+    // Tandai admin utama secara tertulis lebih dulu (tab lama: baris pertama dianggap utama)
+    const utama = t.rows.length ? utamaNames_(t) : [];
+    t.rows.forEach(r => {
+      if (utama.indexOf(r.username.toLowerCase()) !== -1 && r.peran.toLowerCase() !== 'utama') { sh.getRange(r.row, col('peran')).setValue('Utama'); }
+      r.peran = utama.indexOf(r.username.toLowerCase()) !== -1 ? 'Utama' : 'Admin';
+    });
+
+    if (a) {
+      const saya = a.username.toLowerCase() === me;
+      if (saya && nonaktif) throw new Error('Anda tidak bisa menonaktifkan akun sendiri.');
+      if (saya && peran !== 'Utama') throw new Error('Anda tidak bisa menurunkan peran akun sendiri.');
+      const sisa = t.rows.filter(r => r !== a && r.peran === 'Utama' && !r.nonaktif && r.password).length;
+      if (a.peran === 'Utama' && (peran !== 'Utama' || nonaktif) && !sisa) throw new Error('Harus ada minimal satu admin utama yang aktif.');
+      sh.getRange(a.row, col('nama')).setValue(nama);
+      sh.getRange(a.row, col('peran')).setValue(peran);
+      sh.getRange(a.row, col('nonaktif')).setValue(nonaktif);
+      if (pw) sh.getRange(a.row, col('password')).setValue(pwHash_(a.username, pw));
+      if ((pw || nonaktif) && !saya) revokeSessions_(a.username);
+      logRow_('ubah', 'ADMIN', a.username, (pw ? 'password diganti · ' : '') + peran + (nonaktif ? ' · nonaktif' : ''));
+    } else {
+      const baru = { username, password: pwHash_(username, pw), nama: nama || username, peran: t.rows.length ? peran : 'Utama', nonaktif };
+      sh.appendRow(t.headers.map(h => (h in baru ? baru[h] : '')));
+      logRow_('tambah', 'ADMIN', username, baru.peran);
+    }
+    return listAdmins_();
+  } catch (err) {
+    return { ok: false, error: err.message };
+  } finally { try { lock.releaseLock(); } catch (_) {} }
+}
+
+function deleteAdmin_(username) {
+  const lock = LockService.getScriptLock();
+  try {
+    lock.waitLock(10000);
+    const t = adminTable_();
+    if (!t) throw new Error('Tab ADMIN belum dibuat.');
+    const u = String(username || '').trim().toLowerCase();
+    const a = t.rows.find(r => r.username.toLowerCase() === u);
+    if (!a) throw new Error('Akun tidak ditemukan. Muat ulang daftar.');
+    if (u === CURRENT_ADMIN_.toLowerCase()) throw new Error('Anda tidak bisa menghapus akun sendiri.');
+    const utama = utamaNames_(t);
+    if (utama.indexOf(u) !== -1 && !t.rows.some(r => r !== a && utama.indexOf(r.username.toLowerCase()) !== -1 && !r.nonaktif && r.password)) {
+      throw new Error('Harus ada minimal satu admin utama yang aktif.');
+    }
+    // Jika yang tersisa belum bertanda "Utama", tandai dulu supaya peran tidak berpindah diam-diam
+    const cr = t.headers.indexOf('peran');
+    if (cr !== -1) t.rows.forEach(r => { if (r !== a && utama.indexOf(r.username.toLowerCase()) !== -1 && r.peran.toLowerCase() !== 'utama') t.sh.getRange(r.row, cr + 1).setValue('Utama'); });
+    t.sh.deleteRow(a.row);
+    revokeSessions_(a.username);
+    logRow_('hapus', 'ADMIN', a.username, '');
+    return listAdmins_();
+  } catch (err) {
+    return { ok: false, error: err.message };
+  } finally { try { lock.releaseLock(); } catch (_) {} }
 }
 
 /* ---------- CRUD generik berdasarkan kolom id ---------- */

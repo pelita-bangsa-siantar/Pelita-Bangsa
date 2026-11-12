@@ -47,7 +47,7 @@ File ini adalah konteks utama untuk Claude (Claude Code / Claude.ai) setiap kali
 
 - Jadwal piket / roster relawan mingguan (tab Stitch "Jadwal Relawan").
 - Peminjaman per nama anak (sirkulasi hanya dihitung per judul: kolom `dipinjam`).
-- Testimoni, WA API otomatis (broadcast), import CSV ke Sheets dari web, multi-akun admin.
+- Testimoni, WA API otomatis (broadcast), import CSV ke Sheets dari web.
 
 ---
 
@@ -95,7 +95,7 @@ pelita-bangsa-web/                  ← repo GitHub, GitHub Pages dari branch ma
 ├── berita.html                     ← daftar berita / satu artikel
 ├── 404.html
 ├── admin/
-│   └── index.html                  ← panel admin (login + 8 modul, hash routing)
+│   └── index.html                  ← panel admin (login + 9 modul, hash routing)
 ├── assets/
 │   ├── css/custom.css              ← skeleton, teks rata, prose berita, print
 │   ├── js/
@@ -173,8 +173,10 @@ Satu baris = satu foto; `album_id` sama = satu album; `sampul` TRUE = foto sampu
 - Satu baris = satu album = satu folder Google Drive (dibagikan "Anyone with the link"). `id` otomatis `AL-yymmdd-XXX`, dipakai sebagai `album_id` di AGENDA.
 - Server membaca gambar di folder lewat `DriveApp` (scope `drive.readonly`), urut nama file, foto pertama = sampul, maks `CONFIG.ALBUM_MAX_FOTO`. Daftar foto di-cache per folder 6 jam (`fld_<id>`); dibaca ulang saat album disimpan/tombol sync, atau saat "Segarkan".
 
-### Tab `ADMIN` (akun login panel admin — disetujui Andre, 11 Nov 2026)
-`username | password | nama | nonaktif`
+### Tab `ADMIN` (akun login panel admin — disetujui Andre, 11 Nov 2026; kelola akun dari panel 12 Nov 2026)
+`username | password | nama | nonaktif | peran`
+- `peran`: **Utama** / Admin. Hanya admin utama yang boleh memakai `admin/#pengguna` (aksi `admin_list/admin_save/admin_delete`, dijaga `utamaOnly_` di server). Belum ada baris bertanda Utama (tab lama) → baris pertama dianggap utama.
+- Aturan server: username tidak bisa diganti; password min 6 dan ≠ username; tidak bisa menghapus/menonaktifkan/menurunkan akun sendiri; minimal satu admin utama aktif. Ganti password / nonaktif / hapus → sesi lama akun itu ditolak (`revokeSessions_`, Script Properties `rev_<username>`; nilai token cache = `username|waktuDibuat`).
 - Satu baris = satu akun. Password diketik biasa di sel; server menggantinya jadi `sha256:<hash>` saat login berhasil / menu "Segarkan Web" (`hashAdminPasswords_`). Username ikut di-hash → ganti username = isi ulang password.
 - `nonaktif` dicentang = akun tidak bisa login. Password kosong = tidak bisa login.
 - **Tidak pernah keluar lewat API**: tidak dibaca `buildData_`, dan `sheetFor_` menolak `ADMIN` (list/save/delete/ekspor CSV).
@@ -213,7 +215,10 @@ Satu baris = satu foto; `album_id` sama = satu album; `sampul` TRUE = foto sampu
 | `login` | – | `{ user, password }` (dicocokkan ke tab `ADMIN`) | `{ ok, token, expiresIn, user }` (5× salah → kunci 5 menit) |
 | `donasi` | – | `{ data: { nama, whatsapp, jenis, catatan, website(honeypot) } }` | `{ ok, id }` — dibatasi 1 kiriman / 3 menit per nomor |
 | `kunjungan` | – | `{ baru: bool }` | `{ ok }` — +1 pengunjung hari ini (tab KUNJUNGAN) |
-| `me`, `logout` | ✓ | – | `{ ok }` |
+| `me`, `logout` | ✓ | – | `{ ok }` (`me`/`login` → `user.utama` bool) |
+| `admin_list` | ✓ utama | – | `{ ok, rows:[{username,nama,peran,nonaktif,password(bool),saya}] }` — password tidak pernah dikirim |
+| `admin_save` | ✓ utama | `{ data:{ username, nama, password?, peran, nonaktif, baru } }` | `{ ok, rows }` |
+| `admin_delete` | ✓ utama | `{ username }` | `{ ok, rows }` |
 | `list` | ✓ | `{ sheet }` | `{ ok, headers, rows:[{_row,...}], writable }` — semua tab |
 | `save` | ✓ | `{ sheet, data:{ id?, ... } }` | `{ ok, row }` — upsert by `id`; hanya BUKU/BERITA/DONASI/ALBUM/AGENDA; kolom tak dikirim dipertahankan. ALBUM: folder divalidasi, respons ditambah `foto` (jumlah) & `publik` (bool) |
 | `delete` | ✓ | `{ sheet, id }` | `{ ok }` |
